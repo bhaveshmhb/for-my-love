@@ -48,22 +48,42 @@ min-height:120px;
 
 #char{
 font-size:120px;
-opacity:0;
-transition:1s;
+opacity:1;
 display:flex;
-gap:30px;
+gap:25px;
 justify-content:center;
 align-items:center;
+margin-bottom:20px;
 }
 
 #cat{
-transform:translateX(-60px);
-transition:1s;
+transform:translateX(-150px) scale(0.5);
+opacity:0;
+animation:enterCat 1s forwards;
 }
 
 #dog{
-transform:translateX(60px);
-transition:1s;
+transform:translateX(150px) scale(0.5);
+opacity:0;
+animation:enterDog 1s forwards;
+}
+
+#midheart{
+opacity:0;
+transform:scale(0);
+animation:heartPop 0.8s 0.8s forwards;
+}
+
+@keyframes enterCat{
+to{transform:translateX(0) scale(1);opacity:1;}
+}
+
+@keyframes enterDog{
+to{transform:translateX(0) scale(1);opacity:1;}
+}
+
+@keyframes heartPop{
+to{transform:scale(1.2);opacity:1;}
 }
 
 
@@ -99,6 +119,7 @@ background:rgba(255,255,255,0.5);
 <div class="scene">
 <div id="char">
 <span id="cat">🐱</span>
+<span id="midheart">💗</span>
 <span id="dog">🐶</span>
 </div>
 
@@ -114,7 +135,7 @@ hold to enter
 
 for(let i=0;i<35;i++){
 let heart=document.createElement("div");
-heart.innerHTML="💗";
+heart.innerHTML="❤️";
 heart.style.position="fixed";
 heart.style.left=Math.random()*100+"vw";
 heart.style.fontSize=(10+Math.random()*18)+"px";
@@ -132,6 +153,24 @@ const lines=[
 
 let i=0, j=0;
 const text=document.getElementById("text");
+function floatingHearts(){
+setInterval(()=>{
+let h=document.createElement("div");
+h.innerHTML="💖";
+h.style.position="fixed";
+h.style.left=Math.random()*100+"vw";
+h.style.bottom="-20px";
+h.style.fontSize=(12+Math.random()*20)+"px";
+h.style.animation="floatUp "+(4+Math.random()*4)+"s linear forwards";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),8000);
+},400);
+}
+
+floatingHearts();
+@keyframes floatUp{
+to{transform:translateY(-120vh);opacity:0;}
+}
 
 function type(){
 if(i<lines.length){
@@ -156,7 +195,8 @@ document.getElementById("dog").style.transform="translateX(0)";
 document.getElementById("hold").style.display="block";
 }
 }
-type();
+setTimeout(type,1400);
+
 
 let holdTime=0;
 const hold=document.getElementById("hold");
