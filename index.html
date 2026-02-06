@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Something for you 💞</title>
+<title>For You 💞</title>
 
 <style>
 body{
@@ -19,39 +19,11 @@ align-items:center;
 color:white;
 }
 
-/* scene */
-.scene{
-text-align:center;
-max-width:600px;
-padding:20px;
-}
+/* intro */
+.scene{text-align:center;max-width:600px;padding:20px;}
+#char{font-size:120px;margin-bottom:20px;}
+#text{font-size:1.6em;line-height:1.6em;min-height:120px;}
 
-/* characters */
-#char{
-font-size:120px;
-display:flex;
-gap:25px;
-justify-content:center;
-align-items:center;
-margin-bottom:20px;
-}
-
-#cat{transform:translateX(-150px) scale(0.5);opacity:0;animation:enterCat 1s forwards;}
-#dog{transform:translateX(150px) scale(0.5);opacity:0;animation:enterDog 1s forwards;}
-#midheart{opacity:0;transform:scale(0);animation:heartPop 0.8s 0.8s forwards;}
-
-@keyframes enterCat{to{transform:translateX(0) scale(1);opacity:1;}}
-@keyframes enterDog{to{transform:translateX(0) scale(1);opacity:1;}}
-@keyframes heartPop{to{transform:scale(1.2);opacity:1;}}
-
-/* typing text */
-#text{
-font-size:1.6em;
-line-height:1.6em;
-min-height:120px;
-}
-
-/* hold button */
 .hold{
 margin-top:40px;
 display:none;
@@ -59,33 +31,11 @@ padding:15px 30px;
 border-radius:40px;
 background:rgba(255,255,255,0.25);
 backdrop-filter:blur(6px);
-font-size:1.1em;
-letter-spacing:2px;
 cursor:pointer;
-user-select:none;
-position:relative;
-overflow:hidden;
 }
 
-.bar{
-position:absolute;
-left:0;
-top:0;
-height:100%;
-width:0%;
-background:rgba(255,255,255,0.5);
-}
-
-/* background floating hearts */
-@keyframes floatSlow{
-from{transform:translateY(110vh);opacity:0.7;}
-to{transform:translateY(-10vh);opacity:0.7;}
-}
-
-/* rising romantic hearts */
-@keyframes floatUp{
-to{transform:translateY(-120vh);opacity:0;}
-}
+/* kiss animation */
+@keyframes floatUp{to{transform:translateY(-120vh);opacity:0;}}
 </style>
 
 </head>
@@ -93,283 +43,138 @@ to{transform:translateY(-120vh);opacity:0;}
 <body>
 
 <div class="scene">
-<div id="char">
-<span id="cat">🐱</span>
-<span id="midheart">💗</span>
-<span id="dog">🐶</span>
-</div>
-
+<div id="char">🐱❤️🐶</div>
 <div id="text"></div>
-
-<div class="hold" id="hold">
-<div class="bar" id="bar"></div>
-Press and Hold to Hug me Tightly🫂🤍
-</div>
+<div class="hold" id="hold">Press & Hold to Hug me Tightly🫂</div>
 </div>
 
 <script>
 
-
-/* rising hearts */
-function floatingHearts(){
-setInterval(()=>{
-let h=document.createElement("div");
-h.innerHTML="💖";
-h.style.position="fixed";
-h.style.left=Math.random()*100+"vw";
-h.style.bottom="-20px";
-h.style.fontSize=(12+Math.random()*20)+"px";
-h.style.animation="floatUp "+(4+Math.random()*4)+"s linear forwards";
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),8000);
-},400);
-}
-floatingHearts();
-
-/* typing */
+/* ---------- INTRO TYPING ---------- */
 const lines=[
-"Babyyy🫂.... ",
+"Babyyy 🫂",
 "Long distance really sucks...🥺",
-"This is my first valentine and Celebrate madoke nine illa nan jote...",
-"Parvagilla bidu babyy.. I made this for you with extra love todayy",
-"Dont Rush and Experience this ❤️😁"
+"This is OUR first valentine..😁",
+"Just wanted to make something speical🫂❤️",
+"Don't rush... experience it ❤️"
 ];
 
-let i=0, j=0;
+let i=0,j=0;
 const text=document.getElementById("text");
 
 function type(){
 if(i<lines.length){
 if(j<lines[i].length){
-text.innerHTML+=lines[i][j];
-j++;
+text.innerHTML+=lines[i][j++];
 setTimeout(type,40);
 }else{
 text.innerHTML+="<br>";
-j=0;
-i++;
+j=0;i++;
 setTimeout(type,900);
 }
 }else{
 document.getElementById("hold").style.display="inline-block";
 }
 }
-setTimeout(type,1400);
+setTimeout(type,1200);
 
-/* hold interaction */
-let holdTime=0;
+/* ---------- HOLD TO ENTER ---------- */
+let holdTimer=null;
 const hold=document.getElementById("hold");
-const bar=document.getElementById("bar");
-let interval;
-
-function startHold(){
-interval=setInterval(()=>{
-holdTime+=2;
-bar.style.width=holdTime+"%";
-if(holdTime>=100){
-clearInterval(interval);
-nextScene();
-}
-},30);
-}
-
-function cancelHold(){
-clearInterval(interval);
-holdTime=0;
-bar.style.width="0%";
-}
 
 hold.addEventListener("mousedown",startHold);
+hold.addEventListener("touchstart",startHold);
 hold.addEventListener("mouseup",cancelHold);
 hold.addEventListener("mouseleave",cancelHold);
-hold.addEventListener("touchstart",startHold);
 hold.addEventListener("touchend",cancelHold);
 
-function nextScene(){
-document.body.innerHTML = `
-<div style="height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;color:white;font-family:Trebuchet MS">
-
-<h2 id="qtext">Continue madok munche...</h2>
-<p id="sub">Tell me what name do I save you as in my phone😤? </p>
-
-<input id="answer" placeholder="type here"
-style="margin-top:20px;padding:12px 18px;border-radius:20px;border:none;font-size:1em;text-align:center">
-
-<button onclick="checkAnswer()" 
-style="margin-top:20px;padding:10px 25px;border-radius:20px;border:none;background:#ff7eb6;color:white;font-size:1em;cursor:pointer">
-unlock
-</button>
-
-<p id="response" style="margin-top:15px;height:20px"></p>
-
-</div>
-`;
+function startHold(){
+holdTimer=setTimeout(showQuestion,700);
 }
+function cancelHold(){
+clearTimeout(holdTimer);
+}
+
+/* ---------- QUESTION PAGE ---------- */
+function showQuestion(){
+document.body.innerHTML=`
+<div style="height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center">
+<h2>Continue madok munchee..</h2>
+<p>Tell me What name do I save you as in my phone🤨?</p>
+
+<input id="answer" style="padding:12px;border-radius:20px;border:none;text-align:center">
+<button onclick="checkAnswer()" style="margin-top:15px;padding:10px 20px;border:none;border-radius:20px;background:#ff7eb6;color:white">Unlock</button>
+<p id="response"></p>
+</div>`;
+}
+
 function checkAnswer(){
+const correct="Indu";
+const user=document.getElementById("answer").value.toLowerCase().trim();
+const res=document.getElementById("response");
 
-const correct = "Indu";   // <-- change this
-const user = document.getElementById("answer").value.toLowerCase().trim();
-const response = document.getElementById("response");
-
-if(user === correct.toLowerCase()){
-response.innerText = "😁.. It's really youuu🫂..Mmuuaah💋";
-setTimeout(nextPart,1200);
-}
-else{
-response.innerText = "🤨 You're not my Babyy...🥲💔";
+if(user===correct.toLowerCase()){
+res.innerText="Hehe it's really you..😁🫂... Mmmuuuaahhh💋❤️";
+setTimeout(kissScene,1000);
+}else{
+res.innerText="Hmm🤨 ARe you sureee...!??";
 }
 }
-function nextPart(){
 
+/* ---------- KISS SCENE ---------- */
+function kissScene(){
 document.body.style.background="#1a0f1f";
-
-document.body.innerHTML = `
-<style>
-#wrap{
-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-color:white;
-font-family:Trebuchet MS;
-text-align:center;
-}
-
-#cat{
-font-size:90px;
-transition:0.3s;
-}
-
-#counter{
-margin-top:10px;
-opacity:0.8;
-}
-
-#kissBtn{
-margin-top:25px;
-width:140px;
-height:140px;
-border-radius:50%;
-background:radial-gradient(circle,#ff7eb6,#ff3d8e);
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:40px;
-cursor:pointer;
-user-select:none;
-transition:0.2s;
-}
-
-#kissBtn:active{
-transform:scale(0.9);
-}
-</style>
-
-<div id="wrap">
-<div id="cat">🐱</div>
-<div id="msg">happiness level: 0/10</div>
-<div id="counter">doctor said I need your kisses</div>
-
-<div id="kissBtn">💋</div>
-</div>
-`;
-
+document.body.innerHTML=`
+<div id="wrap" style="height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center">
+<div id="cat" style="font-size:90px">🐱</div>
+<div id="msg">Your Baby's happiness level: 0/10</div>
+<div id="sub">Ning gottalva en madbek antaa</div>
+<div id="kissBtn" style="margin-top:25px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,#ff7eb6,#ff3d8e);display:flex;justify-content:center;align-items:center;font-size:40px">💋</div>
+</div>`;
 startKisses();
 }
-function startKisses(){
 
+function startKisses(){
 let kisses=0;
-let holding=false;
+let timer=null;
 const btn=document.getElementById("kissBtn");
 const msg=document.getElementById("msg");
-const cat=document.getElementById("cat");
 
-const reactions=[
-"that helped",
-"again",
-"stay close",
-"hehe",
-"i like that",
-"more",
-"almost happy",
-"don’t stop",
-"one more"
-];
+btn.addEventListener("mousedown",start);
+btn.addEventListener("touchstart",start);
+btn.addEventListener("mouseup",stop);
+btn.addEventListener("mouseleave",stop);
+btn.addEventListener("touchend",stop);
 
-btn.addEventListener("mousedown",startHold);
-btn.addEventListener("touchstart",startHold);
-
-btn.addEventListener("mouseup",endHold);
-btn.addEventListener("mouseleave",endHold);
-btn.addEventListener("touchend",endHold);
-
-let holdTimer=null;
-
-function startHold(){
-if(holdTimer) return;
-
-cat.style.transform="scale(1.15)";
-holdTimer=setTimeout(()=>{
-registerKiss();
-holdTimer=null;
+function start(){
+timer=setTimeout(()=>{
+if(kisses>=10)return;
+kisses++;
+msg.innerText=`happiness level: ${kisses}/10`;
+spawnHeart();
+if(kisses===10)setTimeout(finalScene,1200);
 },600);
 }
 
-function endHold(){
-cat.style.transform="scale(1)";
-if(holdTimer){
-clearTimeout(holdTimer);
-holdTimer=null;
-}
-}
-
-if(kisses>=10) return;
-
-kisses++;
-cat.style.transform="scale(1)";
-msg.innerText=`happiness level: ${kisses}/10`;
-
-spawnHeart();
-
-if(kisses<10){
-document.getElementById("counter").innerText=reactions[kisses-1];
-}else{
-document.getElementById("counter").innerText="perfect… 10/10 🤍";
-setTimeout(afterComfort,1200);
-}
-}
-function registerKiss(){
-if(kisses>=10) return;
-
-kisses++;
-msg.innerText=`happiness level: ${kisses}/10`;
-
-spawnHeart();
-
-if(kisses<10){
-document.getElementById("counter").innerText=reactions[kisses-1];
-}else{
-document.getElementById("counter").innerText="perfect… 10/10 🤍";
-setTimeout(afterComfort,1200);
-}
+function stop(){clearTimeout(timer);}
 }
 
 function spawnHeart(){
 const h=document.createElement("div");
 h.innerHTML="💗";
 h.style.position="fixed";
-h.style.left=(window.innerWidth/2+(Math.random()*120-60))+"px";
-h.style.top=(window.innerHeight/2+(Math.random()*120-60))+"px";
+h.style.left="50%";
+h.style.top="50%";
 h.style.fontSize="22px";
 h.style.animation="floatUp 1s forwards";
 document.body.appendChild(h);
 setTimeout(()=>h.remove(),1000);
 }
+
+/* ---------- FINAL ---------- */
+function finalScene(){
+document.body.innerHTML="<h1 style='color:white'>Perfect… 10/10 🤍</h1>";
 }
-
-
-
 </script>
 
 </body>
