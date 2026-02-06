@@ -109,17 +109,6 @@ Press and Hold to Hug me Tightly🫂🤍
 
 <script>
 
-/* background hearts */
-for(let k=0;k<35;k++){
-let heart=document.createElement("div");
-heart.innerHTML="❤️";
-heart.style.position="fixed";
-heart.style.left=Math.random()*100+"vw";
-heart.style.fontSize=(10+Math.random()*18)+"px";
-heart.style.top="110vh";
-heart.style.animation="floatSlow "+(12+Math.random()*10)+"s linear infinite";
-document.body.appendChild(heart);
-}
 
 /* rising hearts */
 function floatingHearts(){
@@ -315,19 +304,45 @@ btn.addEventListener("mouseup",endHold);
 btn.addEventListener("mouseleave",endHold);
 btn.addEventListener("touchend",endHold);
 
+let holdTimer=null;
+
 function startHold(){
-holding=true;
+if(holdTimer) return;
+
 cat.style.transform="scale(1.15)";
+holdTimer=setTimeout(()=>{
+registerKiss();
+holdTimer=null;
+},600);
 }
 
 function endHold(){
-if(!holding) return;
-holding=false;
+cat.style.transform="scale(1)";
+if(holdTimer){
+clearTimeout(holdTimer);
+holdTimer=null;
+}
+}
 
 if(kisses>=10) return;
 
 kisses++;
 cat.style.transform="scale(1)";
+msg.innerText=`happiness level: ${kisses}/10`;
+
+spawnHeart();
+
+if(kisses<10){
+document.getElementById("counter").innerText=reactions[kisses-1];
+}else{
+document.getElementById("counter").innerText="perfect… 10/10 🤍";
+setTimeout(afterComfort,1200);
+}
+}
+function registerKiss(){
+if(kisses>=10) return;
+
+kisses++;
 msg.innerText=`happiness level: ${kisses}/10`;
 
 spawnHeart();
