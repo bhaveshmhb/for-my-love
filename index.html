@@ -232,83 +232,127 @@ response.innerText = "🤨 You're not my Babyy...🥲💔";
 }
 function nextPart(){
 
-// change background first
 document.body.style.background="#1a0f1f";
 
 document.body.innerHTML = `
 <style>
-#wipeText{
-position:fixed;
-inset:0;
+#wrap{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+color:white;
+font-family:Trebuchet MS;
+text-align:center;
+}
+
+#cat{
+font-size:90px;
+transition:0.3s;
+}
+
+#counter{
+margin-top:10px;
+opacity:0.8;
+}
+
+#kissBtn{
+margin-top:25px;
+width:140px;
+height:140px;
+border-radius:50%;
+background:radial-gradient(circle,#ff7eb6,#ff3d8e);
 display:flex;
 justify-content:center;
 align-items:center;
-font-size:2em;
-color:#ffffff;
-text-align:center;
-padding:20px;
-z-index:2;
-pointer-events:none;
+font-size:40px;
+cursor:pointer;
+user-select:none;
+transition:0.2s;
 }
 
-canvas{
-position:fixed;
-inset:0;
-z-index:3;
+#kissBtn:active{
+transform:scale(0.9);
 }
-#hint{
-margin-top:20px;
-font-size:0.6em;
-opacity:0.8;
-animation:blink 2s infinite;
-}
-
-@keyframes blink{
-0%,100%{opacity:0.2;}
-50%{opacity:1;}
-}
-
 </style>
 
-<div id="wipeText">
-hey… you found me
-<div id="hint">wipe my tears</div>
-</div>
+<div id="wrap">
+<div id="cat">🐱</div>
+<div id="msg">happiness level: 0/10</div>
+<div id="counter">doctor said I need your kisses</div>
 
-<canvas id="wipe"></canvas>
+<div id="kissBtn">💋</div>
+</div>
 `;
 
-startWipe();
+startKisses();
+}
+function startKisses(){
+
+let kisses=0;
+let holding=false;
+const btn=document.getElementById("kissBtn");
+const msg=document.getElementById("msg");
+const cat=document.getElementById("cat");
+
+const reactions=[
+"that helped",
+"again",
+"stay close",
+"hehe",
+"i like that",
+"more",
+"almost happy",
+"don’t stop",
+"one more"
+];
+
+btn.addEventListener("mousedown",startHold);
+btn.addEventListener("touchstart",startHold);
+
+btn.addEventListener("mouseup",endHold);
+btn.addEventListener("mouseleave",endHold);
+btn.addEventListener("touchend",endHold);
+
+function startHold(){
+holding=true;
+cat.style.transform="scale(1.15)";
 }
 
-function startWipe(){
-const canvas=document.getElementById("wipe");
-const ctx=canvas.getContext("2d");
+function endHold(){
+if(!holding) return;
+holding=false;
 
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
+if(kisses>=10) return;
 
-ctx.fillStyle="rgba(255,255,255,0.85)";
-ctx.fillRect(0,0,canvas.width,canvas.height);
+kisses++;
+cat.style.transform="scale(1)";
+msg.innerText=`happiness level: ${kisses}/10`;
 
-canvas.addEventListener("touchmove",wipe);
-canvas.addEventListener("mousemove",wipe);
+spawnHeart();
 
-function wipe(e){
-
-// ✔ remove hint when she touches
-document.getElementById("hint")?.remove();
-
-const rect=canvas.getBoundingClientRect();
-const x=(e.touches?e.touches[0].clientX:e.clientX)-rect.left;
-const y=(e.touches?e.touches[0].clientY:e.clientY)-rect.top;
-
-ctx.globalCompositeOperation="destination-out";
-ctx.beginPath();
-ctx.arc(x,y,40,0,Math.PI*2);
-ctx.fill();
+if(kisses<10){
+document.getElementById("counter").innerText=reactions[kisses-1];
+}else{
+document.getElementById("counter").innerText="perfect… 10/10 🤍";
+setTimeout(afterComfort,1200);
 }
 }
+
+function spawnHeart(){
+const h=document.createElement("div");
+h.innerHTML="💗";
+h.style.position="fixed";
+h.style.left=(window.innerWidth/2+(Math.random()*120-60))+"px";
+h.style.top=(window.innerHeight/2+(Math.random()*120-60))+"px";
+h.style.fontSize="22px";
+h.style.animation="floatUp 1s forwards";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),1000);
+}
+}
+
 
 
 </script>
