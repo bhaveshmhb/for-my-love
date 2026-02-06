@@ -47,10 +47,25 @@ min-height:120px;
 }
 
 #char{
-font-size:70px;
+font-size:120px;
 opacity:0;
 transition:1s;
+display:flex;
+gap:30px;
+justify-content:center;
+align-items:center;
 }
+
+#cat{
+transform:translateX(-60px);
+transition:1s;
+}
+
+#dog{
+transform:translateX(60px);
+transition:1s;
+}
+
 
 .hold{
 margin-top:40px;
@@ -82,7 +97,11 @@ background:rgba(255,255,255,0.5);
 <body>
 
 <div class="scene">
-<div id="char">🐰</div>
+<div id="char">
+<span id="cat">🐱</span>
+<span id="dog">🐶</span>
+</div>
+
 <div id="text"></div>
 
 <div class="hold" id="hold">
@@ -93,12 +112,15 @@ hold to enter
 
 <script>
 
-for(let i=0;i<40;i++){
-let p=document.createElement("div");
-p.className="particle";
-p.style.left=Math.random()*100+"vw";
-p.style.animationDuration=6+Math.random()*10+"s";
-document.body.appendChild(p);
+for(let i=0;i<35;i++){
+let heart=document.createElement("div");
+heart.innerHTML="💗";
+heart.style.position="fixed";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(10+Math.random()*18)+"px";
+heart.style.top="110vh";
+heart.style.animation="float "+(6+Math.random()*8)+"s linear infinite";
+document.body.appendChild(heart);
 }
 
 const lines=[
@@ -125,6 +147,13 @@ setTimeout(type,900);
 }
 }else{
 document.getElementById("char").style.opacity=1;
+
+setTimeout(()=>{
+document.getElementById("cat").style.transform="translateX(0)";
+document.getElementById("dog").style.transform="translateX(0)";
+},200);
+
+document.getElementById("hold").style.display="block";
 }
 }
 type();
