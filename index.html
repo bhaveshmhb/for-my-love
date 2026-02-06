@@ -256,9 +256,25 @@ position:fixed;
 inset:0;
 z-index:3;
 }
+#hint{
+margin-top:20px;
+font-size:0.6em;
+opacity:0.8;
+animation:blink 2s infinite;
+}
+
+@keyframes blink{
+0%,100%{opacity:0.2;}
+50%{opacity:1;}
+}
+
 </style>
 
-<div id="wipeText">I love you Babyyy🫂❤️</div>
+<div id="wipeText">
+hey… you found me
+<div id="hint">wipe my tears</div>
+</div>
+
 <canvas id="wipe"></canvas>
 `;
 
