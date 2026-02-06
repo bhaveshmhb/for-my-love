@@ -295,6 +295,10 @@ canvas.addEventListener("touchmove",wipe);
 canvas.addEventListener("mousemove",wipe);
 
 function wipe(e){
+
+// ✔ remove hint when she touches
+document.getElementById("hint")?.remove();
+
 const rect=canvas.getBoundingClientRect();
 const x=(e.touches?e.touches[0].clientX:e.clientX)-rect.left;
 const y=(e.touches?e.touches[0].clientY:e.clientY)-rect.top;
