@@ -19,92 +19,45 @@ align-items:center;
 color:white;
 }
 
-.particle{
-position:fixed;
-width:6px;
-height:6px;
-background:white;
-border-radius:50%;
-opacity:.7;
-animation:float linear infinite;
-}
-
-@keyframes float{
-from{transform:translateY(110vh)}
-to{transform:translateY(-10vh)}
-}
-
+/* scene */
 .scene{
 text-align:center;
 max-width:600px;
 padding:20px;
 }
 
-#text{
-font-size:1.6em;
-line-height:1.6em;
-min-height:120px;
-}
-
+/* characters */
 #char{
 font-size:120px;
-opacity:1;
 display:flex;
 gap:25px;
 justify-content:center;
 align-items:center;
 margin-bottom:20px;
 }
-/* slow floating background hearts */
-@keyframes floatSlow{
-from{transform:translateY(110vh);opacity:0.7;}
-to{transform:translateY(-10vh);opacity:0.7;}
+
+#cat{transform:translateX(-150px) scale(0.5);opacity:0;animation:enterCat 1s forwards;}
+#dog{transform:translateX(150px) scale(0.5);opacity:0;animation:enterDog 1s forwards;}
+#midheart{opacity:0;transform:scale(0);animation:heartPop 0.8s 0.8s forwards;}
+
+@keyframes enterCat{to{transform:translateX(0) scale(1);opacity:1;}}
+@keyframes enterDog{to{transform:translateX(0) scale(1);opacity:1;}}
+@keyframes heartPop{to{transform:scale(1.2);opacity:1;}}
+
+/* typing text */
+#text{
+font-size:1.6em;
+line-height:1.6em;
+min-height:120px;
 }
 
-/* rising romantic hearts */
-@keyframes floatUp{
-to{transform:translateY(-120vh);opacity:0;}
-}
-
-#cat{
-transform:translateX(-150px) scale(0.5);
-opacity:0;
-animation:enterCat 1s forwards;
-}
-
-#dog{
-transform:translateX(150px) scale(0.5);
-opacity:0;
-animation:enterDog 1s forwards;
-}
-
-#midheart{
-opacity:0;
-transform:scale(0);
-animation:heartPop 0.8s 0.8s forwards;
-}
-
-@keyframes enterCat{
-to{transform:translateX(0) scale(1);opacity:1;}
-}
-
-@keyframes enterDog{
-to{transform:translateX(0) scale(1);opacity:1;}
-}
-
-@keyframes heartPop{
-to{transform:scale(1.2);opacity:1;}
-}
-
-
+/* hold button */
 .hold{
 margin-top:40px;
-.hold{
 display:none;
-
 padding:15px 30px;
 border-radius:40px;
-background:rgba(255,255,255,0.2);
+background:rgba(255,255,255,0.25);
 backdrop-filter:blur(6px);
 font-size:1.1em;
 letter-spacing:2px;
@@ -121,6 +74,17 @@ top:0;
 height:100%;
 width:0%;
 background:rgba(255,255,255,0.5);
+}
+
+/* background floating hearts */
+@keyframes floatSlow{
+from{transform:translateY(110vh);opacity:0.7;}
+to{transform:translateY(-10vh);opacity:0.7;}
+}
+
+/* rising romantic hearts */
+@keyframes floatUp{
+to{transform:translateY(-120vh);opacity:0;}
 }
 </style>
 
@@ -139,24 +103,25 @@ background:rgba(255,255,255,0.5);
 
 <div class="hold" id="hold">
 <div class="bar" id="bar"></div>
-hold to enter
+hold to hug me 🤍
 </div>
 </div>
 
 <script>
 
+/* background hearts */
+for(let k=0;k<35;k++){
+let heart=document.createElement("div");
+heart.innerHTML="❤️";
+heart.style.position="fixed";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(10+Math.random()*18)+"px";
+heart.style.top="110vh";
 heart.style.animation="floatSlow "+(12+Math.random()*10)+"s linear infinite";
+document.body.appendChild(heart);
+}
 
-
-const lines=[
-"hey...",
-"don’t rush this",
-"i made something for you",
-"so stay here for a moment"
-];
-
-let i=0, j=0;
-const text=document.getElementById("text");
+/* rising hearts */
 function floatingHearts(){
 setInterval(()=>{
 let h=document.createElement("div");
@@ -170,9 +135,18 @@ document.body.appendChild(h);
 setTimeout(()=>h.remove(),8000);
 },400);
 }
-
 floatingHearts();
 
+/* typing */
+const lines=[
+"hey...",
+"don’t rush this",
+"i made something for you",
+"so stay here with me for a moment"
+];
+
+let i=0, j=0;
+const text=document.getElementById("text");
 
 function type(){
 if(i<lines.length){
@@ -187,23 +161,15 @@ i++;
 setTimeout(type,900);
 }
 }else{
-document.getElementById("char").style.opacity=1;
-
-setTimeout(()=>{
-document.getElementById("cat").style.transform="translateX(0)";
-document.getElementById("dog").style.transform="translateX(0)";
-},200);
-
-document.getElementById("hold").style.display="block";
+document.getElementById("hold").style.display="inline-block";
 }
 }
 setTimeout(type,1400);
 
-
+/* hold interaction */
 let holdTime=0;
 const hold=document.getElementById("hold");
 const bar=document.getElementById("bar");
-
 let interval;
 
 function startHold(){
