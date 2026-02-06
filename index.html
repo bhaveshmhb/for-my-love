@@ -1,2 +1,168 @@
-<!-- rebuild -->
+<!DOCTYPE html>
 
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Something for you 💞</title>
+
+<style>
+body{
+margin:0;
+height:100vh;
+background:radial-gradient(circle at 50% 70%,#ffd6ec,#ffc0e6,#fbaed2,#f48ac2,#c774e8);
+font-family:'Trebuchet MS',sans-serif;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+color:white;
+}
+
+.particle{
+position:fixed;
+width:6px;
+height:6px;
+background:white;
+border-radius:50%;
+opacity:.7;
+animation:float linear infinite;
+}
+
+@keyframes float{
+from{transform:translateY(110vh)}
+to{transform:translateY(-10vh)}
+}
+
+.scene{
+text-align:center;
+max-width:600px;
+padding:20px;
+}
+
+#text{
+font-size:1.6em;
+line-height:1.6em;
+min-height:120px;
+}
+
+#char{
+font-size:70px;
+opacity:0;
+transition:1s;
+}
+
+.hold{
+margin-top:40px;
+display:inline-block;
+padding:15px 30px;
+border-radius:40px;
+background:rgba(255,255,255,0.2);
+backdrop-filter:blur(6px);
+font-size:1.1em;
+letter-spacing:2px;
+cursor:pointer;
+user-select:none;
+position:relative;
+overflow:hidden;
+}
+
+.bar{
+position:absolute;
+left:0;
+top:0;
+height:100%;
+width:0%;
+background:rgba(255,255,255,0.5);
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="scene">
+<div id="char">🐰</div>
+<div id="text"></div>
+
+<div class="hold" id="hold">
+<div class="bar" id="bar"></div>
+hold to enter
+</div>
+</div>
+
+<script>
+
+for(let i=0;i<40;i++){
+let p=document.createElement("div");
+p.className="particle";
+p.style.left=Math.random()*100+"vw";
+p.style.animationDuration=6+Math.random()*10+"s";
+document.body.appendChild(p);
+}
+
+const lines=[
+"hey...",
+"don’t rush this",
+"i made something for you",
+"so stay here for a moment"
+];
+
+let i=0, j=0;
+const text=document.getElementById("text");
+
+function type(){
+if(i<lines.length){
+if(j<lines[i].length){
+text.innerHTML+=lines[i][j];
+j++;
+setTimeout(type,40);
+}else{
+text.innerHTML+="<br>";
+j=0;
+i++;
+setTimeout(type,900);
+}
+}else{
+document.getElementById("char").style.opacity=1;
+}
+}
+type();
+
+let holdTime=0;
+const hold=document.getElementById("hold");
+const bar=document.getElementById("bar");
+
+let interval;
+
+function startHold(){
+interval=setInterval(()=>{
+holdTime+=2;
+bar.style.width=holdTime+"%";
+if(holdTime>=100){
+clearInterval(interval);
+nextScene();
+}
+},30);
+}
+
+function cancelHold(){
+clearInterval(interval);
+holdTime=0;
+bar.style.width="0%";
+}
+
+hold.addEventListener("mousedown",startHold);
+hold.addEventListener("mouseup",cancelHold);
+hold.addEventListener("mouseleave",cancelHold);
+hold.addEventListener("touchstart",startHold);
+hold.addEventListener("touchend",cancelHold);
+
+function nextScene(){
+document.body.innerHTML="<h1 style='color:white;font-family:sans-serif'>okay… now it begins 💗</h1>";
+}
+
+</script>
+
+</body>
+</html>
