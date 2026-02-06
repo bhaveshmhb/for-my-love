@@ -223,7 +223,7 @@ const user = document.getElementById("answer").value.toLowerCase().trim();
 const response = document.getElementById("response");
 
 if(user === correct.toLowerCase()){
-response.innerText = "hehe… it really is you 🤍";
+response.innerText = "😁.. It's really youuu🫂..Mmuuaah💋";
 setTimeout(nextPart,1200);
 }
 else{
@@ -231,8 +231,65 @@ response.innerText = "🤨 You're not my Babyy...🥲💔";
 }
 }
 function nextPart(){
-document.body.innerHTML="<h1 style='color:white;font-family:sans-serif'>welcome back 💞</h1>";
+document.body.innerHTML = `
+<style>
+#fog{
+position:fixed;
+inset:0;
+background:rgba(255,255,255,0.85);
+backdrop-filter:blur(12px);
 }
+
+#wipeText{
+position:fixed;
+inset:0;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:2em;
+color:white;
+text-align:center;
+padding:20px;
+}
+
+canvas{
+position:fixed;
+inset:0;
+}
+</style>
+
+<div id="wipeText">hey… you found me</div>
+<canvas id="wipe"></canvas>
+<div id="fog"></div>
+`;
+
+startWipe();
+}
+function startWipe(){
+const canvas=document.getElementById("wipe");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+ctx.fillStyle="rgba(255,255,255,0.85)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+canvas.addEventListener("touchmove",wipe);
+canvas.addEventListener("mousemove",wipe);
+
+function wipe(e){
+const rect=canvas.getBoundingClientRect();
+const x=(e.touches?e.touches[0].clientX:e.clientX)-rect.left;
+const y=(e.touches?e.touches[0].clientY:e.clientY)-rect.top;
+
+ctx.globalCompositeOperation="destination-out";
+ctx.beginPath();
+ctx.arc(x,y,40,0,Math.PI*2);
+ctx.fill();
+}
+}
+
 
 </script>
 
