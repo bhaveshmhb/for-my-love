@@ -200,8 +200,8 @@ function nextScene(){
 document.body.innerHTML = `
 <div style="height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;color:white;font-family:Trebuchet MS">
 
-<h2 id="qtext">before i continue...</h2>
-<p id="sub">prove it's really you</p>
+<h2 id="qtext">Continue madok munche...</h2>
+<p id="sub">Tell me what name do I save you as in my phone😤? </p>
 
 <input id="answer" placeholder="type here"
 style="margin-top:20px;padding:12px 18px;border-radius:20px;border:none;font-size:1em;text-align:center">
@@ -215,6 +215,23 @@ unlock
 
 </div>
 `;
+}
+function checkAnswer(){
+
+const correct = "Indu";   // <-- change this
+const user = document.getElementById("answer").value.toLowerCase().trim();
+const response = document.getElementById("response");
+
+if(user === correct.toLowerCase()){
+response.innerText = "hehe… it really is you 🤍";
+setTimeout(nextPart,1200);
+}
+else{
+response.innerText = "🤨 You're not my Babyy...🥲💔";
+}
+}
+function nextPart(){
+document.body.innerHTML="<h1 style='color:white;font-family:sans-serif'>welcome back 💞</h1>";
 }
 
 </script>
