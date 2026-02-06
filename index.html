@@ -231,15 +231,12 @@ response.innerText = "🤨 You're not my Babyy...🥲💔";
 }
 }
 function nextPart(){
+
+// change background first
+document.body.style.background="#1a0f1f";
+
 document.body.innerHTML = `
 <style>
-#fog{
-position:fixed;
-inset:0;
-background:rgba(255,255,255,0.85);
-backdrop-filter:blur(12px);
-}
-
 #wipeText{
 position:fixed;
 inset:0;
@@ -247,24 +244,27 @@ display:flex;
 justify-content:center;
 align-items:center;
 font-size:2em;
-color:white;
+color:#ffffff;
 text-align:center;
 padding:20px;
+z-index:2;
+pointer-events:none;
 }
 
 canvas{
 position:fixed;
 inset:0;
+z-index:3;
 }
 </style>
 
-<div id="wipeText">hey… you found me</div>
+<div id="wipeText">I love you Babyyy🫂❤️</div>
 <canvas id="wipe"></canvas>
-<div id="fog"></div>
 `;
 
 startWipe();
 }
+
 function startWipe(){
 const canvas=document.getElementById("wipe");
 const ctx=canvas.getContext("2d");
