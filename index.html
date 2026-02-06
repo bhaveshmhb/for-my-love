@@ -197,7 +197,24 @@ hold.addEventListener("touchstart",startHold);
 hold.addEventListener("touchend",cancelHold);
 
 function nextScene(){
-document.body.innerHTML="<h1 style='color:white;font-family:sans-serif'>okay… now it begins 💗</h1>";
+document.body.innerHTML = `
+<div style="height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;color:white;font-family:Trebuchet MS">
+
+<h2 id="qtext">before i continue...</h2>
+<p id="sub">prove it's really you</p>
+
+<input id="answer" placeholder="type here"
+style="margin-top:20px;padding:12px 18px;border-radius:20px;border:none;font-size:1em;text-align:center">
+
+<button onclick="checkAnswer()" 
+style="margin-top:20px;padding:10px 25px;border-radius:20px;border:none;background:#ff7eb6;color:white;font-size:1em;cursor:pointer">
+unlock
+</button>
+
+<p id="response" style="margin-top:15px;height:20px"></p>
+
+</div>
+`;
 }
 
 </script>
