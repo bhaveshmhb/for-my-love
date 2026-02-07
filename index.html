@@ -33,7 +33,7 @@ text-shadow:0 0 25px rgba(255,255,255,0.35);
 
 /* slide enters */
 .slideIn{
-opacity:1;
+opacity:1 !important;
 transform:translate(-50%,-50%) scale(1);
 }
 
@@ -172,9 +172,13 @@ story.textContent=lines[index];
 dim.classList.add("show");
 
 /* enter animation */
-story.classList.remove("slideOut");
-void story.offsetWidth;
+story.classList.remove("slideIn","slideOut");
+story.style.opacity="0";
+
+nextFrame(()=>{
 story.classList.add("slideIn");
+});
+
 
 /* hold on screen */
 setTimeout(()=>{
@@ -204,6 +208,10 @@ dim.classList.add("show");
 setTimeout(showSlides,700);
 },700);
 }
+function nextFrame(cb){
+requestAnimationFrame(()=>requestAnimationFrame(cb));
+}
+
 
 
 
