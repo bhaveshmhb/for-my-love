@@ -18,23 +18,32 @@ overflow:hidden;
 position:fixed;
 top:50%;
 left:50%;
-transform:translate(-50%,-50%);
-width:min(90%,650px);
+transform:translate(-50%,-50%) scale(.85);
+width:min(90%,750px);
 text-align:center;
 color:white;
 font-family:'Great Vibes',cursive;
-font-size:clamp(34px,7vw,72px);
+font-size:clamp(38px,7vw,80px);
 line-height:1.25;
-pointer-events:none;
 z-index:20;
 opacity:0;
-filter:blur(10px);
-transition:1.4s ease;
+transition:all 900ms cubic-bezier(.22,1,.36,1);
 text-shadow:0 0 25px rgba(255,255,255,0.35);
 }
 
-.show{opacity:1;filter:blur(0)}
-.hide{opacity:0;filter:blur(12px)}
+/* slide enters */
+.slideIn{
+opacity:1;
+transform:translate(-50%,-50%) scale(1);
+}
+
+/* slide exits */
+.slideOut{
+opacity:0;
+transform:translate(-50%,-60%) scale(.92);
+}
+
+
 
 .star{
 position:fixed;
@@ -42,6 +51,7 @@ width:2px;
 height:2px;
 background:white;
 opacity:.7;
+z-index:1;
 animation:twinkle 2s infinite alternate;
 }
 
@@ -57,6 +67,19 @@ inset:0;
 background:url("sky.jpg") center/cover no-repeat;
 opacity:0;
 transition:opacity 2.5s ease;
+}
+#dim{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.55);
+opacity:0;
+transition:opacity 1s ease;
+z-index:15;
+pointer-events:none;
+}
+
+#dim.show{
+opacity:1;
 }
 
 /* overlay that we cut open */
@@ -103,6 +126,8 @@ C940 480 800 650 500 900Z"/>
 
 
 <div id="bg"></div>
+<div id="dim"></div>
+
 <div id="reveal"></div>
 <div id="story"></div>
 
@@ -122,55 +147,49 @@ document.getElementById("reveal").remove();
 startStory();
 },4800);
 
-
-
 const lines=[
 "Hello Cutiee🥰",
-"TOday is OUR first valentine",
+"Today is OUR first valentine",
 "Long distance really sucks🥲🫂",
 "I made this for you",
-"To make our first valentine speical😁"
+"To make our first valentine special😁"
 ];
 
 const story=document.getElementById("story");
+const dim=document.getElementById("dim");
 let index=0;
 
-function showLine(){
+function showSlides(){
 
-if(index>=lines.length) return;
+if(index>=lines.length){
+dim.classList.remove("show");
+return;
+}
 
-story.classList.remove("show","hide");
-story.classList.add("show");
+story.textContent=lines[index];
 
-typeText(lines[index],story,()=>{
+/* focus viewer */
+dim.classList.add("show");
+
+/* enter animation */
+story.classList.remove("slideOut");
+void story.offsetWidth;
+story.classList.add("slideIn");
+
+/* hold on screen */
 setTimeout(()=>{
-story.classList.remove("show");
-story.classList.add("hide");
+
+/* exit animation */
+story.classList.remove("slideIn");
+story.classList.add("slideOut");
+
 index++;
-setTimeout(showLine,1000);
-},2200);
-});
+setTimeout(showSlides,900);
+
+},2600);
 }
 
 
-
-/* start after reveal */
-function startStory(){
-showLine();
-}
-
-function typeText(text,element,callback){
-let i=0;
-element.textContent="";
-let typing=setInterval(()=>{
-element.textContent+=text[i];
-i++;
-if(i>=text.length){
-clearInterval(typing);
-if(callback) setTimeout(callback,900);
-}
-},45);
-}
 for(let i=0;i<60;i++){
 let s=document.createElement("div");
 s.className="star";
@@ -179,6 +198,14 @@ s.style.top=Math.random()*100+"vh";
 s.style.animationDelay=Math.random()*2+"s";
 document.body.appendChild(s);
 }
+function startStory(){
+setTimeout(()=>{
+dim.classList.add("show");
+setTimeout(showSlides,700);
+},700);
+}
+
+
 
 
 </script>
