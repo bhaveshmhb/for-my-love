@@ -26,29 +26,51 @@ opacity:0;
 transition:opacity 2s ease;
 }
 
-/* circular reveal mask */
+/* reveal layer */
 #reveal{
 position:fixed;
 inset:0;
-background:black;
+pointer-events:none;
 display:flex;
 justify-content:center;
 align-items:center;
-pointer-events:none;
 }
 
+/* circular opening */
 .circle{
-width:0px;
-height:0px;
+position:absolute;
+width:0;
+height:0;
 border-radius:50%;
-background:transparent;
-box-shadow:0 0 0 200vmax black;
-animation:open 3s ease forwards;
+backdrop-filter:blur(25px);
+-webkit-backdrop-filter:blur(25px);
+background:rgba(0,0,0,0.9);
+animation:openEye 4.5s ease forwards;
 }
 
-@keyframes open{
-0%{width:0;height:0;}
-100%{width:200vmax;height:200vmax;}
+/* expanding vision */
+@keyframes openEye{
+0%{
+width:0;
+height:0;
+opacity:1;
+}
+
+40%{
+width:120px;
+height:120px;
+}
+
+70%{
+width:60vmax;
+height:60vmax;
+}
+
+100%{
+width:200vmax;
+height:200vmax;
+opacity:0;
+}
 }
 
 /* container for later content */
@@ -73,14 +95,15 @@ align-items:center;
 
 <script>
 
-/* fade in stars after small delay */
+/* fade background slowly */
 setTimeout(()=>{
 document.getElementById("bg").style.opacity=1;
-},300);
-/* remove reveal layer after animation finishes */
+},600);
+
+/* remove reveal after animation */
 setTimeout(()=>{
 document.getElementById("reveal").style.display="none";
-},3000);
+},4500);
 
 </script>
 
