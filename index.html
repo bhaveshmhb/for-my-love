@@ -68,8 +68,9 @@ z-index:10;
 pointer-events:none;
 
 /* the mask */
--webkit-mask:url(#heartMask);
-mask:url(#heartMask);
+-webkit-mask: url(#heartMask) center / contain no-repeat;
+mask: url(#heartMask) center / contain no-repeat;
+
 
 animation:revealAnim 5.2s ease forwards;
 transition:opacity 1s ease;
@@ -111,21 +112,22 @@ filter:blur(0px);
 
 <!-- heart mask definition -->
 
-<svg width="0" height="0">
+<svg width="0" height="0" viewBox="0 0 1000 1000">
 <defs>
-<mask id="heartMask" maskUnits="objectBoundingBox">
-<rect width="1" height="1" fill="black"/>
+<mask id="heartMask" maskUnits="userSpaceOnUse">
+<rect width="1000" height="1000" fill="black"/>
 <path fill="white" d="
-M0.5 0.9
-C0.15 0.65 0 0.45 0 0.25
-C0 0.1 0.12 0 0.25 0
-C0.38 0 0.5 0.12 0.5 0.2
-C0.5 0.12 0.62 0 0.75 0
-C0.88 0 1 0.1 1 0.25
-C1 0.45 0.85 0.65 0.5 0.9Z"/>
+M500 900
+C200 650 60 480 60 300
+C60 150 180 60 300 60
+C380 60 450 120 500 200
+C550 120 620 60 700 60
+C820 60 940 150 940 300
+C940 480 800 650 500 900Z"/>
 </mask>
 </defs>
 </svg>
+
 
 <div id="bg"></div>
 <div id="reveal"></div>
@@ -139,14 +141,18 @@ document.getElementById("bg").style.opacity=1;
 },600);
 
 /* remove black overlay after animation */
+const reveal = document.getElementById("reveal");
+
+/* fade */
 setTimeout(()=>{
-document.getElementById("reveal").style.opacity="0";
+reveal.style.opacity="0";
 },5200);
 
+/* remove overlay completely */
 setTimeout(()=>{
-document.getElementById("reveal").style.display="none";
-document.body.offsetHeight;
-},6200);
+reveal.remove();              // <--- VERY IMPORTANT
+startStory();
+},6100);
 
 
 
@@ -167,7 +173,7 @@ if(index>=lines.length) return;
 
 /* reset state */
 story.className="";
-story.style.opacity="0";
+story.style.removeProperty("opacity");
 story.textContent=lines[index];
 
 /* wait one frame so browser registers initial state */
@@ -187,7 +193,11 @@ setTimeout(showLine,1600);
 }
 
 /* start after reveal */
-setTimeout(showLine,6200);
+function startStory(){
+showLine();
+}
+
+
 
 </script>
 
