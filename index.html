@@ -162,21 +162,28 @@ function showLine(){
 
 if(index>=lines.length) return;
 
-story.classList.remove("hide");
+/* reset state */
+story.className="";
+story.style.opacity="0";
 story.textContent=lines[index];
 
-setTimeout(()=> story.classList.add("show"),50);
+/* wait one frame so browser registers initial state */
+requestAnimationFrame(()=>{
+requestAnimationFrame(()=>{
+story.classList.add("show");
+});
+});
 
-/* hold time */
+/* hold */
 setTimeout(()=>{
 story.classList.remove("show");
 story.classList.add("hide");
 index++;
 setTimeout(showLine,1600);
-},2600);
+},3000);
 }
 
-/* start AFTER reveal finishes */
+/* start after reveal */
 setTimeout(showLine,6200);
 
 </script>
