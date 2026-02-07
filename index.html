@@ -77,6 +77,10 @@ align-items:center;
 setTimeout(()=>{
 document.getElementById("bg").style.opacity=1;
 },300);
+/* remove reveal layer after animation finishes */
+setTimeout(()=>{
+document.getElementById("reveal").style.display="none";
+},3000);
 
 </script>
 
