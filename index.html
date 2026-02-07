@@ -216,6 +216,28 @@ height:360px;
 transition:height .7s cubic-bezier(.22,1,.36,1);
 }
 
+/* MOBILE FIX */
+@media (max-width: 700px){
+
+#sideCard{
+right:50%;
+transform:translateX(50%);
+width:100%;
+padding:0 18px;
+}
+
+#sideCard.show{
+right:50%;
+transform:translateX(50%);
+}
+
+.cardContent{
+width:100%;
+max-width:380px;
+margin:auto;
+}
+
+}
 
 </style>
 
@@ -469,14 +491,104 @@ function expandCard(card){
 card.classList.add("expand");
 
 card.innerHTML=`
-<h2 style="font-family:'Great Vibes';font-size:36px;margin-top:10px;">
-Prove me it's you
-</h2>
+<div id="quizBox">
 
-<p style="opacity:.8;margin-top:20px">
-Answer correctly to continue 💌
-</p>
+<div id="questionText"></div>
+
+<input id="answerInput" type="text" placeholder="Type here..." autocomplete="off">
+
+<div id="responseText"></div>
+
+</div>
 `;
+
+startQuiz();
+}
+/* ---------------- QUIZ ENGINE ---------------- */
+
+const quiz=[
+{
+question:"What name did you save me as in your phone?",
+answers:["baby","babyy","my baby"], // edit freely
+correct:"💗 hehe correct",
+wrong:"nope try again 😌"
+},
+{
+question:"What do you call me when it's just us?",
+answers:["cutie","love","idiot"], // edit
+correct:"i like that one 🤭",
+wrong:"hmmm not that"
+},
+{
+question:"What always makes me happiest?",
+answers:["hug","kiss","talk","call"], // edit
+correct:"exactly ❤️",
+wrong:"almost... think again"
+}
+];
+
+let qIndex=0;
+
+function startQuiz(){
+showQuestion();
+}
+
+function showQuestion(){
+
+const q=quiz[qIndex];
+
+document.getElementById("questionText").textContent=q.question;
+document.getElementById("responseText").textContent="";
+document.getElementById("answerInput").value="";
+document.getElementById("answerInput").focus();
+
+}
+document.addEventListener("keydown",(e)=>{
+
+if(e.key!=="Enter") return;
+
+const input=document.getElementById("answerInput");
+if(!input) return;
+
+const user=input.value.toLowerCase().trim();
+const q=quiz[qIndex];
+
+const correct=q.answers.some(a=>user.includes(a));
+
+const response=document.getElementById("responseText");
+
+if(correct){
+
+response.textContent=q.correct;
+
+setTimeout(()=>{
+qIndex++;
+
+if(qIndex<quiz.length){
+showQuestion();
+}else{
+quizComplete();
+}
+
+},900);
+
+}else{
+
+response.textContent=q.wrong;
+
+}
+
+});
+function quizComplete(){
+
+document.getElementById("quizBox").innerHTML=`
+<div style="font-size:22px">
+Access granted ❤️
+</div>
+`;
+
+}
+
 
 }
 
