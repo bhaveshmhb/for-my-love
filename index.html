@@ -71,6 +71,8 @@ pointer-events:none;
 mask:url(#heartMask);
 
 animation:revealAnim 5.2s ease forwards;
+transition:opacity 1s ease;
+
 }
 
 /* heart grows + blur clears */
@@ -137,8 +139,13 @@ document.getElementById("bg").style.opacity=1;
 
 /* remove black overlay after animation */
 setTimeout(()=>{
-document.getElementById("reveal").style.display="none";
+document.getElementById("reveal").style.opacity="0";
 },5200);
+
+setTimeout(()=>{
+document.getElementById("reveal").style.display="none";
+},6200);
+
 
 const lines=[
 "hey...",
