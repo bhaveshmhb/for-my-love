@@ -4,7 +4,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Heart Reveal</title>
+<title>For my Baby🩷</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 html,body{
@@ -12,6 +13,40 @@ margin:0;
 height:100%;
 background:black;
 overflow:hidden;
+}
+#story{
+position:fixed;
+top:38%;
+right:10%;
+width:520px;
+max-width:80%;
+color:white;
+font-family:'Great Vibes',cursive;
+font-size:72px;
+line-height:1.25;
+pointer-events:none;
+opacity:0;
+transform:translateY(40px) scale(0.98);
+filter:blur(12px);
+
+transition:
+opacity 1.6s ease,
+transform 1.6s ease,
+filter 1.6s ease;
+
+text-shadow:0 0 25px rgba(255,255,255,0.35);
+}
+
+.show{
+opacity:1;
+transform:translateY(0px) scale(1);
+filter:blur(0);
+}
+
+.hide{
+opacity:0;
+transform:translateY(-25px) scale(1.02);
+filter:blur(14px);
 }
 
 /* background image */
@@ -91,6 +126,8 @@ C1 0.45 0.85 0.65 0.5 0.9Z"/>
 
 <div id="bg"></div>
 <div id="reveal"></div>
+<div id="story"></div>
+
 
 <script>
 /* sky fades in slightly after opening begins */
@@ -102,6 +139,39 @@ document.getElementById("bg").style.opacity=1;
 setTimeout(()=>{
 document.getElementById("reveal").style.display="none";
 },5200);
+
+const lines=[
+"hey...",
+"don’t read this",
+"just feel it",
+"because tonight",
+"i made something for you"
+];
+
+const story=document.getElementById("story");
+let index=0;
+
+function showLine(){
+
+if(index>=lines.length) return;
+
+story.classList.remove("hide");
+story.textContent=lines[index];
+
+setTimeout(()=> story.classList.add("show"),50);
+
+/* hold time */
+setTimeout(()=>{
+story.classList.remove("show");
+story.classList.add("hide");
+index++;
+setTimeout(showLine,1600);
+},2600);
+}
+
+/* start AFTER reveal finishes */
+setTimeout(showLine,6200);
+
 </script>
 
 </body>
