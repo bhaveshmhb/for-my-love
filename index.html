@@ -33,7 +33,6 @@ backdrop-filter:blur(6px);
 cursor:pointer;
 }
 
-
 @keyframes floatUp{to{transform:translateY(-120vh);opacity:0;}}
 </style>
 
@@ -41,20 +40,29 @@ cursor:pointer;
 
 <body>
 
-<div class="scene">
-<div id="char">🐱🩷🐶</div>
-<div id="text"></div>
-<div class="hold" id="hold">Press & Hold to Hug me Tightly🫂</div>
-</div>
+<div id="app"></div>
 
 <script>
+const app=document.getElementById("app");
 
-/* ---------- INTRO TYPING ---------- */
+/* ================= INTRO ================= */
+function loadIntro(){
+app.innerHTML=`
+<div class="scene">
+<div id="char">🐱❤️🐶</div>
+<div id="text"></div>
+<div class="hold" id="hold">Press & Hold to Hug me Tightly 🫂</div>
+</div>`;
+startIntro();
+}
+
+function startIntro(){
+
 const lines=[
 "Babyyy 🫂",
 "Long distance really sucks...🥺",
 "This is OUR first valentine..😁",
-"Just wanted to make something speical🫂❤️",
+"Just wanted to make something special 🫂❤️",
 "Don't rush... experience it ❤️"
 ];
 
@@ -77,29 +85,23 @@ document.getElementById("hold").style.display="inline-block";
 }
 setTimeout(type,1200);
 
-/* ---------- HOLD TO ENTER ---------- */
+/* hold detection */
 let holdTimer=null;
 const hold=document.getElementById("hold");
 
-hold.addEventListener("mousedown",startHold);
-hold.addEventListener("touchstart",startHold);
-hold.addEventListener("mouseup",cancelHold);
-hold.addEventListener("mouseleave",cancelHold);
-hold.addEventListener("touchend",cancelHold);
-
-function startHold(){
-holdTimer=setTimeout(showQuestion,1500);
-}
-function cancelHold(){
-clearTimeout(holdTimer);
+hold.addEventListener("mousedown",()=>holdTimer=setTimeout(showQuestion,700));
+hold.addEventListener("touchstart",()=>holdTimer=setTimeout(showQuestion,700));
+hold.addEventListener("mouseup",()=>clearTimeout(holdTimer));
+hold.addEventListener("mouseleave",()=>clearTimeout(holdTimer));
+hold.addEventListener("touchend",()=>clearTimeout(holdTimer);
 }
 
-/* ---------- QUESTION PAGE ---------- */
+/* ================= QUESTION ================= */
 function showQuestion(){
-document.body.innerHTML=`
+app.innerHTML=`
 <div style="height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center">
-<h2>Prove you're my babyy...🫂</h2>
-<p>Tell me What name do I save you as in my phone🤨?</p>
+<h2>Continue madok munchee..</h2>
+<p>Tell me What name do I save you as in my phone 🤨?</p>
 
 <input id="answer" style="padding:12px;border-radius:20px;border:none;text-align:center">
 <button onclick="checkAnswer()" style="margin-top:15px;padding:10px 20px;border:none;border-radius:20px;background:#ff7eb6;color:white">Unlock</button>
@@ -114,101 +116,69 @@ const res=document.getElementById("response");
 
 if(user===correct.toLowerCase()){
 res.innerText="Hehe it's really you..😁🫂... Mmmuuuaahhh💋❤️";
-setTimeout(kissScene,2300);
+setTimeout(kissScene,1000);
 }else{
-res.innerText="Hmm🤨 ARe you sureee...!??";
+res.innerText="Hmm🤨 Are you sureee...!?";
 }
 }
 
-/* ---------- KISS SCENE ---------- */
+/* ================= KISS ================= */
 function kissScene(){
-
 document.body.style.background="#1a0f1f";
-
-document.body.innerHTML = `
-
-<div id="wrap" style="height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;color:white;font-family:Trebuchet MS">
-  <div id="cat" style="font-size:90px">🐱</div>
-  <div id="msg">Your Baby's happiness level: 0/10</div>
-  <div id="sub">Ning gottalva en madbek antaa</div>
-  <div id="kissBtn">💋</div>
-</div>
-`;
-
+app.innerHTML=`
+<div style="height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center">
+<div style="font-size:90px">🐱</div>
+<div id="msg">Your Baby's happiness level: 0/10</div>
+<div id="sub">Ning gottalva en madbek antaa</div>
+<div id="kissBtn" style="margin-top:25px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,#ff7eb6,#ff3d8e);display:flex;justify-content:center;align-items:center;font-size:40px;cursor:pointer">💋</div>
+</div>`;
 startKisses();
 }
 
-/* ---------- KISS LOGIC ---------- */
 function startKisses(){
+let kisses=0;
+let timer=null;
+const btn=document.getElementById("kissBtn");
+const msg=document.getElementById("msg");
 
-let kisses = 0;
-let timer = null;
-
-const btn = document.getElementById("kissBtn");
-const msg = document.getElementById("msg");
-
-/* stop mobile copy popup */
-btn.addEventListener("contextmenu", e => e.preventDefault());
-
-btn.addEventListener("mousedown", start);
-btn.addEventListener("touchstart", start);
-
-btn.addEventListener("mouseup", stop);
-btn.addEventListener("mouseleave", stop);
-btn.addEventListener("touchend", stop);
+btn.addEventListener("mousedown",start);
+btn.addEventListener("touchstart",start);
+btn.addEventListener("mouseup",stop);
+btn.addEventListener("mouseleave",stop);
+btn.addEventListener("touchend",stop);
 
 function start(){
-if(timer) return;
-
-timer = setTimeout(()=>{
-if(kisses>=10) return;
-
+timer=setTimeout(()=>{
+if(kisses>=10)return;
 kisses++;
-msg.innerText = `My Happiness Level: ${kisses}/10`;
-
+msg.innerText=`happiness level: ${kisses}/10`;
 spawnHeart();
-
-if(kisses===10){
-setTimeout(finalScene,1200);
-}
-
-timer = null;
+if(kisses===10)setTimeout(finalScene,1200);
 },600);
 }
 
-function stop(){
-if(timer){
-clearTimeout(timer);
-timer=null;
-}
+function stop(){clearTimeout(timer);}
 }
 
-}
-
-/* ---------- HEART EFFECT ---------- */
 function spawnHeart(){
 const h=document.createElement("div");
 h.innerHTML="💗";
 h.style.position="fixed";
 h.style.left="50%";
 h.style.top="50%";
-h.style.transform="translate(-50%,-50%)";
 h.style.fontSize="22px";
 h.style.animation="floatUp 1s forwards";
 document.body.appendChild(h);
 setTimeout(()=>h.remove(),1000);
 }
 
-/* ---------- FINAL ---------- */
+/* ================= FINAL ================= */
 function finalScene(){
-document.body.innerHTML = `
+app.innerHTML="<h1 style='color:white'>Perfect… 10/10 🤍</h1>";
+}
 
-<div style="height:100vh;display:flex;justify-content:center;align-items:center;text-align:center;color:white;font-family:Trebuchet MS">
-<h1>Finally Perfect 10/10... Mmmuuaah 😁😚💋</h1>
-</div>
-`;
-}
-}
+/* start */
+loadIntro();
 </script>
 
 </body>
