@@ -30,11 +30,6 @@ opacity:0;
 transition:all 900ms cubic-bezier(.22,1,.36,1);
 text-shadow:0 0 25px rgba(255,255,255,0.35);
 }
-<div id="sideCard">
-  <div class="cardContent">
-      (something is waiting here...)
-  </div>
-</div>
 
 /* slide enters */
 .slideIn{
@@ -172,21 +167,19 @@ C940 480 800 650 500 900Z"/>
 <div id="reveal"></div>
 <div id="story"></div>
 
-
 <script>
-/* sky fades in slightly after opening begins */
+
+/* sky fades in */
 setTimeout(()=>{
 document.getElementById("bg").style.opacity=1;
 },600);
 
-/* remove black overlay after animation */
-const reveal = document.getElementById("reveal");
-
-/* fade */
+/* reveal end */
 setTimeout(()=>{
 document.getElementById("reveal").remove();
 startStory();
 },4800);
+
 
 const lines=[
 "Hello Cutiee🥰",
@@ -198,25 +191,18 @@ const lines=[
 
 const story=document.getElementById("story");
 const dim=document.getElementById("dim");
+
 let index=0;
+
+
+/* ---------- SLIDES ---------- */
 
 function showSlides(){
 
-if(index>=lines.length){
-setTimeout(()=>{
-dim.classList.remove("show");
-document.getElementById("sideCard").classList.add("show");
-},1500);
-return;
-}
-
-
+// show text
 story.textContent=lines[index];
-
-/* focus viewer */
 dim.classList.add("show");
 
-/* enter animation */
 story.classList.remove("slideIn","slideOut");
 story.style.opacity="0";
 
@@ -225,19 +211,74 @@ story.classList.add("slideIn");
 });
 
 
-/* hold on screen */
+// hold visible
 setTimeout(()=>{
 
-/* exit animation */
 story.classList.remove("slideIn");
 story.classList.add("slideOut");
 
 index++;
-setTimeout(showSlides,1500);
 
-},2600);
+/* LAST SLIDE FINISHED */
+if(index >= lines.length){
+
+    setTimeout(()=>{
+        dim.classList.remove("show");
+        createSideCard();
+    },1500);
+
+} else {
+
+    setTimeout(showSlides,1500);
+
 }
 
+},2600);
+
+}
+
+
+/* ---------- START ---------- */
+
+function startStory(){
+setTimeout(()=>{
+dim.classList.add("show");
+setTimeout(showSlides,2000);
+},700);
+}
+
+
+/* ---------- CREATE INVITATION CARD ---------- */
+
+function createSideCard(){
+
+const card=document.createElement("div");
+card.id="sideCard";
+
+card.innerHTML=`
+<div class="cardContent">
+    (something is waiting here...)
+</div>
+`;
+
+document.body.appendChild(card);
+
+/* animate in next frame */
+requestAnimationFrame(()=>{
+card.classList.add("show");
+});
+
+}
+
+
+/* ---------- HELPERS ---------- */
+
+function nextFrame(cb){
+requestAnimationFrame(()=>requestAnimationFrame(cb));
+}
+
+
+/* ---------- STARS ---------- */
 
 for(let i=0;i<60;i++){
 let s=document.createElement("div");
@@ -247,21 +288,9 @@ s.style.top=Math.random()*100+"vh";
 s.style.animationDelay=Math.random()*2+"s";
 document.body.appendChild(s);
 }
-function startStory(){
-setTimeout(()=>{
-dim.classList.add("show");
-setTimeout(showSlides,2000);
-},700);
-}
-function nextFrame(cb){
-requestAnimationFrame(()=>requestAnimationFrame(cb));
-}
-
-
-
-
 
 </script>
+
 
 </body>
 </html>
