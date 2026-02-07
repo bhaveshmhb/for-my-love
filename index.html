@@ -144,24 +144,19 @@ document.getElementById("bg").style.opacity=1;
 const reveal = document.getElementById("reveal");
 
 /* fade */
-setTimeout(()=>{
-reveal.style.opacity="0";
-},5200);
-
-/* remove overlay completely */
-setTimeout(()=>{
-reveal.remove();              // <--- VERY IMPORTANT
-startStory();
-},6100);
+reveal.addEventListener("animationend", () => {
+  reveal.remove();
+  startStory();
+});
 
 
 
 const lines=[
-"hey...",
-"don’t read this",
-"just feel it",
-"because tonight",
-"i made something for you"
+"Hello Cutiee🥰",
+"TOday is OUR first valentine",
+"Long distance really sucks🥲🫂",
+"I made this for you",
+"To make our first valentine speical😁"
 ];
 
 const story=document.getElementById("story");
@@ -171,19 +166,19 @@ function showLine(){
 
 if(index>=lines.length) return;
 
-/* reset state */
-story.className="";
-story.style.removeProperty("opacity");
+/* reset */
+story.classList.remove("show","hide");
+
+/* set text */
 story.textContent=lines[index];
 
-/* wait one frame so browser registers initial state */
-requestAnimationFrame(()=>{
-requestAnimationFrame(()=>{
-story.classList.add("show");
-});
-});
+/* force browser to register base state */
+void story.offsetHeight;
 
-/* hold */
+/* animate in */
+story.classList.add("show");
+
+/* hold then fade out */
 setTimeout(()=>{
 story.classList.remove("show");
 story.classList.add("hide");
@@ -191,6 +186,7 @@ index++;
 setTimeout(showLine,1600);
 },3000);
 }
+
 
 /* start after reveal */
 function startStory(){
