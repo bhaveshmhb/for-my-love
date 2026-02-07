@@ -4,181 +4,80 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For You 💞</title>
+<title>For You</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-body{
+html,body{
 margin:0;
-height:100vh;
-background:radial-gradient(circle at 50% 70%,#ffd6ec,#ffc0e6,#fbaed2,#f48ac2,#c774e8);
-font-family:'Trebuchet MS',sans-serif;
+height:100%;
+background:black;
 overflow:hidden;
+font-family:'Poppins',sans-serif;
+}
+
+/* background image */
+#bg{
+position:fixed;
+inset:0;
+background:url("sky.jpg") center/cover no-repeat;
+opacity:0;
+transition:opacity 2s ease;
+}
+
+/* circular reveal mask */
+#reveal{
+position:fixed;
+inset:0;
+background:black;
 display:flex;
 justify-content:center;
 align-items:center;
+pointer-events:none;
+}
+
+.circle{
+width:0px;
+height:0px;
+border-radius:50%;
+background:transparent;
+box-shadow:0 0 0 200vmax black;
+animation:open 3s ease forwards;
+}
+
+@keyframes open{
+0%{width:0;height:0;}
+100%{width:200vmax;height:200vmax;}
+}
+
+/* container for later content */
+#app{
+position:relative;
+height:100%;
+width:100%;
 color:white;
+display:flex;
+justify-content:center;
+align-items:center;
 }
-
-.scene{text-align:center;max-width:600px;padding:20px;}
-#char{font-size:120px;margin-bottom:20px;}
-#text{font-size:1.6em;line-height:1.6em;min-height:120px;}
-
-.hold{
-margin-top:40px;
-display:none;
-padding:15px 30px;
-border-radius:40px;
-background:rgba(255,255,255,0.25);
-backdrop-filter:blur(6px);
-cursor:pointer;
-}
-
-@keyframes floatUp{to{transform:translateY(-120vh);opacity:0;}}
 </style>
 
 </head>
 
 <body>
 
+<div id="bg"></div>
+<div id="reveal"><div class="circle"></div></div>
 <div id="app"></div>
 
 <script>
-const app=document.getElementById("app");
 
-/* ================= INTRO ================= */
-function loadIntro(){
-app.innerHTML=`
-<div class="scene">
-<div id="char">🐱❤️🐶</div>
-<div id="text"></div>
-<div class="hold" id="hold">Press & Hold to Hug me Tightly 🫂</div>
-</div>`;
-startIntro();
-}
+/* fade in stars after small delay */
+setTimeout(()=>{
+document.getElementById("bg").style.opacity=1;
+},300);
 
-function startIntro(){
-
-const lines=[
-"Babyyy 🫂",
-"Long distance really sucks...🥺",
-"This is OUR first valentine..😁",
-"Just wanted to make something special 🫂❤️",
-"Don't rush... experience it ❤️"
-];
-
-let i=0,j=0;
-const text=document.getElementById("text");
-
-function type(){
-if(i<lines.length){
-if(j<lines[i].length){
-text.innerHTML+=lines[i][j++];
-setTimeout(type,40);
-}else{
-text.innerHTML+="<br>";
-j=0;i++;
-setTimeout(type,900);
-}
-}else{
-document.getElementById("hold").style.display="inline-block";
-}
-}
-setTimeout(type,1200);
-
-/* hold detection */
-let holdTimer=null;
-const hold=document.getElementById("hold");
-
-hold.addEventListener("mousedown",()=>holdTimer=setTimeout(showQuestion,700));
-hold.addEventListener("touchstart",()=>holdTimer=setTimeout(showQuestion,700));
-hold.addEventListener("mouseup",()=>clearTimeout(holdTimer));
-hold.addEventListener("mouseleave",()=>clearTimeout(holdTimer));
-hold.addEventListener("touchend",()=>clearTimeout(holdTimer);
-}
-
-/* ================= QUESTION ================= */
-function showQuestion(){
-app.innerHTML=`
-<div style="height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center">
-<h2>Continue madok munchee..</h2>
-<p>Tell me What name do I save you as in my phone 🤨?</p>
-
-<input id="answer" style="padding:12px;border-radius:20px;border:none;text-align:center">
-<button onclick="checkAnswer()" style="margin-top:15px;padding:10px 20px;border:none;border-radius:20px;background:#ff7eb6;color:white">Unlock</button>
-<p id="response"></p>
-</div>`;
-}
-
-function checkAnswer(){
-const correct="Indu";
-const user=document.getElementById("answer").value.toLowerCase().trim();
-const res=document.getElementById("response");
-
-if(user===correct.toLowerCase()){
-res.innerText="Hehe it's really you..😁🫂... Mmmuuuaahhh💋❤️";
-setTimeout(kissScene,1000);
-}else{
-res.innerText="Hmm🤨 Are you sureee...!?";
-}
-}
-
-/* ================= KISS ================= */
-function kissScene(){
-document.body.style.background="#1a0f1f";
-app.innerHTML=`
-<div style="height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center">
-<div style="font-size:90px">🐱</div>
-<div id="msg">Your Baby's happiness level: 0/10</div>
-<div id="sub">Ning gottalva en madbek antaa</div>
-<div id="kissBtn" style="margin-top:25px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,#ff7eb6,#ff3d8e);display:flex;justify-content:center;align-items:center;font-size:40px;cursor:pointer">💋</div>
-</div>`;
-startKisses();
-}
-
-function startKisses(){
-let kisses=0;
-let timer=null;
-const btn=document.getElementById("kissBtn");
-const msg=document.getElementById("msg");
-
-btn.addEventListener("mousedown",start);
-btn.addEventListener("touchstart",start);
-btn.addEventListener("mouseup",stop);
-btn.addEventListener("mouseleave",stop);
-btn.addEventListener("touchend",stop);
-
-function start(){
-timer=setTimeout(()=>{
-if(kisses>=10)return;
-kisses++;
-msg.innerText=`happiness level: ${kisses}/10`;
-spawnHeart();
-if(kisses===10)setTimeout(finalScene,1200);
-},600);
-}
-
-function stop(){clearTimeout(timer);}
-}
-
-function spawnHeart(){
-const h=document.createElement("div");
-h.innerHTML="💗";
-h.style.position="fixed";
-h.style.left="50%";
-h.style.top="50%";
-h.style.fontSize="22px";
-h.style.animation="floatUp 1s forwards";
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),1000);
-}
-
-/* ================= FINAL ================= */
-function finalScene(){
-app.innerHTML="<h1 style='color:white'>Perfect… 10/10 🤍</h1>";
-}
-
-/* start */
-loadIntro();
 </script>
 
 </body>
