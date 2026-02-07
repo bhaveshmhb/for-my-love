@@ -16,38 +16,38 @@ overflow:hidden;
 }
 #story{
 position:fixed;
-top:38%;
-right:10%;
-width:520px;
-max-width:80%;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:min(90%,650px);
+text-align:center;
 color:white;
 font-family:'Great Vibes',cursive;
-font-size:72px;
+font-size:clamp(34px,7vw,72px);
 line-height:1.25;
 pointer-events:none;
 z-index:20;
 opacity:0;
-transform:translateY(40px) scale(0.98);
-filter:blur(12px);
-
-transition:
-opacity 1.6s ease,
-transform 1.6s ease,
-filter 1.6s ease;
-
+filter:blur(10px);
+transition:1.4s ease;
 text-shadow:0 0 25px rgba(255,255,255,0.35);
 }
 
-.show{
-opacity:1;
-transform:translateY(0px) scale(1);
-filter:blur(0);
+.show{opacity:1;filter:blur(0)}
+.hide{opacity:0;filter:blur(12px)}
+
+.star{
+position:fixed;
+width:2px;
+height:2px;
+background:white;
+opacity:.7;
+animation:twinkle 2s infinite alternate;
 }
 
-.hide{
-opacity:0;
-transform:translateY(-25px) scale(1.02);
-filter:blur(14px);
+@keyframes twinkle{
+from{opacity:.2;transform:scale(.7)}
+to{opacity:1;transform:scale(1.4)}
 }
 
 /* background image */
@@ -60,50 +60,23 @@ transition:opacity 2.5s ease;
 }
 
 /* overlay that we cut open */
+/* HEART REVEAL — WORKS EVERYWHERE */
 #reveal{
 position:fixed;
 inset:0;
 background:black;
 z-index:10;
-pointer-events:none;
-
-/* the mask */
--webkit-mask: url(#heartMask) center / contain no-repeat;
-mask: url(#heartMask) center / contain no-repeat;
-
-
-animation:revealAnim 5.2s ease forwards;
-transition:opacity 1s ease;
-
+clip-path:circle(0% at 50% 50%);
+animation:heartOpen 4.8s cubic-bezier(.7,.05,.2,1) forwards;
 }
 
-/* heart grows + blur clears */
-@keyframes revealAnim{
-0%{
--webkit-mask-size:0% 0%;
-mask-size:0% 0%;
--webkit-mask-position:center;
-mask-position:center;
-filter:blur(20px);
+@keyframes heartOpen{
+0%{clip-path:circle(0% at 50% 50%)}
+40%{clip-path:circle(15% at 50% 50%)}
+70%{clip-path:circle(60% at 50% 50%)}
+100%{clip-path:circle(140% at 50% 50%)}
 }
 
-40%{
--webkit-mask-size:18% 18%;
-mask-size:18% 18%;
-}
-
-70%{
--webkit-mask-size:90% 90%;
-mask-size:90% 90%;
-filter:blur(8px);
-}
-
-100%{
--webkit-mask-size:260% 260%;
-mask-size:260% 260%;
-filter:blur(0px);
-}
-}
 </style>
 
 </head>
@@ -144,10 +117,10 @@ document.getElementById("bg").style.opacity=1;
 const reveal = document.getElementById("reveal");
 
 /* fade */
-reveal.addEventListener("animationend", () => {
-  reveal.remove();
-  startStory();
-});
+setTimeout(()=>{
+document.getElementById("reveal").remove();
+startStory();
+},4800);
 
 
 
@@ -166,26 +139,19 @@ function showLine(){
 
 if(index>=lines.length) return;
 
-/* reset */
 story.classList.remove("show","hide");
-
-/* set text */
-story.textContent=lines[index];
-
-/* force browser to register base state */
-void story.offsetHeight;
-
-/* animate in */
 story.classList.add("show");
 
-/* hold then fade out */
+typeText(lines[index],story,()=>{
 setTimeout(()=>{
 story.classList.remove("show");
 story.classList.add("hide");
 index++;
-setTimeout(showLine,1600);
-},3000);
+setTimeout(showLine,1000);
+},2200);
+});
 }
+
 
 
 /* start after reveal */
@@ -193,6 +159,26 @@ function startStory(){
 showLine();
 }
 
+function typeText(text,element,callback){
+let i=0;
+element.textContent="";
+let typing=setInterval(()=>{
+element.textContent+=text[i];
+i++;
+if(i>=text.length){
+clearInterval(typing);
+if(callback) setTimeout(callback,900);
+}
+},45);
+}
+for(let i=0;i<60;i++){
+let s=document.createElement("div");
+s.className="star";
+s.style.left=Math.random()*100+"vw";
+s.style.top=Math.random()*100+"vh";
+s.style.animationDelay=Math.random()*2+"s";
+document.body.appendChild(s);
+}
 
 
 </script>
