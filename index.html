@@ -156,6 +156,20 @@ backdrop-filter:blur(10px);
 background:rgba(255,255,255,0.18);
 box-shadow:0 0 25px rgba(255,105,180,.35);
 }
+#hugBtn::before{
+content:"";
+position:absolute;
+inset:0;
+border-radius:40px;
+background:radial-gradient(circle at var(--x,50%) var(--y,50%),
+rgba(255,105,180,.55) 0%,
+rgba(255,105,180,.35) 20%,
+rgba(255,105,180,.15) 35%,
+transparent 60%);
+opacity:0;
+transform:scale(0);
+transition:opacity .25s linear;
+}
 
 </style>
 
@@ -309,6 +323,207 @@ s.style.top=Math.random()*100+"vh";
 s.style.animationDelay=Math.random()*2+"s";
 document.body.appendChild(s);
 }
+
+
+/*---------------hold button-------*/ 
+let holdProgress=0;
+let holdInterval=null;
+let holdStart=0;
+let activeBtn=null;
+
+document.addEventListener("pointerdown",(e)=>{
+const btn=e.target.closest("#hugBtn");
+if(!btn) return;
+
+activeBtn=btn;
+
+const rect=btn.getBoundingClientRect();
+const x=((e.clientX-rect.left)/rect.width)*100;
+const y=((e.clientY-rect.top)/rect.height)*100;
+
+btn.style.setProperty("--x",x+"%");
+btn.style.setProperty("--y",y+"%");
+
+btn.style.setProperty("--progress","0");
+btn.classList.add("holding");
+
+holdStart=Date.now();
+
+holdInterval=setInterval(()=>{
+
+holdProgress=(Date.now()-holdStart)/3500;
+
+btn.style.setProperty("--scale",holdProgress);
+
+btn.style.setProperty("--opacity",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.querySelector("span")?.style?.setProperty?.("opacity",1);
+
+btn.style.setProperty("--progress",holdProgress);
+
+btn.style.setProperty("--size",(holdProgress*1.2));
+
+btn.style.setProperty("--fill",holdProgress);
+
+btn.style.setProperty("--glow",holdProgress);
+
+btn.style.setProperty("--expand",holdProgress);
+
+btn.style.setProperty("--radius",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--alpha",holdProgress);
+
+btn.style.setProperty("--scale",holdProgress);
+
+btn.style.setProperty("--progress",holdProgress);
+
+btn.style.setProperty("--scale",holdProgress);
+
+btn.style.setProperty("--progress",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--size",holdProgress);
+
+btn.style.setProperty("--expand",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--fill",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+btn.style.setProperty("--spread",holdProgress);
+
+if(holdProgress>=1){
+clearInterval(holdInterval);
+btn.classList.remove("holding");
+btn.style.opacity="1";
+alert("hug complete ❤️");
+}
+
+},16);
+
+});
+
+document.addEventListener("pointerup",resetHold);
+document.addEventListener("pointercancel",resetHold);
+
+function resetHold(){
+if(!activeBtn) return;
+clearInterval(holdInterval);
+activeBtn.classList.remove("holding");
+activeBtn=null;
+}
+
 
 </script>
 
