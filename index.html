@@ -213,8 +213,123 @@ opacity:0;
 }
 }
 .cardContent.expand{
-height:360px;
+height:480px;
 transition:height .7s cubic-bezier(.22,1,.36,1);
+}
+/* QUIZ LAYOUT */
+#quizBox{
+height:100%;
+display:flex;
+flex-direction:column;
+padding-top:40px;
+}
+
+.quizHeader{
+text-align:center;
+margin-bottom:35px;
+}
+
+.quizTitle{
+font-family:'Great Vibes',cursive;
+font-size:40px;
+}
+
+.divider{
+width:120px;
+height:1px;
+margin:14px auto 0;
+background:linear-gradient(90deg,transparent,#ff9bd4,transparent);
+opacity:.6;
+}
+
+.quizCenter{
+flex:1;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:24px;
+text-align:center;
+}
+
+.question{
+font-family:'Playfair Display',serif;
+font-size:28px;
+line-height:1.5;
+max-width:80%;
+}
+
+#answerInput{
+width:70%;
+padding:16px 22px;
+border-radius:40px;
+border:none;
+outline:none;
+background:rgba(255,255,255,.12);
+color:white;
+text-align:center;
+font-size:18px;
+transition:.25s;
+}
+
+#answerInput:focus{
+background:rgba(255,255,255,.20);
+box-shadow:0 0 25px rgba(255,170,220,.45);
+transform:scale(1.03);
+}
+
+#submitBtn{
+padding:13px 36px;
+border-radius:50px;
+border:none;
+font-size:16px;
+font-weight:600;
+background:linear-gradient(135deg,#ff9acb,#ffd6ec);
+color:#2a2a2a;
+cursor:pointer;
+transition:.18s;
+}
+
+#submitBtn:hover{
+transform:translateY(-2px);
+box-shadow:0 8px 22px rgba(255,150,210,.45);
+}
+
+#submitBtn:active{
+transform:scale(.90);
+}
+
+.response{
+min-height:26px;
+font-size:18px;
+opacity:.95;
+transition:.35s;
+}
+.quizTitle{
+font-family:'Great Vibes',cursive;
+font-size:40px;
+letter-spacing:.5px;
+}
+
+.question{
+font-family:'Playfair Display',serif;
+font-size:28px;
+line-height:1.55;
+max-width:80%;
+}
+#answerInput{
+font-family:'Nunito',sans-serif;
+font-size:18px;
+letter-spacing:.3px;
+}
+#submitBtn{
+font-family:'Nunito',sans-serif;
+font-weight:600;
+letter-spacing:.6px;
+}
+.response{
+font-family:'Nunito',sans-serif;
+font-size:19px;
 }
 
 /* MOBILE FIX */
@@ -239,225 +354,36 @@ margin:auto;
 }
 
 
-#quizBox{
-display:flex;
-flex-direction:column;
-justify-content:space-between;
-height:100%;
-padding:10px 10px 20px 10px;
-}
 
-/* top small title */
-.quizTitle{
-font-family:'Great Vibes',cursive;
-font-size:28px;
-opacity:.85;
-margin-bottom:10px;
-}
-
-/* main question */
-.question{
-font-size:24px;
-line-height:1.4;
-margin:30px 0 20px 0;
-}
-
-/* input style */
-.inputWrap{
-position:relative;
-width:70%;
-margin:0 auto;
-}
-
-#answerInput{
-width:100%;
-border:none;
-outline:none;
-background:transparent;
-color:white;
-font-size:18px;
-text-align:center;
-padding:10px 0;
-border-bottom:2px solid rgba(255,255,255,.35);
-font-family:'Poppins',sans-serif;
-}
-
-/* glowing underline */
-.inputGlow{
-position:absolute;
-left:0;
-bottom:-2px;
-height:2px;
-width:0%;
-background:linear-gradient(90deg,#ff7ac8,#ffd6f1);
-transition:.4s;
-}
-
-#answerInput:focus + .inputGlow{
-width:100%;
-}
-
-/* response text */
+/* response */
 .response{
-margin-top:20px;
-min-height:24px;
-opacity:.9;
+min-height:26px;
 font-size:18px;
-}
-
-/* bottom hint */
-.quizBottom{
-opacity:.5;
-font-size:13px;
-margin-top:auto;
-padding-top:20px;
-}
-.shake{
-animation:shake .35s;
-}
-
-@keyframes shake{
-0%{transform:translateX(0)}
-25%{transform:translateX(-4px)}
-50%{transform:translateX(4px)}
-75%{transform:translateX(-4px)}
-100%{transform:translateX(0)}
-}
-.correctFlash{
-animation:correctFlash .6s ease;
-}
-
-@keyframes correctFlash{
-0%{text-shadow:0 0 0 rgba(255,192,203,0)}
-50%{text-shadow:0 0 18px rgba(255,192,203,.9)}
-100%{text-shadow:0 0 0 rgba(255,192,203,0)}
-}
-.cardContent{
-position:relative;
-overflow:hidden;
-}
-
-.cardContent::after{
-content:"";
-position:absolute;
-inset:-40%;
-background:radial-gradient(circle, rgba(255,105,180,.15), transparent 60%);
-opacity:.35;
-animation:breathe 6s ease-in-out infinite;
-pointer-events:none;
-}
-
-@keyframes breathe{
-0%{transform:scale(1);opacity:.25}
-50%{transform:scale(1.15);opacity:.45}
-100%{transform:scale(1);opacity:.25}
-}
-
-#answerInput{
-caret-color:#ffd6f1;
-}
-
-#answerInput::placeholder{
-opacity:.4;
-}
-/* overall layout */
-/* layout */
-#quizBox{
-height:100%;
-display:flex;
-flex-direction:column;
-padding-top:40px;
-}
-
-/* title */
-.quizHeader{
-text-align:center;
-margin-bottom:35px;
-}
-
-.quizTitle{
-font-family:'Great Vibes',cursive;
-font-size:38px;
 opacity:.95;
+transition:all .35s ease;
 }
 
-/* divider */
-.divider{
-width:120px;
-height:1px;
-margin:14px auto 0;
-background:linear-gradient(90deg,transparent,#ff9bd4,transparent);
-opacity:.6;
-}
-
-/* center zone */
-.quizCenter{
-flex:1;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-gap:22px;
-text-align:center;
-}
-
-/* question */
-.question{
-font-family:'Playfair Display',serif;
-font-size:26px;
-line-height:1.5;
-max-width:80%;
-}
-
-/* input */
 #answerInput{
-width:65%;
-padding:14px 18px;
-border-radius:28px;
+width:70%;
+padding:16px 22px;
+border-radius:40px;
 border:none;
 outline:none;
 background:rgba(255,255,255,.10);
 color:white;
 text-align:center;
-font-size:17px;
-font-family:'Poppins',sans-serif;
-transition:.25s;
+font-size:18px;
+transition:all .25s ease;
 }
 
 #answerInput:focus{
-background:rgba(255,255,255,.16);
-box-shadow:0 0 20px rgba(255,160,220,.35);
+background:rgba(255,255,255,.18);
+box-shadow:0 0 25px rgba(255,170,220,.45);
+transform:scale(1.03);
 }
-
-/* playful button */
 #submitBtn{
-padding:12px 34px;
-border-radius:40px;
-border:none;
-font-family:'Poppins',sans-serif;
-font-weight:600;
-font-size:16px;
-background:rgba(255,182,210,.85);
-color:#2b2b2b;
-cursor:pointer;
-transition:transform .15s ease, box-shadow .2s ease, background .2s;
-}
-
-#submitBtn:hover{
-transform:translateY(-2px);
-box-shadow:0 8px 25px rgba(255,140,200,.45);
-}
-
-#submitBtn:active{
-transform:scale(.92);
-box-shadow:0 3px 10px rgba(255,140,200,.35);
-}
-
-/* response */
-.response{
-min-height:24px;
-font-size:18px;
-opacity:.9;
+width:75%;
+margin-top:12px;
 }
 
 }
@@ -773,23 +699,20 @@ function showQuestion(){
 const q=quiz[qIndex];
 const qBox=document.getElementById("questionText");
 const input=document.getElementById("answerInput");
+const response=document.getElementById("responseText");
 
-qBox.textContent="";
-document.getElementById("responseText").textContent="";
+response.textContent="";
 input.value="";
+
+qBox.style.opacity=0;
+qBox.textContent=q.question;
+
+setTimeout(()=>{
+qBox.style.transition="opacity .8s ease";
+qBox.style.opacity=1;
 input.focus();
+},80);
 
-let i=0;
-
-function type(){
-if(i<q.question.length){
-qBox.textContent+=q.question[i];
-i++;
-setTimeout(type,28);
-}
-}
-
-type();
 }
 
 document.addEventListener("click",(e)=>{
@@ -810,23 +733,7 @@ Access granted ❤️
 
 }
 
-setInterval(()=>{
-const card=document.querySelector(".cardContent.expand");
-if(!card) return;
 
-const heart=document.createElement("div");
-heart.className="floatingHeart";
-heart.textContent=["💗","💕","💖"][Math.floor(Math.random()*3)];
-
-heart.style.left=Math.random()*100+"%";
-heart.style.bottom="20px";
-heart.style.animationDuration=(4+Math.random()*3)+"s";
-
-card.appendChild(heart);
-
-setTimeout(()=>heart.remove(),7000);
-
-},900);
 function checkAnswer(){
 
 const input=document.getElementById("answerInput");
@@ -841,10 +748,9 @@ const correct=q.answers.some(a=>user.includes(a));
 if(correct){
 
 response.textContent=q.correct;
-response.classList.add("correctFlash");
+response.style.color="#ffb3da";
 
 setTimeout(()=>{
-response.classList.remove("correctFlash");
 qIndex++;
 
 if(qIndex<quiz.length){
@@ -858,6 +764,8 @@ quizComplete();
 }else{
 
 response.textContent=q.wrong;
+response.style.color="#ffd6ec";
+
 input.classList.add("shake");
 setTimeout(()=>input.classList.remove("shake"),350);
 
