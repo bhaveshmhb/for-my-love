@@ -349,6 +349,62 @@ letter-spacing:.6px;
 font-family:'Nunito',sans-serif;
 font-size:19px;
 }
+/* ================= HEART ENTRY TRANSITION ================= */
+
+.cardContent.enterHeart{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(1);
+z-index:999;
+
+background:linear-gradient(180deg,#ffd9f0,#ffc3ea,#ffb3e6);
+backdrop-filter:none;
+-webkit-backdrop-filter:none;
+
+box-shadow:0 0 120px rgba(255,150,220,.75);
+border-radius:28px;
+
+animation:heartConsume 2.6s cubic-bezier(.22,1,.36,1) forwards;
+}
+
+/* grow from middle */
+@keyframes heartConsume{
+0%{
+transform:translate(-50%,-50%) scale(1);
+border-radius:28px;
+opacity:1;
+}
+
+40%{
+transform:translate(-50%,-50%) scale(6);
+border-radius:40px;
+}
+
+70%{
+transform:translate(-50%,-50%) scale(18);
+border-radius:60px;
+}
+
+100%{
+transform:translate(-50%,-50%) scale(40);
+border-radius:0px;
+opacity:1;
+}
+}
+
+/* fade old world */
+.fadeOldWorld{
+opacity:0 !important;
+transition:opacity 1.2s ease;
+}
+
+/* show heart sky */
+#heartWorld.show{
+opacity:1;
+transition:opacity 2.2s ease;
+z-index:1;
+}
 
 /* MOBILE FIX */
 @media (max-width: 700px){
@@ -1370,21 +1426,38 @@ checkAnswer();
 function quizComplete(){
 function showAccessMessage(){
 
-const box=document.getElementById("quizBox");
+const card=document.querySelector(".cardContent");
 
-box.innerHTML=`
-<div class="accessStage showAccess">
-    <div class="accessTitle">I knew it was you ❤️</div>
-    <div class="accessSub">come… we're going inside my heart</div>
+card.innerHTML=`
+<div class="finalOpen">
+    come… <br> we’re going inside my heart 💗
 </div>
 `;
 
-/* directly open heart after emotional pause */
+/* wait emotional pause */
 setTimeout(()=>{
-finalHeartUnlock();
+enterHeartWorld(card);
 },2400);
 
 }
+function enterHeartWorld(card){
+
+/* fade old background */
+document.getElementById("bg")?.classList.add("fadeOldWorld");
+document.getElementById("dim")?.classList.add("fadeOldWorld");
+document.querySelectorAll(".star").forEach(s=>s.classList.add("fadeOldWorld"));
+
+/* transform card */
+card.classList.add("enterHeart");
+
+/* after expansion show world */
+setTimeout(()=>{
+document.getElementById("heartWorld").classList.add("show");
+startLoveStage();
+},2200);
+
+}
+
 
 
 
@@ -1446,12 +1519,27 @@ setTimeout(()=>{
 box.classList.remove("showAccess");
 
 setTimeout(()=>{
-startHeartStage();
-},700);
+function startLoveStage(){
 
-},2200);
+const box=document.querySelector(".cardContent");
+
+box.innerHTML=`
+<div class="loveStage">
+
+<div class="loveStatus">
+Your baby's happiness level:
+<span id="loveCount">0</span>/10 🤍
+</div>
+
+<div id="heartBtn" class="heartBtn">💋</div>
+
+<div class="loveHint">kiss me to wake my heart</div>
+
+</div>
+`;
 
 }
+
 
 function finalHeartUnlock(){
 
