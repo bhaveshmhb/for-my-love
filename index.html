@@ -7,6 +7,7 @@
 <title>For my Baby🩷</title>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 html,body{
@@ -213,9 +214,21 @@ opacity:0;
 }
 }
 .cardContent.expand{
-height:480px;
-transition:height .7s cubic-bezier(.22,1,.36,1);
+padding-bottom:50px;
+animation:cardGrow .6s cubic-bezier(.22,1,.36,1);
 }
+
+@keyframes cardGrow{
+from{
+transform:scale(.92);
+opacity:.6;
+}
+to{
+transform:scale(1);
+opacity:1;
+}
+}
+
 /* QUIZ LAYOUT */
 #quizBox{
 height:100%;
@@ -253,11 +266,14 @@ text-align:center;
 }
 
 .question{
-font-family:'Playfair Display',serif;
-font-size:28px;
-line-height:1.5;
-max-width:80%;
+font-family:'Quicksand',sans-serif;
+font-size:25px;
+line-height:1.6;
+max-width:82%;
+letter-spacing:.3px;
+color:#f5f5f5;
 }
+
 
 #answerInput{
 width:70%;
@@ -300,9 +316,11 @@ transform:scale(.90);
 }
 
 .response{
-min-height:26px;
+min-height:28px;
 font-size:18px;
 opacity:.95;
+margin-top:12px;
+padding-bottom:10px;
 transition:.35s;
 }
 .quizTitle{
