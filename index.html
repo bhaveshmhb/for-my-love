@@ -1368,7 +1368,22 @@ checkAnswer();
 
 
 function quizComplete(){
-showAccessMessage();
+function showAccessMessage(){
+
+const box=document.getElementById("quizBox");
+
+box.innerHTML=`
+<div class="accessStage showAccess">
+    <div class="accessTitle">I knew it was you ❤️</div>
+    <div class="accessSub">come… we're going inside my heart</div>
+</div>
+`;
+
+/* directly open heart after emotional pause */
+setTimeout(()=>{
+finalHeartUnlock();
+},2400);
+
 }
 
 
@@ -1437,67 +1452,32 @@ startHeartStage();
 },2200);
 
 }
-/* ---------- HEART STAGE ---------- */
-
-let happiness=0;
-
-function startHeartStage(){
-
-const box=document.getElementById("quizBox");
-
-box.innerHTML=`
-<div class="loveStage">
-
-    <div class="loveStatus">
-        Your baby's happiness level:
-        <span id="loveCount">0</span>/10 🤍
-    </div>
-
-    <div id="heartBtn" class="heartBtn">💋</div>
-
-    <div class="loveHint">touch my heart…</div>
-
-</div>
-`;
-
-}
-document.addEventListener("click",(e)=>{
-
-if(!e.target.matches("#heartBtn")) return;
-
-if(happiness>=10) return;
-
-happiness++;
-
-document.getElementById("loveCount").textContent=happiness;
-
-/* visual pulse */
-e.target.classList.remove("pulse");
-void e.target.offsetWidth;
-e.target.classList.add("pulse");
-
-/* final unlock */
-if(happiness===10){
-
-setTimeout(()=>{
-finalHeartUnlock();
-},900);
-
-}
-
-});
-
 
 function finalHeartUnlock(){
 
-const box=document.getElementById("quizBox");
+const world=document.getElementById("heartWorld");
+const card=document.querySelector(".cardContent");
 
-box.innerHTML=`
+/* show pink world */
+world.style.opacity="1";
+
+/* card melts into heart */
+card.style.transition="all 1.6s cubic-bezier(.22,1,.36,1)";
+card.style.background="rgba(255,182,220,.35)";
+card.style.backdropFilter="blur(8px)";
+card.style.webkitBackdropFilter="blur(8px)";
+card.style.transform="scale(8)";
+card.style.borderRadius="0px";
+
+/* remove UI after expansion */
+setTimeout(()=>{
+document.getElementById("quizBox").innerHTML=`
 <div class="finalOpen">
-    Happiness level MAX ❤️
-    <div class="opening">opening my heart…</div>
+    I'm all yours now ❤️
+    <div class="opening">welcome inside my heart…</div>
 </div>
 `;
+},900);
 
 }
 
