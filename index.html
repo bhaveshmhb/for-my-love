@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For my Baby🩷</title>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 html,body{
@@ -351,24 +352,7 @@ pointer-events:none;
 50%{transform:scale(1.15);opacity:.45}
 100%{transform:scale(1);opacity:.25}
 }
-.floatingHeart{
-position:absolute;
-font-size:14px;
-opacity:.4;
-animation:floatUp linear forwards;
-pointer-events:none;
-}
 
-@keyframes floatUp{
-from{
-transform:translateY(20px) scale(.6);
-opacity:.2;
-}
-to{
-transform:translateY(-220px) scale(1.2);
-opacity:0;
-}
-}
 #answerInput{
 caret-color:#ffd6f1;
 }
@@ -377,70 +361,62 @@ caret-color:#ffd6f1;
 opacity:.4;
 }
 /* overall layout */
+/* layout */
 #quizBox{
 height:100%;
 display:flex;
 flex-direction:column;
-justify-content:flex-start;
+padding-top:40px;
 }
 
-/* heading */
+/* title */
 .quizHeader{
 text-align:center;
-margin-top:5px;
+margin-bottom:35px;
 }
 
 .quizTitle{
 font-family:'Great Vibes',cursive;
-font-size:34px;
-letter-spacing:.5px;
-margin-bottom:10px;
+font-size:38px;
+opacity:.95;
 }
 
-/* glowing divider */
+/* divider */
 .divider{
+width:120px;
 height:1px;
-width:70%;
-margin:0 auto 20px auto;
+margin:14px auto 0;
 background:linear-gradient(90deg,transparent,#ff9bd4,transparent);
 opacity:.6;
 }
 
-/* center content */
+/* center zone */
 .quizCenter{
 flex:1;
 display:flex;
 flex-direction:column;
-justify-content:center;
 align-items:center;
+justify-content:center;
+gap:22px;
 text-align:center;
-gap:18px;
 }
 
 /* question */
 .question{
-font-size:24px;
-line-height:1.4;
-max-width:85%;
+font-family:'Playfair Display',serif;
+font-size:26px;
+line-height:1.5;
+max-width:80%;
 }
 
-/* input area */
-.inputArea{
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:12px;
-width:75%;
-}
-
-/* modern input */
+/* input */
 #answerInput{
-width:100%;
-padding:12px 16px;
-border-radius:18px;
+width:65%;
+padding:14px 18px;
+border-radius:28px;
 border:none;
 outline:none;
-background:rgba(255,255,255,.12);
+background:rgba(255,255,255,.10);
 color:white;
 text-align:center;
 font-size:17px;
@@ -449,31 +425,38 @@ transition:.25s;
 }
 
 #answerInput:focus{
-background:rgba(255,255,255,.18);
-box-shadow:0 0 18px rgba(255,150,210,.35);
+background:rgba(255,255,255,.16);
+box-shadow:0 0 20px rgba(255,160,220,.35);
 }
 
-/* cute button */
+/* playful button */
 #submitBtn{
-padding:10px 26px;
-border-radius:25px;
+padding:12px 34px;
+border-radius:40px;
 border:none;
-background:linear-gradient(135deg,#ff7ac8,#ffb3e6);
-color:#1a1a1a;
+font-family:'Poppins',sans-serif;
 font-weight:600;
+font-size:16px;
+background:rgba(255,182,210,.85);
+color:#2b2b2b;
 cursor:pointer;
-transition:.25s;
+transition:transform .15s ease, box-shadow .2s ease, background .2s;
 }
 
 #submitBtn:hover{
-transform:scale(1.05);
-box-shadow:0 6px 20px rgba(255,120,190,.45);
+transform:translateY(-2px);
+box-shadow:0 8px 25px rgba(255,140,200,.45);
+}
+
+#submitBtn:active{
+transform:scale(.92);
+box-shadow:0 3px 10px rgba(255,140,200,.35);
 }
 
 /* response */
 .response{
-min-height:22px;
-font-size:17px;
+min-height:24px;
+font-size:18px;
 opacity:.9;
 }
 
@@ -734,23 +717,23 @@ card.innerHTML=`
 <div id="quizBox">
 
 <div class="quizHeader">
-    <div class="quizTitle">Prove that you're my Babyy 🤨❤️</div>
+    <div class="quizTitle">Prove that you're my Babyy 🥺❤️</div>
     <div class="divider"></div>
 </div>
 
 <div class="quizCenter">
     <div id="questionText" class="question"></div>
 
-    <div class="inputArea">
-        <input id="answerInput" type="text" placeholder="type your answer..." autocomplete="off">
-        <button id="submitBtn">Answer 💌</button>
-    </div>
+    <input id="answerInput" type="text" placeholder="type your answer..." autocomplete="off">
+
+    <button id="submitBtn">Send 💌</button>
 
     <div id="responseText" class="response"></div>
 </div>
 
 </div>
 `;
+
 
 
 
