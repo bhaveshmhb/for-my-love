@@ -368,6 +368,7 @@ to{
 transform:translateY(-220px) scale(1.2);
 opacity:0;
 }
+}
 #answerInput{
 caret-color:#ffd6f1;
 }
@@ -815,13 +816,7 @@ checkAnswer();
 });
 
 
-input.classList.add("shake");
-setTimeout(()=>input.classList.remove("shake"),350);
 
-
-}
-
-});
 function quizComplete(){
 
 document.getElementById("quizBox").innerHTML=`
