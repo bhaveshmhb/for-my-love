@@ -485,7 +485,551 @@ opacity:.7;
 margin-top:12px;
 font-family:'Playfair Display',serif;
 }
+<style>
+html,body{
+margin:0;
+height:100%;
+background:black;
+overflow:hidden;
+}
+#story{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(.85);
+width:min(90%,750px);
+text-align:center;
+color:white;
+font-family:'Great Vibes',cursive;
+font-size:clamp(38px,7vw,80px);
+line-height:1.25;
+z-index:20;
+opacity:0;
+transition:all 900ms cubic-bezier(.22,1,.36,1);
+text-shadow:0 0 25px rgba(255,255,255,0.35);
+}
 
+/* slide enters */
+.slideIn{
+opacity:1 !important;
+transform:translate(-50%,-50%) scale(1);
+}
+
+/* slide exits */
+.slideOut{
+opacity:0;
+transform:translate(-50%,-60%) scale(.92);
+}
+
+
+
+.star{
+position:fixed;
+width:2px;
+height:2px;
+background:white;
+opacity:.7;
+z-index:1;
+animation:twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle{
+from{opacity:.2;transform:scale(.7)}
+to{opacity:1;transform:scale(1.4)}
+}
+
+/* background image */
+#bg{
+position:fixed;
+inset:0;
+background:url("sky.jpg") center/cover no-repeat;
+opacity:0;
+transition:opacity 2.5s ease;
+}
+#dim{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.55);
+opacity:0;
+transition:opacity 1s ease;
+z-index:15;
+pointer-events:none;
+}
+
+#dim.show{
+opacity:1;
+}
+
+/* overlay that we cut open */
+/* HEART REVEAL — WORKS EVERYWHERE */
+#reveal{
+position:fixed;
+inset:0;
+background:black;
+z-index:10;
+clip-path:circle(0% at 50% 50%);
+animation:heartOpen 4.8s cubic-bezier(.7,.05,.2,1) forwards;
+}
+
+@keyframes heartOpen{
+0%{clip-path:circle(0% at 50% 50%)}
+40%{clip-path:circle(15% at 50% 50%)}
+70%{clip-path:circle(60% at 50% 50%)}
+100%{clip-path:circle(140% at 50% 50%)}
+}
+/* floating side card container */
+#sideCard{
+position:fixed;
+top:0;
+right:-420px; /* start outside screen */
+height:100%;
+width:420px;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:40;
+transition:1.2s cubic-bezier(.22,1,.36,1);
+pointer-events:none; /* inactive until visible */
+}
+
+/* when shown */
+#sideCard.show{
+right:60px; /* FLOAT inward instead of edge */
+pointer-events:auto;
+}
+
+/* glass card */
+.cardContent{
+width:320px;
+padding:40px 30px;
+border-radius:22px;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(18px);
+-webkit-backdrop-filter:blur(18px);
+box-shadow:0 10px 45px rgba(255,105,180,.25);
+color:white;
+text-align:center;
+font-family:'Poppins',sans-serif;
+font-size:18px;
+letter-spacing:.3px;
+}
+#hugBtn{
+position:relative;
+overflow:hidden;
+
+width:100%;
+padding:18px 22px;
+border-radius:40px;
+border:none;
+cursor:pointer;
+
+background:rgba(255,255,255,0.12);
+color:white;
+font-family:'Poppins',sans-serif;
+font-size:16px;
+letter-spacing:.3px;
+
+transition:background .25s, box-shadow .25s;
+}
+
+/* hover softness */
+#hugBtn:hover{
+background:rgba(255,255,255,0.18);
+box-shadow:0 0 25px rgba(255,105,180,.35);
+}
+
+/* spreading warmth layer */
+#hugBtn::before{
+content:"";
+position:absolute;
+inset:0;
+border-radius:40px;
+pointer-events:none;
+
+
+
+/* touch origin */
+background:radial-gradient(circle at var(--x,50%) var(--y,50%),
+rgba(255,105,180,.55) 0%,
+rgba(255,105,180,.35) 25%,
+rgba(255,105,180,.18) 45%,
+transparent 70%);
+
+/* controlled by JS */
+opacity:var(--hold,0);
+transform:scale(calc(var(--hold,0) * 1.8));
+
+transition:opacity .2s linear, transform .2s linear;
+}
+/* prevent long-press selection & callout on touch */
+#hugBtn, .cardContent {
+-webkit-user-select:none;
+user-select:none;
+
+-webkit-touch-callout:none;
+-webkit-tap-highlight-color:transparent;
+}
+.heartPop{
+position:absolute;
+font-size:22px;
+pointer-events:none;
+animation:heartRise 900ms ease forwards;
+}
+
+@keyframes heartRise{
+0%{
+transform:translateY(0) scale(.6);
+opacity:0;
+}
+20%{
+opacity:1;
+}
+100%{
+transform:translateY(-70px) scale(1.4);
+opacity:0;
+}
+}
+.cardContent.expand{
+padding-bottom:50px;
+animation:cardGrow .6s cubic-bezier(.22,1,.36,1);
+}
+
+@keyframes cardGrow{
+from{
+transform:scale(.92);
+opacity:.6;
+}
+to{
+transform:scale(1);
+opacity:1;
+}
+}
+
+/* QUIZ LAYOUT */
+#quizBox{
+height:100%;
+display:flex;
+flex-direction:column;
+padding-top:40px;
+}
+
+.quizHeader{
+text-align:center;
+margin-bottom:35px;
+}
+
+.quizTitle{
+font-family:'Great Vibes',cursive;
+font-size:40px;
+}
+
+.divider{
+width:120px;
+height:1px;
+margin:14px auto 0;
+background:linear-gradient(90deg,transparent,#ff9bd4,transparent);
+opacity:.6;
+}
+
+.quizCenter{
+flex:1;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:24px;
+text-align:center;
+}
+
+.question{
+font-family:'Quicksand',sans-serif;
+font-size:25px;
+line-height:1.6;
+max-width:82%;
+letter-spacing:.3px;
+color:#f5f5f5;
+}
+
+
+#answerInput{
+width:70%;
+padding:16px 22px;
+border-radius:40px;
+border:none;
+outline:none;
+background:rgba(255,255,255,.12);
+color:white;
+text-align:center;
+font-size:18px;
+transition:.25s;
+}
+
+#answerInput:focus{
+background:rgba(255,255,255,.20);
+box-shadow:0 0 25px rgba(255,170,220,.45);
+transform:scale(1.03);
+}
+
+#submitBtn{
+padding:13px 36px;
+border-radius:50px;
+border:none;
+font-size:16px;
+font-weight:600;
+background:linear-gradient(135deg,#ff9acb,#ffd6ec);
+color:#2a2a2a;
+cursor:pointer;
+transition:.18s;
+}
+
+#submitBtn:hover{
+transform:translateY(-2px);
+box-shadow:0 8px 22px rgba(255,150,210,.45);
+}
+
+#submitBtn:active{
+transform:scale(.90);
+}
+
+.response{
+min-height:28px;
+font-size:18px;
+opacity:.95;
+margin-top:12px;
+padding-bottom:10px;
+transition:.35s;
+}
+.quizTitle{
+font-family:'Great Vibes',cursive;
+font-size:40px;
+letter-spacing:.5px;
+}
+
+.question{
+font-family:'Playfair Display',serif;
+font-size:28px;
+line-height:1.55;
+max-width:80%;
+}
+#answerInput{
+font-family:'Nunito',sans-serif;
+font-size:18px;
+letter-spacing:.3px;
+}
+#submitBtn{
+font-family:'Nunito',sans-serif;
+font-weight:600;
+letter-spacing:.6px;
+}
+.response{
+font-family:'Nunito',sans-serif;
+font-size:19px;
+}
+/* ===== HEART WORLD SKY ===== */
+
+#heartWorld{
+position:fixed;
+inset:0;
+z-index:1;
+opacity:0;
+pointer-events:none;
+transition:opacity 1.8s ease;
+
+/* soft dreamy pink sky */
+background:
+linear-gradient(180deg,#ffe6f4 0%, #ffd6f0 35%, #ffc2ea 70%, #ffb3e6 100%);
+overflow:hidden;
+}
+
+/* clouds container depth glow */
+#heartWorld::after{
+content:"";
+position:absolute;
+inset:0;
+background:radial-gradient(circle at 50% 70%,
+rgba(255,255,255,.35),
+rgba(255,255,255,0) 60%);
+opacity:.6;
+}
+
+/* floating clouds */
+
+.cloud{
+position:absolute;
+width:420px;
+height:220px;
+background:radial-gradient(circle at 50% 50%,
+rgba(255,255,255,.95),
+rgba(255,255,255,.65) 55%,
+transparent 70%);
+filter:blur(18px);
+opacity:.55;
+animation:drift linear infinite;
+}
+
+/* layered movement = depth illusion */
+
+.cloud1{
+top:18%;
+left:-30%;
+animation-duration:70s;
+}
+
+.cloud2{
+top:50%;
+left:-40%;
+transform:scale(1.2);
+animation-duration:95s;
+opacity:.45;
+}
+
+.cloud3{
+top:75%;
+left:-35%;
+transform:scale(.9);
+animation-duration:120s;
+opacity:.4;
+}
+
+@keyframes drift{
+from{transform:translateX(0)}
+to{transform:translateX(140vw)}
+}
+
+/* MOBILE FIX */
+@media (max-width: 700px){
+
+#sideCard{
+right:50%;
+transform:translateX(50%);
+width:100%;
+padding:0 18px;
+}
+
+#sideCard.show{
+right:50%;
+transform:translateX(50%);
+}
+
+.cardContent{
+width:100%;
+max-width:380px;
+margin:auto;
+}
+
+
+
+/* response */
+.response{
+min-height:26px;
+font-size:18px;
+opacity:.95;
+transition:all .35s ease;
+}
+
+#answerInput{
+width:70%;
+padding:16px 22px;
+border-radius:40px;
+border:none;
+outline:none;
+background:rgba(255,255,255,.10);
+color:white;
+text-align:center;
+font-size:18px;
+transition:all .25s ease;
+}
+
+#answerInput:focus{
+background:rgba(255,255,255,.18);
+box-shadow:0 0 25px rgba(255,170,220,.45);
+transform:scale(1.03);
+}
+#submitBtn{
+width:75%;
+margin-top:12px;
+}
+/* ACCESS MESSAGE */
+
+.accessStage{
+opacity:0;
+text-align:center;
+transition:opacity .7s ease;
+}
+
+.showAccess{
+opacity:1;
+}
+
+.accessTitle{
+font-family:'Great Vibes',cursive;
+font-size:42px;
+margin-bottom:10px;
+}
+
+.accessSub{
+font-family:'Playfair Display',serif;
+opacity:.75;
+font-size:18px;
+}
+
+/* HEART WORLD */
+
+.loveStage{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:28px;
+height:100%;
+text-align:center;
+}
+
+.loveStatus{
+font-family:'Playfair Display',serif;
+font-size:22px;
+opacity:.9;
+}
+
+.heartBtn{
+font-size:70px;
+cursor:pointer;
+transition:transform .18s ease, filter .25s;
+}
+
+.heartBtn:hover{
+transform:scale(1.1);
+filter:drop-shadow(0 0 18px rgba(255,120,200,.6));
+}
+
+.heartBtn.pulse{
+animation:heartPulse .5s ease;
+}
+
+@keyframes heartPulse{
+0%{transform:scale(1)}
+40%{transform:scale(1.35)}
+100%{transform:scale(1)}
+}
+
+.loveHint{
+opacity:.45;
+font-size:14px;
+}
+
+/* FINAL TEXT */
+
+.finalOpen{
+font-family:'Great Vibes',cursive;
+font-size:38px;
+text-align:center;
+}
+
+.opening{
+font-size:18px;
+opacity:.7;
+margin-top:12px;
+font-family:'Playfair Display',serif;
 }
 
 </style>
@@ -942,6 +1486,8 @@ finalHeartUnlock();
 }
 
 });
+
+
 function finalHeartUnlock(){
 
 const box=document.getElementById("quizBox");
@@ -959,6 +1505,11 @@ box.innerHTML=`
 
 
 </script>
+<div id="heartWorld">
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="cloud cloud3"></div>
+</div>
 
 
 </body>
