@@ -403,6 +403,88 @@ transform:scale(1.03);
 width:75%;
 margin-top:12px;
 }
+/* ACCESS MESSAGE */
+
+.accessStage{
+opacity:0;
+text-align:center;
+transition:opacity .7s ease;
+}
+
+.showAccess{
+opacity:1;
+}
+
+.accessTitle{
+font-family:'Great Vibes',cursive;
+font-size:42px;
+margin-bottom:10px;
+}
+
+.accessSub{
+font-family:'Playfair Display',serif;
+opacity:.75;
+font-size:18px;
+}
+
+/* HEART WORLD */
+
+.loveStage{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:28px;
+height:100%;
+text-align:center;
+}
+
+.loveStatus{
+font-family:'Playfair Display',serif;
+font-size:22px;
+opacity:.9;
+}
+
+.heartBtn{
+font-size:70px;
+cursor:pointer;
+transition:transform .18s ease, filter .25s;
+}
+
+.heartBtn:hover{
+transform:scale(1.1);
+filter:drop-shadow(0 0 18px rgba(255,120,200,.6));
+}
+
+.heartBtn.pulse{
+animation:heartPulse .5s ease;
+}
+
+@keyframes heartPulse{
+0%{transform:scale(1)}
+40%{transform:scale(1.35)}
+100%{transform:scale(1)}
+}
+
+.loveHint{
+opacity:.45;
+font-size:14px;
+}
+
+/* FINAL TEXT */
+
+.finalOpen{
+font-family:'Great Vibes',cursive;
+font-size:38px;
+text-align:center;
+}
+
+.opening{
+font-size:18px;
+opacity:.7;
+margin-top:12px;
+font-family:'Playfair Display',serif;
+}
 
 }
 
@@ -742,14 +824,9 @@ checkAnswer();
 
 
 function quizComplete(){
-
-document.getElementById("quizBox").innerHTML=`
-<div style="font-size:22px">
-Access granted ❤️
-</div>
-`;
-
+showAccessMessage();
 }
+
 
 
 function checkAnswer(){
@@ -786,6 +863,95 @@ response.style.color="#ffd6ec";
 
 input.classList.add("shake");
 setTimeout(()=>input.classList.remove("shake"),350);
+
+}
+/* ---------- ACCESS MESSAGE ---------- */
+
+function showAccessMessage(){
+
+const box=document.getElementById("quizBox");
+
+box.innerHTML=`
+<div class="accessStage">
+    <div class="accessTitle">Access granted ❤️</div>
+    <div class="accessSub">you found the way to me…</div>
+</div>
+`;
+
+setTimeout(()=>{
+box.classList.add("showAccess");
+},80);
+
+/* hold the feeling */
+setTimeout(()=>{
+box.classList.remove("showAccess");
+
+setTimeout(()=>{
+startHeartStage();
+},700);
+
+},2200);
+
+}
+/* ---------- HEART STAGE ---------- */
+
+let happiness=0;
+
+function startHeartStage(){
+
+const box=document.getElementById("quizBox");
+
+box.innerHTML=`
+<div class="loveStage">
+
+    <div class="loveStatus">
+        Your baby's happiness level:
+        <span id="loveCount">0</span>/10 🤍
+    </div>
+
+    <div id="heartBtn" class="heartBtn">💋</div>
+
+    <div class="loveHint">touch my heart…</div>
+
+</div>
+`;
+
+}
+document.addEventListener("click",(e)=>{
+
+if(!e.target.matches("#heartBtn")) return;
+
+if(happiness>=10) return;
+
+happiness++;
+
+document.getElementById("loveCount").textContent=happiness;
+
+/* visual pulse */
+e.target.classList.remove("pulse");
+void e.target.offsetWidth;
+e.target.classList.add("pulse");
+
+/* final unlock */
+if(happiness===10){
+
+setTimeout(()=>{
+finalHeartUnlock();
+},900);
+
+}
+
+});
+function finalHeartUnlock(){
+
+const box=document.getElementById("quizBox");
+
+box.innerHTML=`
+<div class="finalOpen">
+    Happiness level MAX ❤️
+    <div class="opening">opening my heart…</div>
+</div>
+`;
 
 }
 
