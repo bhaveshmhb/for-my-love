@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -33,19 +32,15 @@ transition:all 900ms cubic-bezier(.22,1,.36,1);
 text-shadow:0 0 25px rgba(255,255,255,0.35);
 }
 
-/* slide enters */
 .slideIn{
 opacity:1 !important;
 transform:translate(-50%,-50%) scale(1);
 }
 
-/* slide exits */
 .slideOut{
 opacity:0;
 transform:translate(-50%,-60%) scale(.92);
 }
-
-
 
 .star{
 position:fixed;
@@ -62,7 +57,6 @@ from{opacity:.2;transform:scale(.7)}
 to{opacity:1;transform:scale(1.4)}
 }
 
-/* background image */
 #bg{
 position:fixed;
 inset:0;
@@ -70,6 +64,7 @@ background:url("sky.jpg") center/cover no-repeat;
 opacity:0;
 transition:opacity 2.5s ease;
 }
+
 #dim{
 position:fixed;
 inset:0;
@@ -84,8 +79,6 @@ pointer-events:none;
 opacity:1;
 }
 
-/* overlay that we cut open */
-/* HEART REVEAL — WORKS EVERYWHERE */
 #reveal{
 position:fixed;
 inset:0;
@@ -101,11 +94,11 @@ animation:heartOpen 4.8s cubic-bezier(.7,.05,.2,1) forwards;
 70%{clip-path:circle(60% at 50% 50%)}
 100%{clip-path:circle(140% at 50% 50%)}
 }
-/* floating side card container */
+
 #sideCard{
 position:fixed;
 top:0;
-right:-420px; /* start outside screen */
+right:-420px;
 height:100%;
 width:420px;
 display:flex;
@@ -113,16 +106,14 @@ align-items:center;
 justify-content:center;
 z-index:40;
 transition:1.2s cubic-bezier(.22,1,.36,1);
-pointer-events:none; /* inactive until visible */
+pointer-events:none;
 }
 
-/* when shown */
 #sideCard.show{
-right:60px; /* FLOAT inward instead of edge */
+right:60px;
 pointer-events:auto;
 }
 
-/* glass card */
 .cardContent{
 width:320px;
 padding:40px 30px;
@@ -137,62 +128,51 @@ font-family:'Poppins',sans-serif;
 font-size:18px;
 letter-spacing:.3px;
 }
+
 #hugBtn{
 position:relative;
 overflow:hidden;
-
 width:100%;
 padding:18px 22px;
 border-radius:40px;
 border:none;
 cursor:pointer;
-
 background:rgba(255,255,255,0.12);
 color:white;
 font-family:'Poppins',sans-serif;
 font-size:16px;
 letter-spacing:.3px;
-
 transition:background .25s, box-shadow .25s;
 }
 
-/* hover softness */
 #hugBtn:hover{
 background:rgba(255,255,255,0.18);
 box-shadow:0 0 25px rgba(255,105,180,.35);
 }
 
-/* spreading warmth layer */
 #hugBtn::before{
 content:"";
 position:absolute;
 inset:0;
 border-radius:40px;
 pointer-events:none;
-
-
-
-/* touch origin */
 background:radial-gradient(circle at var(--x,50%) var(--y,50%),
 rgba(255,105,180,.55) 0%,
 rgba(255,105,180,.35) 25%,
 rgba(255,105,180,.18) 45%,
 transparent 70%);
-
-/* controlled by JS */
 opacity:var(--hold,0);
 transform:scale(calc(var(--hold,0) * 1.8));
-
 transition:opacity .2s linear, transform .2s linear;
 }
-/* prevent long-press selection & callout on touch */
+
 #hugBtn, .cardContent {
 -webkit-user-select:none;
 user-select:none;
-
 -webkit-touch-callout:none;
 -webkit-tap-highlight-color:transparent;
 }
+
 .heartPop{
 position:absolute;
 font-size:22px;
@@ -201,35 +181,21 @@ animation:heartRise 900ms ease forwards;
 }
 
 @keyframes heartRise{
-0%{
-transform:translateY(0) scale(.6);
-opacity:0;
+0%{transform:translateY(0) scale(.6);opacity:0;}
+20%{opacity:1;}
+100%{transform:translateY(-70px) scale(1.4);opacity:0;}
 }
-20%{
-opacity:1;
-}
-100%{
-transform:translateY(-70px) scale(1.4);
-opacity:0;
-}
-}
+
 .cardContent.expand{
 padding-bottom:50px;
 animation:cardGrow .6s cubic-bezier(.22,1,.36,1);
 }
 
 @keyframes cardGrow{
-from{
-transform:scale(.92);
-opacity:.6;
-}
-to{
-transform:scale(1);
-opacity:1;
-}
+from{transform:scale(.92);opacity:.6;}
+to{transform:scale(1);opacity:1;}
 }
 
-/* QUIZ LAYOUT */
 #quizBox{
 height:100%;
 display:flex;
@@ -245,6 +211,7 @@ margin-bottom:35px;
 .quizTitle{
 font-family:'Great Vibes',cursive;
 font-size:40px;
+letter-spacing:.5px;
 }
 
 .divider{
@@ -266,14 +233,13 @@ text-align:center;
 }
 
 .question{
-font-family:'Quicksand',sans-serif;
-font-size:25px;
-line-height:1.6;
-max-width:82%;
+font-family:'Playfair Display',serif;
+font-size:28px;
+line-height:1.55;
+max-width:80%;
 letter-spacing:.3px;
 color:#f5f5f5;
 }
-
 
 #answerInput{
 width:70%;
@@ -285,6 +251,7 @@ background:rgba(255,255,255,.12);
 color:white;
 text-align:center;
 font-size:18px;
+font-family:'Nunito',sans-serif;
 transition:.25s;
 }
 
@@ -300,6 +267,7 @@ border-radius:50px;
 border:none;
 font-size:16px;
 font-weight:600;
+font-family:'Nunito',sans-serif;
 background:linear-gradient(135deg,#ff9acb,#ffd6ec);
 color:#2a2a2a;
 cursor:pointer;
@@ -317,39 +285,13 @@ transform:scale(.90);
 
 .response{
 min-height:28px;
-font-size:18px;
+font-size:19px;
+font-family:'Nunito',sans-serif;
 opacity:.95;
 margin-top:12px;
 padding-bottom:10px;
 transition:.35s;
 }
-.quizTitle{
-font-family:'Great Vibes',cursive;
-font-size:40px;
-letter-spacing:.5px;
-}
-
-.question{
-font-family:'Playfair Display',serif;
-font-size:28px;
-line-height:1.55;
-max-width:80%;
-}
-#answerInput{
-font-family:'Nunito',sans-serif;
-font-size:18px;
-letter-spacing:.3px;
-}
-#submitBtn{
-font-family:'Nunito',sans-serif;
-font-weight:600;
-letter-spacing:.6px;
-}
-.response{
-font-family:'Nunito',sans-serif;
-font-size:19px;
-}
-/* ================= HEART ENTRY TRANSITION ================= */
 
 .cardContent.enterHeart{
 position:fixed;
@@ -357,531 +299,31 @@ top:50%;
 left:50%;
 transform:translate(-50%,-50%) scale(1);
 z-index:999;
-
 background:linear-gradient(180deg,#ffd9f0,#ffc3ea,#ffb3e6);
 backdrop-filter:none;
 -webkit-backdrop-filter:none;
-
 box-shadow:0 0 120px rgba(255,150,220,.75);
 border-radius:28px;
-
 animation:heartConsume 2.6s cubic-bezier(.22,1,.36,1) forwards;
 }
 
-/* grow from middle */
 @keyframes heartConsume{
-0%{
-transform:translate(-50%,-50%) scale(1);
-border-radius:28px;
-opacity:1;
+0%{transform:translate(-50%,-50%) scale(1);border-radius:28px;opacity:1;}
+40%{transform:translate(-50%,-50%) scale(6);border-radius:40px;}
+70%{transform:translate(-50%,-50%) scale(18);border-radius:60px;}
+100%{transform:translate(-50%,-50%) scale(40);border-radius:0px;opacity:1;}
 }
 
-40%{
-transform:translate(-50%,-50%) scale(6);
-border-radius:40px;
-}
-
-70%{
-transform:translate(-50%,-50%) scale(18);
-border-radius:60px;
-}
-
-100%{
-transform:translate(-50%,-50%) scale(40);
-border-radius:0px;
-opacity:1;
-}
-}
-
-/* fade old world */
 .fadeOldWorld{
 opacity:0 !important;
 transition:opacity 1.2s ease;
 }
 
-/* show heart sky */
 #heartWorld.show{
 opacity:1;
 transition:opacity 2.2s ease;
 z-index:1;
 }
-
-/* MOBILE FIX */
-@media (max-width: 700px){
-
-#sideCard{
-right:50%;
-transform:translateX(50%);
-width:100%;
-padding:0 18px;
-}
-
-#sideCard.show{
-right:50%;
-transform:translateX(50%);
-}
-
-.cardContent{
-width:100%;
-max-width:380px;
-margin:auto;
-}
-
-
-
-/* response */
-.response{
-min-height:26px;
-font-size:18px;
-opacity:.95;
-transition:all .35s ease;
-}
-
-#answerInput{
-width:70%;
-padding:16px 22px;
-border-radius:40px;
-border:none;
-outline:none;
-background:rgba(255,255,255,.10);
-color:white;
-text-align:center;
-font-size:18px;
-transition:all .25s ease;
-}
-
-#answerInput:focus{
-background:rgba(255,255,255,.18);
-box-shadow:0 0 25px rgba(255,170,220,.45);
-transform:scale(1.03);
-}
-#submitBtn{
-width:75%;
-margin-top:12px;
-}
-/* ACCESS MESSAGE */
-
-.accessStage{
-opacity:0;
-text-align:center;
-transition:opacity .7s ease;
-}
-
-.showAccess{
-opacity:1;
-}
-
-.accessTitle{
-font-family:'Great Vibes',cursive;
-font-size:42px;
-margin-bottom:10px;
-}
-
-.accessSub{
-font-family:'Playfair Display',serif;
-opacity:.75;
-font-size:18px;
-}
-
-/* HEART WORLD */
-
-.loveStage{
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-gap:28px;
-height:100%;
-text-align:center;
-}
-
-.loveStatus{
-font-family:'Playfair Display',serif;
-font-size:22px;
-opacity:.9;
-}
-
-.heartBtn{
-font-size:70px;
-cursor:pointer;
-transition:transform .18s ease, filter .25s;
-}
-
-.heartBtn:hover{
-transform:scale(1.1);
-filter:drop-shadow(0 0 18px rgba(255,120,200,.6));
-}
-
-.heartBtn.pulse{
-animation:heartPulse .5s ease;
-}
-
-@keyframes heartPulse{
-0%{transform:scale(1)}
-40%{transform:scale(1.35)}
-100%{transform:scale(1)}
-}
-
-.loveHint{
-opacity:.45;
-font-size:14px;
-}
-
-/* FINAL TEXT */
-
-.finalOpen{
-font-family:'Great Vibes',cursive;
-font-size:38px;
-text-align:center;
-}
-
-.opening{
-font-size:18px;
-opacity:.7;
-margin-top:12px;
-font-family:'Playfair Display',serif;
-}
-<style>
-html,body{
-margin:0;
-height:100%;
-background:black;
-overflow:hidden;
-}
-#story{
-position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%) scale(.85);
-width:min(90%,750px);
-text-align:center;
-color:white;
-font-family:'Great Vibes',cursive;
-font-size:clamp(38px,7vw,80px);
-line-height:1.25;
-z-index:20;
-opacity:0;
-transition:all 900ms cubic-bezier(.22,1,.36,1);
-text-shadow:0 0 25px rgba(255,255,255,0.35);
-}
-
-/* slide enters */
-.slideIn{
-opacity:1 !important;
-transform:translate(-50%,-50%) scale(1);
-}
-
-/* slide exits */
-.slideOut{
-opacity:0;
-transform:translate(-50%,-60%) scale(.92);
-}
-
-
-
-.star{
-position:fixed;
-width:2px;
-height:2px;
-background:white;
-opacity:.7;
-z-index:1;
-animation:twinkle 2s infinite alternate;
-}
-
-@keyframes twinkle{
-from{opacity:.2;transform:scale(.7)}
-to{opacity:1;transform:scale(1.4)}
-}
-
-/* background image */
-#bg{
-position:fixed;
-inset:0;
-background:url("sky.jpg") center/cover no-repeat;
-opacity:0;
-transition:opacity 2.5s ease;
-}
-#dim{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.55);
-opacity:0;
-transition:opacity 1s ease;
-z-index:15;
-pointer-events:none;
-}
-
-#dim.show{
-opacity:1;
-}
-
-/* overlay that we cut open */
-/* HEART REVEAL — WORKS EVERYWHERE */
-#reveal{
-position:fixed;
-inset:0;
-background:black;
-z-index:10;
-clip-path:circle(0% at 50% 50%);
-animation:heartOpen 4.8s cubic-bezier(.7,.05,.2,1) forwards;
-}
-
-@keyframes heartOpen{
-0%{clip-path:circle(0% at 50% 50%)}
-40%{clip-path:circle(15% at 50% 50%)}
-70%{clip-path:circle(60% at 50% 50%)}
-100%{clip-path:circle(140% at 50% 50%)}
-}
-/* floating side card container */
-#sideCard{
-position:fixed;
-top:0;
-right:-420px; /* start outside screen */
-height:100%;
-width:420px;
-display:flex;
-align-items:center;
-justify-content:center;
-z-index:40;
-transition:1.2s cubic-bezier(.22,1,.36,1);
-pointer-events:none; /* inactive until visible */
-}
-
-/* when shown */
-#sideCard.show{
-right:60px; /* FLOAT inward instead of edge */
-pointer-events:auto;
-}
-
-/* glass card */
-.cardContent{
-width:320px;
-padding:40px 30px;
-border-radius:22px;
-background:rgba(255,255,255,0.08);
-backdrop-filter:blur(18px);
--webkit-backdrop-filter:blur(18px);
-box-shadow:0 10px 45px rgba(255,105,180,.25);
-color:white;
-text-align:center;
-font-family:'Poppins',sans-serif;
-font-size:18px;
-letter-spacing:.3px;
-}
-#hugBtn{
-position:relative;
-overflow:hidden;
-
-width:100%;
-padding:18px 22px;
-border-radius:40px;
-border:none;
-cursor:pointer;
-
-background:rgba(255,255,255,0.12);
-color:white;
-font-family:'Poppins',sans-serif;
-font-size:16px;
-letter-spacing:.3px;
-
-transition:background .25s, box-shadow .25s;
-}
-
-/* hover softness */
-#hugBtn:hover{
-background:rgba(255,255,255,0.18);
-box-shadow:0 0 25px rgba(255,105,180,.35);
-}
-
-/* spreading warmth layer */
-#hugBtn::before{
-content:"";
-position:absolute;
-inset:0;
-border-radius:40px;
-pointer-events:none;
-
-
-
-/* touch origin */
-background:radial-gradient(circle at var(--x,50%) var(--y,50%),
-rgba(255,105,180,.55) 0%,
-rgba(255,105,180,.35) 25%,
-rgba(255,105,180,.18) 45%,
-transparent 70%);
-
-/* controlled by JS */
-opacity:var(--hold,0);
-transform:scale(calc(var(--hold,0) * 1.8));
-
-transition:opacity .2s linear, transform .2s linear;
-}
-/* prevent long-press selection & callout on touch */
-#hugBtn, .cardContent {
--webkit-user-select:none;
-user-select:none;
-
--webkit-touch-callout:none;
--webkit-tap-highlight-color:transparent;
-}
-.heartPop{
-position:absolute;
-font-size:22px;
-pointer-events:none;
-animation:heartRise 900ms ease forwards;
-}
-
-@keyframes heartRise{
-0%{
-transform:translateY(0) scale(.6);
-opacity:0;
-}
-20%{
-opacity:1;
-}
-100%{
-transform:translateY(-70px) scale(1.4);
-opacity:0;
-}
-}
-.cardContent.expand{
-padding-bottom:50px;
-animation:cardGrow .6s cubic-bezier(.22,1,.36,1);
-}
-
-@keyframes cardGrow{
-from{
-transform:scale(.92);
-opacity:.6;
-}
-to{
-transform:scale(1);
-opacity:1;
-}
-}
-
-/* QUIZ LAYOUT */
-#quizBox{
-height:100%;
-display:flex;
-flex-direction:column;
-padding-top:40px;
-}
-
-.quizHeader{
-text-align:center;
-margin-bottom:35px;
-}
-
-.quizTitle{
-font-family:'Great Vibes',cursive;
-font-size:40px;
-}
-
-.divider{
-width:120px;
-height:1px;
-margin:14px auto 0;
-background:linear-gradient(90deg,transparent,#ff9bd4,transparent);
-opacity:.6;
-}
-
-.quizCenter{
-flex:1;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-gap:24px;
-text-align:center;
-}
-
-.question{
-font-family:'Quicksand',sans-serif;
-font-size:25px;
-line-height:1.6;
-max-width:82%;
-letter-spacing:.3px;
-color:#f5f5f5;
-}
-
-
-#answerInput{
-width:70%;
-padding:16px 22px;
-border-radius:40px;
-border:none;
-outline:none;
-background:rgba(255,255,255,.12);
-color:white;
-text-align:center;
-font-size:18px;
-transition:.25s;
-}
-
-#answerInput:focus{
-background:rgba(255,255,255,.20);
-box-shadow:0 0 25px rgba(255,170,220,.45);
-transform:scale(1.03);
-}
-
-#submitBtn{
-padding:13px 36px;
-border-radius:50px;
-border:none;
-font-size:16px;
-font-weight:600;
-background:linear-gradient(135deg,#ff9acb,#ffd6ec);
-color:#2a2a2a;
-cursor:pointer;
-transition:.18s;
-}
-
-#submitBtn:hover{
-transform:translateY(-2px);
-box-shadow:0 8px 22px rgba(255,150,210,.45);
-}
-
-#submitBtn:active{
-transform:scale(.90);
-}
-
-.response{
-min-height:28px;
-font-size:18px;
-opacity:.95;
-margin-top:12px;
-padding-bottom:10px;
-transition:.35s;
-}
-.quizTitle{
-font-family:'Great Vibes',cursive;
-font-size:40px;
-letter-spacing:.5px;
-}
-
-.question{
-font-family:'Playfair Display',serif;
-font-size:28px;
-line-height:1.55;
-max-width:80%;
-}
-#answerInput{
-font-family:'Nunito',sans-serif;
-font-size:18px;
-letter-spacing:.3px;
-}
-#submitBtn{
-font-family:'Nunito',sans-serif;
-font-weight:600;
-letter-spacing:.6px;
-}
-.response{
-font-family:'Nunito',sans-serif;
-font-size:19px;
-}
-/* ===== HEART WORLD SKY ===== */
 
 #heartWorld{
 position:fixed;
@@ -890,14 +332,10 @@ z-index:1;
 opacity:0;
 pointer-events:none;
 transition:opacity 1.8s ease;
-
-/* soft dreamy pink sky */
-background:
-linear-gradient(180deg,#ffe6f4 0%, #ffd6f0 35%, #ffc2ea 70%, #ffb3e6 100%);
+background:linear-gradient(180deg,#ffe6f4 0%, #ffd6f0 35%, #ffc2ea 70%, #ffb3e6 100%);
 overflow:hidden;
 }
 
-/* clouds container depth glow */
 #heartWorld::after{
 content:"";
 position:absolute;
@@ -907,8 +345,6 @@ rgba(255,255,255,.35),
 rgba(255,255,255,0) 60%);
 opacity:.6;
 }
-
-/* floating clouds */
 
 .cloud{
 position:absolute;
@@ -922,8 +358,6 @@ filter:blur(18px);
 opacity:.55;
 animation:drift linear infinite;
 }
-
-/* layered movement = depth illusion */
 
 .cloud1{
 top:18%;
@@ -952,85 +386,6 @@ from{transform:translateX(0)}
 to{transform:translateX(140vw)}
 }
 
-/* MOBILE FIX */
-@media (max-width: 700px){
-
-#sideCard{
-right:50%;
-transform:translateX(50%);
-width:100%;
-padding:0 18px;
-}
-
-#sideCard.show{
-right:50%;
-transform:translateX(50%);
-}
-
-.cardContent{
-width:100%;
-max-width:380px;
-margin:auto;
-}
-
-
-
-/* response */
-.response{
-min-height:26px;
-font-size:18px;
-opacity:.95;
-transition:all .35s ease;
-}
-
-#answerInput{
-width:70%;
-padding:16px 22px;
-border-radius:40px;
-border:none;
-outline:none;
-background:rgba(255,255,255,.10);
-color:white;
-text-align:center;
-font-size:18px;
-transition:all .25s ease;
-}
-
-#answerInput:focus{
-background:rgba(255,255,255,.18);
-box-shadow:0 0 25px rgba(255,170,220,.45);
-transform:scale(1.03);
-}
-#submitBtn{
-width:75%;
-margin-top:12px;
-}
-/* ACCESS MESSAGE */
-
-.accessStage{
-opacity:0;
-text-align:center;
-transition:opacity .7s ease;
-}
-
-.showAccess{
-opacity:1;
-}
-
-.accessTitle{
-font-family:'Great Vibes',cursive;
-font-size:42px;
-margin-bottom:10px;
-}
-
-.accessSub{
-font-family:'Playfair Display',serif;
-opacity:.75;
-font-size:18px;
-}
-
-/* HEART WORLD */
-
 .loveStage{
 display:flex;
 flex-direction:column;
@@ -1073,8 +428,6 @@ opacity:.45;
 font-size:14px;
 }
 
-/* FINAL TEXT */
-
 .finalOpen{
 font-family:'Great Vibes',cursive;
 font-size:38px;
@@ -1088,13 +441,40 @@ margin-top:12px;
 font-family:'Playfair Display',serif;
 }
 
+@media (max-width: 700px){
+#sideCard{
+right:50%;
+transform:translateX(50%);
+width:100%;
+padding:0 18px;
+}
+#sideCard.show{
+right:50%;
+transform:translateX(50%);
+}
+.cardContent{
+width:100%;
+max-width:380px;
+margin:auto;
+}
+.response{
+min-height:26px;
+font-size:18px;
+}
+#answerInput{
+width:70%;
+background:rgba(255,255,255,.10);
+}
+#submitBtn{
+width:75%;
+margin-top:12px;
+}
+}
 </style>
 
 </head>
 
 <body>
-
-<!-- heart mask definition -->
 
 <svg width="0" height="0" viewBox="0 0 1000 1000">
 <defs>
@@ -1112,26 +492,27 @@ C940 480 800 650 500 900Z"/>
 </defs>
 </svg>
 
-
 <div id="bg"></div>
 <div id="dim"></div>
-
 <div id="reveal"></div>
 <div id="story"></div>
 
+<div id="heartWorld">
+<div class="cloud cloud1"></div>
+<div class="cloud cloud2"></div>
+<div class="cloud cloud3"></div>
+</div>
+
 <script>
 
-/* sky fades in */
 setTimeout(()=>{
 document.getElementById("bg").style.opacity=1;
 },600);
 
-/* reveal end */
 setTimeout(()=>{
 document.getElementById("reveal").remove();
 startStory();
 },4800);
-
 
 const lines=[
 "Hello Cutiee🥰",
@@ -1143,54 +524,35 @@ const lines=[
 
 const story=document.getElementById("story");
 const dim=document.getElementById("dim");
-
 let index=0;
 
-
-/* ---------- SLIDES ---------- */
-
 function showSlides(){
-
-// show text
 story.textContent=lines[index];
 dim.classList.add("show");
-
 story.classList.remove("slideIn","slideOut");
 story.style.opacity="0";
 
-nextFrame(()=>{
+requestAnimationFrame(()=>{
+requestAnimationFrame(()=>{
 story.classList.add("slideIn");
 });
+});
 
-
-// hold visible
 setTimeout(()=>{
-
 story.classList.remove("slideIn");
 story.classList.add("slideOut");
-
 index++;
 
-/* LAST SLIDE FINISHED */
 if(index >= lines.length){
-
-    setTimeout(()=>{
-        dim.classList.remove("show");
-        createSideCard();
-    },1500);
-
+setTimeout(()=>{
+dim.classList.remove("show");
+createSideCard();
+},1500);
 } else {
-
-    setTimeout(showSlides,1500);
-
+setTimeout(showSlides,1500);
 }
-
 },2600);
-
 }
-
-
-/* ---------- START ---------- */
 
 function startStory(){
 setTimeout(()=>{
@@ -1199,38 +561,19 @@ setTimeout(showSlides,2000);
 },700);
 }
 
-
-/* ---------- CREATE INVITATION CARD ---------- */
-
 function createSideCard(){
-
 const card=document.createElement("div");
 card.id="sideCard";
-
 card.innerHTML=`
 <div class="cardContent">
-    <button id="hugBtn">Hold here to hug me tightly 🫂</button>
+<button id="hugBtn">Hold here to hug me tightly 🫂</button>
 </div>
 `;
-
 document.body.appendChild(card);
-
-/* animate in next frame */
 requestAnimationFrame(()=>{
 card.classList.add("show");
 });
-
 }
-
-
-/* ---------- HELPERS ---------- */
-
-function nextFrame(cb){
-requestAnimationFrame(()=>requestAnimationFrame(cb));
-}
-
-
-/* ---------- STARS ---------- */
 
 for(let i=0;i<60;i++){
 let s=document.createElement("div");
@@ -1241,23 +584,17 @@ s.style.animationDelay=Math.random()*2+"s";
 document.body.appendChild(s);
 }
 
-
-/* -------- HOLD TO HUG -------- */
-
 let holdInterval=null;
 let activeBtn=null;
-const HOLD_TIME=2600; // ms
+const HOLD_TIME=2600;
 
 document.addEventListener("pointerdown",(e)=>{
-
 const btn=e.target.closest("#hugBtn");
 if(!btn) return;
 
 activeBtn=btn;
-
-/* get touch position */
 const rect=btn.getBoundingClientRect();
-const x=((e.clientX-rect.left)/rect.width)*100
+const x=((e.clientX-rect.left)/rect.width)*100;
 const y=((e.clientY-rect.top)/rect.height)*100;
 
 btn.style.setProperty("--x",x+"%");
@@ -1266,27 +603,19 @@ btn.style.setProperty("--hold","0");
 
 let start=performance.now();
 
-/* progress animation */
 holdInterval=setInterval(()=>{
-
 let progress=(performance.now()-start)/HOLD_TIME;
 if(progress>1) progress=1;
 
 btn.style.setProperty("--hold",progress.toFixed(3));
 
-/* completed */
 if(progress>=1){
 clearInterval(holdInterval);
 activeBtn=null;
-
-/* temporary success action */
 hugComplete(btn);
 }
-
 },16);
-
 });
-
 
 document.addEventListener("pointerup",cancelHold);
 document.addEventListener("pointercancel",cancelHold);
@@ -1294,95 +623,69 @@ document.addEventListener("pointerleave",cancelHold);
 
 function cancelHold(){
 if(!activeBtn) return;
-
 clearInterval(holdInterval);
-
-/* smooth fade back */
 activeBtn.style.transition="--hold .3s ease";
 activeBtn.style.setProperty("--hold","0");
-
 setTimeout(()=>{
 if(activeBtn) activeBtn.style.transition="";
 activeBtn=null;
 },300);
 }
 
-
-/* -------- SUCCESS (temporary) -------- */
-
 function hugComplete(btn){
-
 btn.style.setProperty("--hold","1");
 
-/* create heart */
 const heart=document.createElement("div");
 heart.className="heartPop";
 heart.textContent="💗";
 
 const rect=btn.getBoundingClientRect();
-
 heart.style.left=(rect.left+rect.width/2)+"px";
 heart.style.top=(rect.top+rect.height/2)+"px";
 
 document.body.appendChild(heart);
-
 setTimeout(()=>heart.remove(),900);
 
-/* expand card after heart */
 setTimeout(()=>{
 expandCard(btn.closest(".cardContent"));
 },600);
-
 }
-/*--card expanxion--------*/
+
 function expandCard(card){
-
 card.classList.add("expand");
-
 card.innerHTML=`
 <div id="quizBox">
-
 <div class="quizHeader">
-    <div class="quizTitle">Prove that you're my Babyy 🥺❤️</div>
-    <div class="divider"></div>
+<div class="quizTitle">Prove that you're my Babyy 🥺❤️</div>
+<div class="divider"></div>
 </div>
-
 <div class="quizCenter">
-    <div id="questionText" class="question"></div>
-
-    <input id="answerInput" type="text" placeholder="type your answer..." autocomplete="off">
-
-    <button id="submitBtn">Send 💌</button>
-
-    <div id="responseText" class="response"></div>
+<div id="questionText" class="question"></div>
+<input id="answerInput" type="text" placeholder="type your answer..." autocomplete="off">
+<button id="submitBtn">Send 💌</button>
+<div id="responseText" class="response"></div>
 </div>
-
 </div>
 `;
-
-
-
-
 startQuiz();
 }
-/* ---------------- QUIZ ENGINE ---------------- */
 
 const quiz=[
 {
 question:"What name did you save me as in your phone?",
-answers:["baby","babyy","my baby"], // edit freely
+answers:["baby","babyy","my baby"],
 correct:"💗 hehe correct",
 wrong:"nope try again 😌"
 },
 {
 question:"What do you call me when it's just us?",
-answers:["cutie","love","idiot"], // edit
+answers:["cutie","love","idiot"],
 correct:"i like that one 🤭",
 wrong:"hmmm not that"
 },
 {
 question:"What always makes me happiest?",
-answers:["hug","kiss","talk","call"], // edit
+answers:["hug","kiss","talk","call"],
 correct:"exactly ❤️",
 wrong:"almost... think again"
 }
@@ -1395,7 +698,6 @@ showQuestion();
 }
 
 function showQuestion(){
-
 const q=quiz[qIndex];
 const qBox=document.getElementById("questionText");
 const input=document.getElementById("answerInput");
@@ -1403,7 +705,6 @@ const response=document.getElementById("responseText");
 
 response.textContent="";
 input.value="";
-
 qBox.style.opacity=0;
 qBox.textContent=q.question;
 
@@ -1412,173 +713,118 @@ qBox.style.transition="opacity .8s ease";
 qBox.style.opacity=1;
 input.focus();
 },80);
-
 }
 
 document.addEventListener("click",(e)=>{
-if(!e.target.matches("#submitBtn")) return;
-
+if(e.target.matches("#submitBtn")){
 checkAnswer();
+}
+if(e.target.matches("#heartBtn")){
+kissHeart(e.target);
+}
 });
 
-
-
-function quizComplete(){
-function showAccessMessage(){
-
-const card=document.querySelector(".cardContent");
-
-card.innerHTML=`
-<div class="finalOpen">
-    come… <br> we’re going inside my heart 💗
-</div>
-`;
-
-/* wait emotional pause */
-setTimeout(()=>{
-enterHeartWorld(card);
-},2400);
-
-}
-function enterHeartWorld(card){
-
-/* fade old background */
-document.getElementById("bg")?.classList.add("fadeOldWorld");
-document.getElementById("dim")?.classList.add("fadeOldWorld");
-document.querySelectorAll(".star").forEach(s=>s.classList.add("fadeOldWorld"));
-
-/* transform card */
-card.classList.add("enterHeart");
-
-/* after expansion show world */
-setTimeout(()=>{
-document.getElementById("heartWorld").classList.add("show");
-startLoveStage();
-},2200);
-
-}
-
-
-
-
 function checkAnswer(){
-
 const input=document.getElementById("answerInput");
 if(!input) return;
 
 const user=input.value.toLowerCase().trim();
 const q=quiz[qIndex];
 const response=document.getElementById("responseText");
-
 const correct=q.answers.some(a=>user.includes(a));
 
 if(correct){
-
 response.textContent=q.correct;
 response.style.color="#ffb3da";
 
 setTimeout(()=>{
 qIndex++;
-
 if(qIndex<quiz.length){
 showQuestion();
 }else{
 quizComplete();
 }
-
 },900);
-
 }else{
-
 response.textContent=q.wrong;
 response.style.color="#ffd6ec";
+}
+}
 
-input.classList.add("shake");
-setTimeout(()=>input.classList.remove("shake"),350);
+function quizComplete(){
+showAccessMessage();
 }
-}
-/* ---------- ACCESS MESSAGE ---------- */
 
 function showAccessMessage(){
-
-const box=document.getElementById("quizBox");
-
-box.innerHTML=`
-<div class="accessStage">
-    <div class="accessTitle">Access granted ❤️</div>
-    <div class="accessSub">you found the way to me…</div>
+const card=document.querySelector(".cardContent");
+card.innerHTML=`
+<div class="finalOpen">
+come… <br> we're going inside my heart 💗
 </div>
 `;
 
 setTimeout(()=>{
-box.classList.add("showAccess");
-},80);
+enterHeartWorld(card);
+},2400);
+}
 
-/* hold the feeling */
-setTimeout(()=>{
-box.classList.remove("showAccess");
+function enterHeartWorld(card){
+document.getElementById("bg")?.classList.add("fadeOldWorld");
+document.getElementById("dim")?.classList.add("fadeOldWorld");
+document.querySelectorAll(".star").forEach(s=>s.classList.add("fadeOldWorld"));
+
+card.classList.add("enterHeart");
 
 setTimeout(()=>{
+document.getElementById("heartWorld").classList.add("show");
+startLoveStage();
+},2200);
+}
+
+let happiness=0;
+
 function startLoveStage(){
-
 const box=document.querySelector(".cardContent");
-
 box.innerHTML=`
 <div class="loveStage">
-
 <div class="loveStatus">
 Your baby's happiness level:
 <span id="loveCount">0</span>/10 🤍
 </div>
-
 <div id="heartBtn" class="heartBtn">💋</div>
-
 <div class="loveHint">kiss me to wake my heart</div>
-
 </div>
 `;
-
 }
 
+function kissHeart(btn){
+if(happiness>=10) return;
+
+happiness++;
+document.getElementById("loveCount").textContent=happiness;
+
+btn.classList.remove("pulse");
+void btn.offsetWidth;
+btn.classList.add("pulse");
+
+if(happiness===10){
+setTimeout(()=>{
+finalHeartUnlock();
+},900);
+}
+}
 
 function finalHeartUnlock(){
-
-const world=document.getElementById("heartWorld");
-const card=document.querySelector(".cardContent");
-
-/* show pink world */
-world.style.opacity="1";
-
-/* card melts into heart */
-card.style.transition="all 1.6s cubic-bezier(.22,1,.36,1)";
-card.style.background="rgba(255,182,220,.35)";
-card.style.backdropFilter="blur(8px)";
-card.style.webkitBackdropFilter="blur(8px)";
-card.style.transform="scale(8)";
-card.style.borderRadius="0px";
-
-/* remove UI after expansion */
-setTimeout(()=>{
-document.getElementById("quizBox").innerHTML=`
+const box=document.querySelector(".cardContent");
+box.innerHTML=`
 <div class="finalOpen">
-    I'm all yours now ❤️
-    <div class="opening">welcome inside my heart…</div>
+I'm all yours now ❤️
+<div class="opening">welcome inside my heart…</div>
 </div>
 `;
-},900);
-
 }
 
-
-
-
 </script>
-<div id="heartWorld">
-    <div class="cloud cloud1"></div>
-    <div class="cloud cloud2"></div>
-    <div class="cloud cloud3"></div>
-</div>
-
 
 </body>
 </html>
