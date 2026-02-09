@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For my Baby🩷</title>
+<title>BuBu's Heart🩷</title>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -337,7 +338,7 @@ margin-top:12px;
 transition:.35s;
 }
 .heartMessage{
-font-family:'Dancing Script',cursive;
+font-family:'Pacifico',cursive;
 font-size:clamp(34px,4vw,52px);
 line-height:1.5;
 letter-spacing:.4px;
@@ -547,10 +548,11 @@ startStory();
 
 const lines=[
 "Hello Cutiee🥰",
-"Today is OUR first valentine",
-"Long distance really sucks🥲🫂",
-"I made this for you",
-"To make our first valentine special😁"
+"This valentine is not normal for me...😎",
+"Ene heluu 517km is really far🥲🫂",
+"I'm missing you little more than usual today..😌",
+"Ningoskara eno madini nan ivattu..😁",
+"Relax and enjoyy..🙂🥰"
 ];
 
 const story=document.getElementById("story");
@@ -683,7 +685,7 @@ for(let i=0;i<12;i++){
 
 const heart=document.createElement("div");
 heart.className="heartPop";
-heart.textContent=["💗","💖","💕","❤️"][Math.floor(Math.random()*4)];
+heart.textContent=["💗","💖","💛","❤️","🩵","💙","🩶","💖","❣️","💚","💜","🧡","❤️"][Math.floor(Math.random()*4)];
 
 const rect=btn.getBoundingClientRect();
 
@@ -722,12 +724,12 @@ document.getElementById("cardInner").innerHTML=
 `
 <div id="quizBox" style="opacity:0; transition:opacity .8s ease;">
 <div class="quizHeader">
-<div class="quizTitle">Prove that you're my Babyy 🥺❤️</div>
+<div class="quizTitle">Prove that you're my Babyy 😤❤️</div>
 <div class="divider"></div>
 </div>
 <div class="quizCenter">
 <div id="questionText" class="question"></div>
-<input id="answerInput" type="text" placeholder="type your answer..." autocomplete="off">
+<input id="answerInput" type="text" placeholder="answer madu nodona..." autocomplete="off">
 <button id="submitBtn">Send 💌</button>
 <div id="responseText" class="response"></div>
 </div>
@@ -738,19 +740,25 @@ startQuiz();
 
 const quiz=[
 {
-question:"What name did you save me as in your phone?",
-answers:["baby","babyy","my baby"],
-correct:"💗 hehe correct",
-wrong:"nope try again 😌"
+question:"Nan Phone nalli nin contact name enu..?",
+answers:["Indu","Amruta","my baby"],
+correct:"💗 hehe correct😁",
+wrong:"Pakka naa 😌"
 },
 {
-question:"What do you call me when it's just us?",
-answers:["cutie","love","idiot"],
+question:"What do you call me when it's just us..?",
+answers:["cutie","bubu","love","idiot"],
 correct:"i like that one 🤭",
 wrong:"hmmm not that"
 },
 {
-question:"What always makes me happiest?",
+question:"Which chocolate you gave me on my Birthdayy..?",
+answers:["Diary milk","fruit and nut","diarymilk"],
+correct:"Soo cutee🥺",
+wrong:"hmmm not that"
+},
+{
+question:"Happiness level kammi iddaga en madbek ninuu..?",
 answers:["hug","kiss","talk","call"],
 correct:"exactly ❤️",
 wrong:"almost... think again"
@@ -829,9 +837,9 @@ const inner=document.getElementById("cardInner");
 
 // Message 1
 inner.innerHTML=`
-<div class="finalOpen fadeText" style="font-family:'Dancing Script',cursive;font-size:42px;line-height:1.4;">
-Yayy finally 💗<br>
-You proved that you're my babyy
+<div class="finalOpen fadeText" style="font-family:'Pacifico',cursive;font-size:42px;line-height:1.4;letter-spacing:.4px;">
+Yayy Finallyy..😁💗<br>
+Konegu prove madbitte alvaa..🫂
 </div>`;
 
 requestAnimationFrame(()=>{
@@ -845,8 +853,8 @@ inner.querySelector(".fadeText").classList.remove("show");
 setTimeout(()=>{
 
 inner.innerHTML=`
-<div class="heartMessage">
-Come…<br>
+<div class="heartMessage" style="font-family:'Pacifico',cursive;">
+Baa nan jotee..<br>
 we're going inside my heart 💗
 </div>
 `;
