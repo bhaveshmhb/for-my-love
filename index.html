@@ -680,9 +680,7 @@ document.getElementById("bg").style.opacity=1;
 },600);
 
 setTimeout(()=>{
-const reveal = document.getElementById("reveal");
-if(reveal) reveal.remove();
-
+document.getElementById("reveal").remove();
 startStory();
 },4800);
 
@@ -880,7 +878,6 @@ const q=quiz[qIndex];
 const qBox=document.getElementById("questionText");
 const input=document.getElementById("answerInput");
 const response=document.getElementById("responseText");
-if(!qBox || !input || !response) return;
 
 response.textContent="";
 input.value="";
@@ -895,13 +892,13 @@ input.focus();
 }
 
 document.addEventListener("click",(e)=>{
-const submit=e.target.closest("#submitBtn");
-if(submit) checkAnswer();
-
-const heart=e.target.closest(".heartBtn");
-if(heart) kissHeart(heart);
+if(e.target.matches("#submitBtn")){
+checkAnswer();
+}
+if(e.target.matches(".heartBtn")){
+kissHeart(e.target);
+}
 });
-
 
 function checkAnswer(){
 const input=document.getElementById("answerInput");
@@ -967,12 +964,8 @@ enterHeartWorld(card);
 
 function enterHeartWorld(card){
 // Fade old world
-const bg = document.getElementById("bg");
-if(bg) bg.classList.add("fadeOldWorld");
-
-const dim = document.getElementById("dim");
-if(dim) dim.classList.add("fadeOldWorld");
-
+document.getElementById("bg")?.classList.add("fadeOldWorld");
+document.getElementById("dim")?.classList.add("fadeOldWorld");
 document.querySelectorAll(".star").forEach(s=>s.classList.add("fadeOldWorld"));
 
 // Transform card to pink and zoom
@@ -1021,10 +1014,7 @@ function kissHeart(btn){
 if(happiness>=10) return;
 
 happiness++;
-const counter=document.getElementById("loveCount");
-if(!counter) return;
-counter.textContent=happiness;
-
+document.getElementById("loveCount").textContent=happiness;
 
 // Pulse animation
 btn.classList.remove("pulse");
@@ -1123,15 +1113,12 @@ createSparkles(btn);
 
 // Fade out love stage
 setTimeout(()=>{
-const stage=document.querySelector(".loveStage");
-if(stage) stage.style.opacity=0;
-
+document.querySelector(".loveStage").style.opacity=0;
 
 // Transition to starry night
 setTimeout(()=>{
 document.getElementById("starryNight").classList.add("show");
-if(stage) stage.remove();
-
+document.querySelector(".loveStage").remove();
 
 // Create stars
 setTimeout(()=>{
@@ -1187,7 +1174,7 @@ const confessionLines=[
 "Happy Valentine's Day, my love 💗",
 "",
 "Forever yours,"
-"Your BuBu"
+'Your BuBu..."
 // Add your name on the next line:
 // "[Your Name]"
 ];
@@ -1206,8 +1193,8 @@ container.appendChild(lineEl);
 },index*2000);
 });
 }
-
 });
+
 </script>
 
 </body>
