@@ -214,7 +214,7 @@ position:relative;
 overflow:hidden;
 width:100%;
 padding:18px 24px;
-border-radius:40px;
+border-radius:35px;
 border:none;
 cursor:pointer;
 
@@ -271,18 +271,19 @@ content:"";
 position:absolute;
 inset:-2px;
 border-radius:inherit;
-
-background:radial-gradient(circle at 50% 50%,
-rgba(255,170,220,.45),
-rgba(255,120,190,.25),
+pointer-events:none;
+background:radial-gradient(circle at var(--x,50%) var(--y,50%),
+rgba(255,120,200,.65) 0%,
+rgba(255,120,200,.45) 25%,
+rgba(255,120,200,.25) 45%,
 transparent 70%);
 
-opacity:.55;
-filter:blur(12px);
-z-index:-1;
-transition:opacity .25s ease, transform .25s ease;
-}
+opacity:var(--hold,0);
+transform:scale(calc(var(--hold,0) * 1.9));
+transition:opacity .2s linear, transform .2s linear;
 
+z-index:1;
+}
 /* hover — floating feeling */
 #hugBtn:hover{
 transform:translateY(-3px) scale(1.03);
@@ -310,6 +311,24 @@ isolation:isolate;
 /* invisible contrast layer behind text */
 #hugBtn::after{
 mix-blend-mode:overlay;
+}
+#hugBtn .aura{
+position:absolute;
+inset:-6px;
+border-radius:inherit;
+background:radial-gradient(circle,
+rgba(255,160,210,.35),
+transparent 70%);
+filter:blur(14px);
+opacity:.6;
+z-index:-1;
+pointer-events:none;
+transition:.3s;
+}
+
+#hugBtn:hover .aura{
+opacity:1;
+transform:scale(1.1);
 }
 
 
@@ -730,8 +749,11 @@ card.id="sideCard";
 card.innerHTML=`
 <div class="cardContent">
    <div id="cardInner">
-      <button id="hugBtn">Hold here to hug me tightly 🫂</button>
-   </div>
+     <button id="hugBtn">
+   Hold here to hug me tightly 🫂
+   <div class="aura"></div>
+   </button>
+ </div>
 </div>
 `;
 
