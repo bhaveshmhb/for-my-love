@@ -389,7 +389,7 @@ height:100vh !important;
 top:0 !important;
 left:0 !important;
 border-radius:0 !important;
-background:linear-gradient(180deg,#ffffff,#ffd6f3,#ff9bd4,#ff6fb7) !important;
+background:linear-gradient(180deg,#ffeaf6,#ffd6f3,#ff9bd4,#ff6fb7)!important;
 transition:background 4s ease;
 }
 
@@ -420,18 +420,22 @@ filter:blur(6px);
 #heartWorld{
 position:fixed;
 inset:0;
-z-index:1;
-opacity:1;              /* always visible */
+z-index:0;
+opacity:0;
 pointer-events:none;
 background:url("pinksky.jpg") center/cover no-repeat;
 overflow:hidden;
-filter:brightness(0) saturate(1.2);
-transition:filter 2.8s ease;
+
+filter:brightness(0.2) saturate(1.3);
+transition:opacity 2.6s ease, filter 3s ease;
 }
 
 #heartWorld.show{
-filter:brightness(1) saturate(1.1);
+opacity:1;
+filter:brightness(1) saturate(1.05);
 }
+
+
 
 #heartWorld::after{
 content:"";
@@ -464,6 +468,16 @@ animation:drift linear infinite;
 @keyframes drift{
 from{transform:translateX(0)}
 to{transform:translateX(140vw)}
+}
+.fadeText{
+opacity:0;
+transform:translateY(8px);
+transition:opacity 1.2s ease, transform 1.2s ease;
+}
+
+.fadeText.show{
+opacity:1;
+transform:translateY(0);
 }
 
 
@@ -591,9 +605,12 @@ const card=document.createElement("div");
 card.id="sideCard";
 card.innerHTML=`
 <div class="cardContent">
-<button id="hugBtn">Hold here to hug me tightly 🫂</button>
+   <div id="cardInner">
+      <button id="hugBtn">Hold here to hug me tightly 🫂</button>
+   </div>
 </div>
 `;
+
 document.body.appendChild(card);
 requestAnimationFrame(()=>{
 card.classList.add("show");
@@ -704,7 +721,8 @@ document.getElementById("quizBox").style.opacity=1;
 /* ========== QUIZ ========== */
 
 function expandCard(card){
-card.innerHTML=`
+document.getElementById("cardInner").innerHTML=
+`
 <div id="quizBox" style="opacity:0; transition:opacity .8s ease;">
 <div class="quizHeader">
 <div class="quizTitle">Prove that you're my Babyy 🥺❤️</div>
@@ -811,19 +829,27 @@ function quizComplete(){
 const card=document.querySelector(".cardContent");
 
 // Message 1
-card.innerHTML=`
-<div class="finalOpen" style="font-family:'Dancing Script',cursive;font-size:42px;line-height:1.4;">
+const inner=document.getElementById("cardInner");
+
+inner.innerHTML=`
+<div class="finalOpen fadeText" style="font-family:'Dancing Script',cursive;font-size:42px;line-height:1.4;">
 Yayy finally 💗<br>
 You proved that you're my babyy
-</div>
-`;
+</div>`;
+
+
+requestAnimationFrame(()=>{
+inner.querySelector(".fadeText").classList.add("show");
+});
+
 
 // Message 2 after 2.5s
 setTimeout(()=>{
-card.style.opacity=0;
+inner.querySelector(".fadeText").classList.remove("show");
 
 setTimeout(()=>{
-card.innerHTML=`
+
+document.getElementById("cardInner").innerHTML=`
 <div class="heartMessage">
 Come…<br>
 we’re going inside my heart
@@ -833,7 +859,7 @@ card.style.opacity=1;
 
 // dissolve → then expand
 setTimeout(()=>{
-const msg = card.querySelector(".heartMessage");
+const msg = document.querySelector(".heartMessage");
 dissolveText(msg);
 
 setTimeout(()=>{
@@ -842,7 +868,7 @@ enterHeartWorld(card);
 
 },2500);
 
-},600);
+},1300);
 },2500);
 }
 function dissolveText(element){
@@ -881,21 +907,24 @@ setTimeout(()=>span.remove(),1400);
 function enterHeartWorld(card){
 
 // fade old elements
-document.getElementById("bg")?.classList.add("fadeOldWorld");
-document.getElementById("dim")?.classList.add("fadeOldWorld");
-document.querySelectorAll(".star").forEach(s=>s.classList.add("fadeOldWorld"));
+
 
 const rect = card.getBoundingClientRect();
 
 // freeze card exactly where it is
+card.style.transform="none";
 card.style.position = "fixed";
 card.style.top = rect.top + "px";
 card.style.left = rect.left + "px";
 card.style.width = rect.width + "px";
 card.style.height = rect.height + "px";
+card.parentElement.style.pointerEvents="none";
+
+card.classList.add("pinkGlow");
 
 // allow animation
 card.classList.add("expandHeart");
+card.offsetHeight; // forces browser to render first state
 
 // next frame → grow to screen
 requestAnimationFrame(()=>{
@@ -905,17 +934,16 @@ card.classList.add("fullHeart");
 // after animation finishes → show heart world
 setTimeout(()=>{
 
-// hold pink moment
+// NOW the card already covers the screen
+document.getElementById("bg")?.classList.add("fadeOldWorld");
+document.getElementById("dim")?.classList.add("fadeOldWorld");
+document.querySelectorAll(".star").forEach(s=>s.classList.add("fadeOldWorld"));
+
 setTimeout(()=>{
 document.getElementById("heartWorld").classList.add("show");
+},900);
 
-setTimeout(()=>{
-card.remove();
-},2000);
-
-},1400);
-
-},4000);
+},4800);
 }
 
 
