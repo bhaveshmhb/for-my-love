@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -145,6 +146,7 @@ justify-content:center;
 font-family:'Poppins',sans-serif;
 font-size:18px;
 letter-spacing:.3px;
+transform-origin:center center;
 }
 /* when identity step starts */
 .cardContent.identityMode{
@@ -334,6 +336,24 @@ word-break:break-word;
 margin-top:12px;
 transition:.35s;
 }
+.heartMessage{
+font-family:'Dancing Script',cursive;
+font-size:clamp(34px,4vw,52px);
+line-height:1.5;
+letter-spacing:.4px;
+color:#fff;
+
+opacity:0;
+transform:translateY(10px);
+animation:softReveal 1.6s ease forwards;
+}
+
+@keyframes softReveal{
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
 
 /* ========== HEART ENTRY TRANSITION ========== */
 
@@ -349,36 +369,49 @@ backdrop-filter:none !important;
 box-shadow:0 0 120px rgba(255,150,220,.85) !important;
 }
 
-.cardContent.enterHeart{
-position:fixed !important;
-top:50% !important;
-left:50% !important;
-transform:translate(-50%,-50%) scale(1) !important;
-z-index:999 !important;
-animation:heartConsume 5s cubic-bezier(.22,1,.36,1) forwards !important;
+.cardContent.expandHeart{
+position:fixed;
+z-index:999;
+transition:
+width 4s cubic-bezier(.22,1,.36,1),
+height 4s cubic-bezier(.22,1,.36,1),
+top 4s cubic-bezier(.22,1,.36,1),
+left 4s cubic-bezier(.22,1,.36,1),
+border-radius 4s cubic-bezier(.22,1,.36,1),
+background 3.2s ease,
+box-shadow 2s ease;
+backdrop-filter:none !important;
+-webkit-backdrop-filter:none !important;
+}
+.cardContent.fullHeart{
+width:100vw !important;
+height:100vh !important;
+top:0 !important;
+left:0 !important;
+border-radius:0 !important;
+background:linear-gradient(180deg,#ffffff,#ffd6f3,#ff9bd4,#ff6fb7) !important;
+transition:background 4s ease;
 }
 
-@keyframes heartConsume{
+.wordParticle{
+position:fixed;
+pointer-events:none;
+font-family:'Dancing Script',cursive;
+color:#ffc0ea;
+opacity:1;
+animation:wordFloat 1.4s ease forwards;
+}
+
+@keyframes wordFloat{
 0%{
-transform:translate(-50%,-50%) scale(1);
-border-radius:22px;
-}
-25%{
-transform:translate(-50%,-50%) scale(3.5);
-border-radius:30px;
-}
-55%{
-transform:translate(-50%,-50%) scale(9);
-border-radius:50px;
-}
-85%{
-transform:translate(-50%,-50%) scale(20);
-border-radius:80px;
+opacity:1;
+transform:translate(0,0) scale(1);
+filter:blur(0px);
 }
 100%{
-transform:translate(-50%,-50%) scale(35);
-border-radius:0;
-opacity:1;
+opacity:0;
+transform:translate(var(--dx),var(--dy)) scale(.6);
+filter:blur(6px);
 }
 }
 
@@ -388,16 +421,16 @@ opacity:1;
 position:fixed;
 inset:0;
 z-index:1;
-opacity:0;
+opacity:1;              /* always visible */
 pointer-events:none;
-background:linear-gradient(180deg,#ffe6f4 0%, #ffd6f0 35%, #ffc2ea 70%, #ffb3e6 100%);
+background:url("pinksky.jpg") center/cover no-repeat;
 overflow:hidden;
-transition:opacity 2.5s ease;
+filter:brightness(0) saturate(1.2);
+transition:filter 2.8s ease;
 }
 
 #heartWorld.show{
-opacity:1;
-pointer-events:auto;
+filter:brightness(1) saturate(1.1);
 }
 
 #heartWorld::after{
@@ -433,229 +466,6 @@ from{transform:translateX(0)}
 to{transform:translateX(140vw)}
 }
 
-/* ========== LOVE STAGE ========== */
-
-.loveStage{
-position:fixed;
-inset:0;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-gap:35px;
-text-align:center;
-z-index:50;
-opacity:0;
-transition:opacity 1.2s ease;
-}
-
-.loveStage.show{
-opacity:1;
-}
-
-.loveStatus{
-font-family:'Playfair Display',serif;
-font-size:26px;
-color:#fff;
-text-shadow:0 2px 15px rgba(0,0,0,.2);
-opacity:0;
-animation:fadeInUp 1s cubic-bezier(.22,1,.36,1) forwards;
-}
-
-@keyframes fadeInUp{
-from{opacity:0;transform:translateY(20px)}
-to{opacity:1;transform:translateY(0)}
-}
-
-#loveCount{
-font-size:32px;
-font-weight:600;
-display:inline-block;
-transition:all .3s cubic-bezier(.22,1,.36,1);
-}
-
-.heartBtn{
-font-size:90px;
-cursor:pointer;
-transition:transform .2s cubic-bezier(.22,1,.36,1), filter .3s;
-opacity:0;
-animation:fadeInUp 1s .3s cubic-bezier(.22,1,.36,1) forwards;
-filter:drop-shadow(0 10px 30px rgba(255,105,180,.4));
--webkit-user-select:none;
-user-select:none;
-}
-
-.heartBtn:hover{
-transform:scale(1.15);
-filter:drop-shadow(0 15px 40px rgba(255,105,180,.6));
-}
-
-.heartBtn:active{
-transform:scale(.95);
-}
-
-.heartBtn.pulse{
-animation:heartPulse .4s cubic-bezier(.22,1,.36,1);
-}
-
-@keyframes heartPulse{
-0%{transform:scale(1)}
-50%{transform:scale(1.3)}
-100%{transform:scale(1)}
-}
-
-.loveHint{
-opacity:.6;
-font-size:16px;
-font-family:'Playfair Display',serif;
-color:#fff;
-text-shadow:0 2px 10px rgba(0,0,0,.15);
-animation:fadeInUp 1s .6s cubic-bezier(.22,1,.36,1) forwards;
-opacity:0;
-}
-
-/* ========== KISS PARTICLES ========== */
-
-.kissParticle{
-position:fixed;
-font-size:24px;
-pointer-events:none;
-z-index:9999;
-animation:kissFloat 1.2s cubic-bezier(.22,1,.36,1) forwards;
-}
-
-@keyframes kissFloat{
-0%{
-opacity:0;
-transform:translateY(0) scale(.5) rotate(0deg);
-}
-20%{
-opacity:1;
-}
-100%{
-opacity:0;
-transform:translateY(-120px) scale(1.3) rotate(25deg);
-}
-}
-
-.sparkle{
-position:fixed;
-width:4px;
-height:4px;
-background:#fff;
-border-radius:50%;
-pointer-events:none;
-z-index:9998;
-animation:sparkleAnim 1s ease-out forwards;
-}
-
-@keyframes sparkleAnim{
-0%{
-opacity:1;
-transform:translate(0,0) scale(1);
-}
-100%{
-opacity:0;
-transform:translate(var(--dx),var(--dy)) scale(0);
-}
-}
-
-/* ========== HAPPINESS LEVEL GLOW ========== */
-
-#heartWorld.level-1{filter:brightness(1.02);}
-#heartWorld.level-2{filter:brightness(1.04);}
-#heartWorld.level-3{filter:brightness(1.06);}
-#heartWorld.level-4{filter:brightness(1.08);}
-#heartWorld.level-5{filter:brightness(1.1);}
-#heartWorld.level-6{filter:brightness(1.12);}
-#heartWorld.level-7{filter:brightness(1.14);}
-#heartWorld.level-8{filter:brightness(1.16);}
-#heartWorld.level-9{filter:brightness(1.18);}
-#heartWorld.level-10{filter:brightness(1.2) saturate(1.2);}
-
-/* ========== STARRY NIGHT TRANSITION ========== */
-
-#starryNight{
-position:fixed;
-inset:0;
-z-index:100;
-opacity:0;
-background:linear-gradient(180deg,
-#1a0a2e 0%,
-#2d1b4e 25%,
-#4a2c6b 50%,
-#6b4299 75%,
-#8b5cb8 100%);
-transition:opacity 3s ease;
-pointer-events:none;
-}
-
-#starryNight.show{
-opacity:1;
-pointer-events:auto;
-}
-
-.finalStar{
-position:absolute;
-width:3px;
-height:3px;
-background:#fff;
-border-radius:50%;
-opacity:0;
-box-shadow:0 0 10px rgba(255,255,255,.8);
-animation:starAppear 1.5s cubic-bezier(.22,1,.36,1) forwards;
-}
-
-@keyframes starAppear{
-0%{
-opacity:0;
-transform:scale(0);
-}
-50%{
-opacity:1;
-transform:scale(1.5);
-}
-100%{
-opacity:1;
-transform:scale(1);
-}
-}
-
-.finalStar.twinkle{
-animation:starTwinkle 3s ease-in-out infinite;
-}
-
-@keyframes starTwinkle{
-0%,100%{opacity:1;transform:scale(1);}
-50%{opacity:.6;transform:scale(.9);}
-}
-
-/* ========== CONFESSION TEXT ========== */
-
-#confessionText{
-position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-width:min(85%,700px);
-text-align:center;
-z-index:101;
-opacity:0;
-}
-
-#confessionText.show{
-opacity:1;
-}
-
-.confessionLine{
-font-family:'Great Vibes',cursive;
-font-size:clamp(28px,5vw,48px);
-color:#fff;
-line-height:1.6;
-text-shadow:0 2px 20px rgba(0,0,0,.4);
-opacity:0;
-margin:10px 0;
-}
 
 /* ========== MOBILE ========== */
 
@@ -706,8 +516,7 @@ font-size:22px;
 <div class="cloud cloud3"></div>
 </div>
 
-<div id="starryNight"></div>
-<div id="confessionText"></div>
+
 
 <script>
 document.addEventListener("DOMContentLoaded",()=>{
@@ -960,10 +769,8 @@ document.addEventListener("click",(e)=>{
 if(e.target.matches("#submitBtn")){
 checkAnswer();
 }
-if(e.target.matches(".heartBtn")){
-kissHeart(e.target);
-}
 });
+
 document.addEventListener("keydown",(e)=>{
    if(e.key==="Enter" && document.activeElement.id==="answerInput"){
       const btn=document.getElementById("submitBtn");
@@ -1000,269 +807,118 @@ response.style.color="#ffd6ec";
 }
 
 /* ========== QUIZ COMPLETE → MESSAGES → HEART ENTRY ========== */
-
 function quizComplete(){
 const card=document.querySelector(".cardContent");
 
 // Message 1
 card.innerHTML=`
-<div class="finalOpen" style="font-family:'Great Vibes',cursive;font-size:42px;line-height:1.4;">
+<div class="finalOpen" style="font-family:'Dancing Script',cursive;font-size:42px;line-height:1.4;">
 Yayy finally 💗<br>
 You proved that you're my babyy
 </div>
 `;
 
-// Message 2 after 2.5 seconds
+// Message 2 after 2.5s
 setTimeout(()=>{
 card.style.opacity=0;
 
 setTimeout(()=>{
 card.innerHTML=`
-<div class="finalOpen" style="font-family:'Great Vibes',cursive;font-size:42px;line-height:1.4;">
-Come...<br>
-We're going inside my heart 💗
+<div class="heartMessage">
+Come…<br>
+we’re going inside my heart
 </div>
 `;
 card.style.opacity=1;
 
-// Start heart entry after 2.5 seconds
+// dissolve → then expand
+setTimeout(()=>{
+const msg = card.querySelector(".heartMessage");
+dissolveText(msg);
+
 setTimeout(()=>{
 enterHeartWorld(card);
+},1200);
+
 },2500);
 
 },600);
 },2500);
 }
+function dissolveText(element){
+
+const text = element.innerText;
+const rect = element.getBoundingClientRect();
+
+element.style.opacity="0";
+
+[...text].forEach((char)=>{
+if(char===" ") return;
+
+const span=document.createElement("span");
+span.className="wordParticle";
+span.textContent=char;
+
+document.body.appendChild(span);
+
+const x = rect.left + Math.random()*rect.width;
+const y = rect.top + Math.random()*rect.height;
+
+span.style.left=x+"px";
+span.style.top=y+"px";
+
+const dx=(Math.random()-0.5)*180+"px";
+const dy=(-120 - Math.random()*160)+"px";
+
+span.style.setProperty("--dx",dx);
+span.style.setProperty("--dy",dy);
+
+setTimeout(()=>span.remove(),1400);
+
+});
+}
 
 function enterHeartWorld(card){
-// Fade old world
+
+// fade old elements
 document.getElementById("bg")?.classList.add("fadeOldWorld");
 document.getElementById("dim")?.classList.add("fadeOldWorld");
 document.querySelectorAll(".star").forEach(s=>s.classList.add("fadeOldWorld"));
 
-// Transform card to pink and zoom
-card.classList.add("pinkGlow");
+const rect = card.getBoundingClientRect();
 
+// freeze card exactly where it is
+card.style.position = "fixed";
+card.style.top = rect.top + "px";
+card.style.left = rect.left + "px";
+card.style.width = rect.width + "px";
+card.style.height = rect.height + "px";
+
+// allow animation
+card.classList.add("expandHeart");
+
+// next frame → grow to screen
+requestAnimationFrame(()=>{
+card.classList.add("fullHeart");
+});
+
+// after animation finishes → show heart world
 setTimeout(()=>{
-card.classList.add("enterHeart");
-},100);
 
-// Show heart world at end of zoom (5 seconds)
+// hold pink moment
 setTimeout(()=>{
 document.getElementById("heartWorld").classList.add("show");
-card.style.opacity=0;
-
-// Start love stage after fade in
-setTimeout(()=>{
-startLoveStage();
-},1500);
-
-},5000);
-}
-
-/* ========== LOVE STAGE (KISS COUNTER) ========== */
-
-let happiness=0;
-
-function startLoveStage(){
-const stage=document.createElement("div");
-stage.className="loveStage";
-stage.innerHTML=`
-<div class="loveStatus">
-Your baby's happiness level:<br>
-<span id="loveCount">0</span>/10 🤍
-</div>
-<div class="heartBtn">💋</div>
-<div class="loveHint">tap my heart to make me happy...</div>
-`;
-document.body.appendChild(stage);
 
 setTimeout(()=>{
-stage.classList.add("show");
-},100);
+card.remove();
+},2000);
+
+},1400);
+
+},4000);
 }
 
-function kissHeart(btn){
-if(happiness>=10) return;
 
-happiness++;
-document.getElementById("loveCount").textContent=happiness;
-
-// Pulse animation
-btn.classList.remove("pulse");
-void btn.offsetWidth;
-btn.classList.add("pulse");
-
-// Create kiss particle
-createKissParticle(btn);
-
-// Create sparkles
-createSparkles(btn);
-
-// Update world brightness
-document.getElementById("heartWorld").className="show level-"+happiness;
-
-// Change emoji based on level
-if(happiness>=8){
-document.getElementById("loveCount").parentElement.innerHTML=`
-Your baby's happiness level:<br>
-<span id="loveCount">${happiness}</span>/10 ❤️
-`;
-}else if(happiness>=4){
-document.getElementById("loveCount").parentElement.innerHTML=`
-Your baby's happiness level:<br>
-<span id="loveCount">${happiness}</span>/10 💗
-`;
-}
-
-// At 10, trigger finale
-if(happiness===10){
-setTimeout(()=>{
-triggerFinale();
-},800);
-}
-}
-
-function createKissParticle(btn){
-const hearts=['💗','❤️','💕','💖'];
-const randomHeart=hearts[Math.floor(Math.random()*hearts.length)];
-
-// Get different heart based on level
-let heart=randomHeart;
-if(happiness<4) heart='🤍';
-else if(happiness<8) heart='💗';
-else heart='❤️';
-
-const particle=document.createElement("div");
-particle.className="kissParticle";
-particle.textContent=heart;
-
-const rect=btn.getBoundingClientRect();
-particle.style.left=(rect.left+rect.width/2)+"px";
-particle.style.top=(rect.top+rect.height/2)+"px";
-
-document.body.appendChild(particle);
-setTimeout(()=>particle.remove(),1200);
-}
-
-function createSparkles(btn){
-const rect=btn.getBoundingClientRect();
-const centerX=rect.left+rect.width/2;
-const centerY=rect.top+rect.height/2;
-
-for(let i=0;i<8;i++){
-const sparkle=document.createElement("div");
-sparkle.className="sparkle";
-
-const angle=Math.random()*Math.PI*2;
-const distance=40+Math.random()*60;
-const dx=Math.cos(angle)*distance;
-const dy=Math.sin(angle)*distance;
-
-sparkle.style.left=centerX+"px";
-sparkle.style.top=centerY+"px";
-sparkle.style.setProperty("--dx",dx+"px");
-sparkle.style.setProperty("--dy",dy+"px");
-
-document.body.appendChild(sparkle);
-setTimeout(()=>sparkle.remove(),1000);
-}
-}
-
-/* ========== FINALE (STARRY NIGHT + CONFESSION) ========== */
-
-function triggerFinale(){
-// Big explosion of hearts
-const btn=document.querySelector(".heartBtn");
-if(btn){
-for(let i=0;i<30;i++){
-setTimeout(()=>{
-createKissParticle(btn);
-createSparkles(btn);
-},i*50);
-}
-}
-
-// Fade out love stage
-setTimeout(()=>{
-document.querySelector(".loveStage").style.opacity=0;
-
-// Transition to starry night
-setTimeout(()=>{
-document.getElementById("starryNight").classList.add("show");
-document.querySelector(".loveStage").remove();
-
-// Create stars
-setTimeout(()=>{
-createStarField();
-},500);
-
-// Start confession after stars appear
-setTimeout(()=>{
-showConfession();
-},3000);
-
-},1500);
-},1500);
-}
-
-function createStarField(){
-const container=document.getElementById("starryNight");
-
-// Create 100 random stars
-for(let i=0;i<100;i++){
-setTimeout(()=>{
-const star=document.createElement("div");
-star.className="finalStar";
-star.style.left=Math.random()*100+"%";
-star.style.top=Math.random()*100+"%";
-star.style.animationDelay=Math.random()*2+"s";
-
-container.appendChild(star);
-
-// Make some stars twinkle
-if(Math.random()>.5){
-setTimeout(()=>{
-star.classList.add("twinkle");
-},1500);
-}
-},i*15);
-}
-}
-
-function showConfession(){
-const confessionLines=[
-"My dearest baby...",
-"From the moment I met you,",
-"You became my whole world...",
-"Every day with you feels like magic,",
-"And I promise to love you,",
-"To cherish you,",
-"To make you smile,",
-"Today, tomorrow, and always...",
-"You are my forever,",
-"My sunshine in the rain,",
-"My heart in human form...",
-"Happy Valentine's Day, my love 💗",
-"",
-"Forever yours,",
-"Your BuBu..."
-];
-
-const container=document.getElementById("confessionText");
-container.classList.add("show");
-
-confessionLines.forEach((line,index)=>{
-setTimeout(()=>{
-const lineEl=document.createElement("div");
-lineEl.className="confessionLine";
-lineEl.textContent=line;
-lineEl.style.animation=`fadeInUp 1.5s cubic-bezier(.22,1,.36,1) forwards`;
-lineEl.style.animationDelay=".3s";
-container.appendChild(lineEl);
-},index*2000);
-});
-}
 });
 
 </script>
