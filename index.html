@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -147,16 +148,18 @@ letter-spacing:.3px;
 }
 /* when identity step starts */
 .cardContent.identityMode{
-width:460px;
-height:360px;
-padding:35px 40px;
+width:min(92vw,460px);
+min-height:260px;
+padding:38px 40px;
 border-radius:22px;
+
 transition:
 width .9s cubic-bezier(.22,1,.36,1),
-height .9s cubic-bezier(.22,1,.36,1),
 padding .9s cubic-bezier(.22,1,.36,1),
-border-radius .9s cubic-bezier(.22,1,.36,1);
+border-radius .9s cubic-bezier(.22,1,.36,1),
+transform .4s ease;
 }
+
 
 /* ========== HUG BUTTON ========== */
 
@@ -255,13 +258,24 @@ gap:24px;
 text-align:center;
 }
 .question{
-font-family:'Playfair Display',serif;
-font-size:26px;
-line-height:1.7;
-letter-spacing:.4px;
+font-family:'Cormorant Garamond',serif;
+font-size:20px;
+line-height:1.5;
+max-width:90%;
+margin:auto;
+
+letter-spacing:.3px;
 color:#fff;
-max-width:100%;
+opacity:0;
+transform:translateY(8px);
+transition:opacity .9s ease, transform .9s ease;
 }
+.question.show{
+opacity:1;
+transform:translateY(0);
+}
+
+
 
 #answerInput{
 width:100%;
@@ -279,6 +293,8 @@ transition:.2s;
 #answerInput:focus{
 border:1px solid #ff4fa3;
 box-shadow:0 0 0 3px rgba(255,80,160,.25);
+width:100%;
+box-sizing:border-box;
 background:rgba(0,0,0,.35);
 }
 
@@ -311,6 +327,10 @@ min-height:28px;
 font-size:19px;
 font-family:'Nunito',sans-serif;
 opacity:.95;
+max-width:90%;
+margin:auto;
+text-align:center;
+word-break:break-word;
 margin-top:12px;
 transition:.35s;
 }
@@ -927,15 +947,14 @@ const response=document.getElementById("responseText");
 
 response.textContent="";
 input.value="";
-qBox.style.opacity=0;
+qBox.classList.remove("show");
 qBox.textContent=q.question;
 
 setTimeout(()=>{
-qBox.style.transition="opacity .8s ease";
-qBox.style.opacity=1;
+qBox.classList.add("show");
 input.focus();
-},80);
-}
+},120);
+
 
 document.addEventListener("click",(e)=>{
 if(e.target.matches("#submitBtn")){
