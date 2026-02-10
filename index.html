@@ -449,7 +449,7 @@ transition:opacity 1.5s ease;
 .proposalText{
 font-family:'Great Vibes',cursive;
 font-size:clamp(32px,5vw,64px);
-color:#fff;text-align:center;line-height:1.6;
+color:#fff;text-align:center;line-height:1.3;
 text-shadow:0 2px 20px rgba(255,100,160,.6),0 0 40px rgba(255,150,200,.3);
 max-width:min(85vw,700px);
 opacity:0;transform:translateY(16px);
@@ -458,9 +458,11 @@ transition:opacity 1.4s ease,transform 1.4s cubic-bezier(.22,1,.36,1);
 .proposalText.show{opacity:1;transform:translateY(0);}
 
 .proposalLine{
-display:block;
-margin:6px 0;
+  display:block;
+  margin:0;
+  line-height:1.15;
 }
+
 
 .proposalButtons{
 display:flex;gap:40px;margin-top:50px;
