@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>BuBu's Heart🩷</title>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -753,6 +753,30 @@ opacity:.7;
 0%{transform:translateY(-40px) rotate(0deg) translateX(0);opacity:.7;}
 100%{transform:translateY(110vh) rotate(720deg) translateX(var(--sway));opacity:0;}
 }
+/* LANDSCAPE / SHORT SCREEN FIX */
+@media (max-height: 720px){
+
+  #heartUI,
+  #proposalStage,
+  #celebrationStage{
+    justify-content:flex-start;
+    padding-top:80px;
+  }
+
+  .proposalText{
+    transform:none !important;
+  }
+
+  .proposalButtons{
+    margin-top:25px;
+  }
+
+  #confessionCard{
+    top:55%;
+    transform:translateY(-55%);
+  }
+
+}
 
 /* ============================================================
    MOBILE
@@ -807,25 +831,91 @@ width:min(92vw,500px);
 </div>
 
 <div id="endingStage"></div>
-<audio id="bgMusic" src="music.mp3" preload="auto"></audio>
+<audio id="musicA" src="music.mp3" preload="auto"></audio>
+<audio id="musicB" src="music.mp3" preload="auto"></audio>
 
 <script>
-document.addEventListener("DOMContentLoaded",()=>{
-const music = document.getElementById("bgMusic");
-music.volume = 0; // start silent
+   /* ================= CINEMATIC MUSIC ENGINE ================= */
 
-function fadeMusic(target=0.20, duration=2000){
+const musicA = document.getElementById("musicA");
+const musicB = document.getElementById("musicB");
+
+let active = musicA;
+let standby = musicB;
+let musicStarted = false;
+
+const LOOP_POINT = 8;       // skips intro silence
+const FADE_TIME = 4000;     // crossfade duration
+const MAX_VOL = 0.18;
+
+[musicA, musicB].forEach(m=>{
+  m.volume = 0;
+});
+
+/* start music once (heart world entry) */
+function startMusic(){
+  if(musicStarted) return;
+  musicStarted = true;
+
+  active.currentTime = LOOP_POINT;
+  active.play();
+  fade(active, MAX_VOL, 3000);
+
+  monitorLoop();
+}
+
+/* watch for loop point */
+function monitorLoop(){
+  setInterval(()=>{
+    if(!active.duration) return;
+
+    const remaining = active.duration - active.currentTime;
+
+    if(remaining < FADE_TIME/1000 + 0.2){
+      crossfade();
+    }
+  },200);
+}
+
+/* crossfade A → B */
+function crossfade(){
+  standby.currentTime = LOOP_POINT;
+  standby.play();
+
+  fade(standby, MAX_VOL, FADE_TIME);
+  fade(active, 0, FADE_TIME);
+
+  const temp = active;
+  active = standby;
+  standby = temp;
+}
+
+/* smooth volume change */
+function fade(audio, target, duration){
   const step = 50;
-  const change = (target - music.volume) / (duration/step);
+  const change = (target - audio.volume) / (duration/step);
 
-  const fade = setInterval(()=>{
-    music.volume += change;
-    if((change>0 && music.volume>=target) || (change<0 && music.volume<=target)){
-      music.volume = target;
-      clearInterval(fade);
+  const f = setInterval(()=>{
+    audio.volume += change;
+
+    if((change>0 && audio.volume>=target) ||
+       (change<0 && audio.volume<=target)){
+      audio.volume = target;
+      clearInterval(f);
+      if(target===0) audio.pause();
     }
   },step);
 }
+
+/* cinematic ending fade */
+function stopMusic(){
+  fade(active, 0, 4500);
+  fade(standby, 0, 4500);
+}
+
+document.addEventListener("DOMContentLoaded",()=>{
+;
+ // start silent
 
 /* ============================================================
    OPENING
@@ -930,49 +1020,21 @@ function cancelHold(){
   activeBtn.style.setProperty("--hold","0");
   activeBtn=null;
 }
-function setupSeamlessLoop(){
-  music.addEventListener("loadedmetadata", ()=>{
-    music.addEventListener("timeupdate", ()=>{
-      if(!music.duration) return;
-      if(music.duration - music.currentTime < 1.2){
-        crossfadeRestart();
-      }
-    });
-  });
-}
 
 
-let looping = false;
-function crossfadeRestart(){
-  if(looping) return;
-  looping = true;
-
-  // fade out
-  let fadeOut = setInterval(()=>{
-   music.volume = Math.max(0, music.volume - 0.02);
-if(music.volume <= 0.02){
-
-      clearInterval(fadeOut);
-      music.currentTime = 8; // skip intro silence part
-music.play();
-
-      // fade back in
-      let fadeIn = setInterval(()=>{
-        music.volume += 0.02;
-        if(music.volume >= 0.20){
-          music.volume = 0.20;
-          clearInterval(fadeIn);
-          looping = false;
-        }
-      },50);
-
-    }
-  },50);
-}
 
 
 function hugComplete(btn){
  
+  musicA.play().then(()=>{
+    musicA.pause();
+    musicA.currentTime = 0;
+  }).catch(()=>{});
+
+  musicB.play().then(()=>{
+    musicB.pause();
+    musicB.currentTime = 0;
+  }).catch(()=>{});
 
   btn.style.setProperty("--hold","1");
   const rect=btn.getBoundingClientRect();
@@ -1173,16 +1235,13 @@ if(ci) ci.innerHTML="";
 ============================================================ */
 
 function startHeartWorld(){
+   startMusic();
+
   startPetalRain();
 
   /* 2.5s silence first */
   setTimeout(()=>{
-     if(music.paused){
-  music.currentTime = 8; // skip intro silence
-  music.play();
-  fadeMusic(0.18, 3000);
-  setupSeamlessLoop();
-}
+     
 
 
     const ui=document.getElementById("heartUI");
@@ -1667,6 +1726,8 @@ function setupHoldFinish(btn){
 }
 
 function hugFinishComplete(btn){
+   stopMusic();
+
   /* burst hearts */
   const rect=btn.getBoundingClientRect();
   const emojis=["🫂","💗","💖","❤️","🥺","🩷"];
@@ -1769,7 +1830,9 @@ stage.appendChild(t);
   },6000);
 }
 
-}); /* end DOMContentLoaded */
+}); 
+/* end DOMContentLoaded */
+
 </script>
 </body>
 </html>
