@@ -1707,15 +1707,24 @@ function setupHoldFinish(btn){
     b.style.setProperty("--hy",((e.clientY-rect.top)/rect.height*100)+"%");
     b.style.setProperty("--hhold","0");
     const start=performance.now();
-    holdFinishInterval=setInterval(()=>{
-      let p=Math.min((performance.now()-start)/HOLD_FINISH_TIME,1);
-      b.style.setProperty("--hhold",p.toFixed(3));
-      if(p>=1){
-        clearInterval(holdFinishInterval);
-        holdFinishActive=false;
-        hugFinishComplete(b);
-      }
-    },16);
+   holdFinishInterval=setInterval(()=>{
+  let p=Math.min((performance.now()-start)/HOLD_FINISH_TIME,1);
+  b.style.setProperty("--hhold",p.toFixed(3));
+
+  /* --- CINEMATIC AUDIO FADE WITH TOUCH --- */
+  const newVol = MAX_VOL * (1 - p);
+  musicA.volume = newVol;
+  musicB.volume = newVol;
+
+  if(p>=1){
+    musicA.pause();
+    musicB.pause();
+    clearInterval(holdFinishInterval);
+    holdFinishActive=false;
+    hugFinishComplete(b);
+  }
+},16);
+
   });
   document.addEventListener("pointerup",()=>{
     if(!holdFinishActive) return;
@@ -1726,7 +1735,7 @@ function setupHoldFinish(btn){
 }
 
 function hugFinishComplete(btn){
-   stopMusic();
+   
 
   /* burst hearts */
   const rect=btn.getBoundingClientRect();
