@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -960,9 +961,9 @@ function expandCard(card){
 
 const quiz=[
   {q:"Nan Phone nalli nin contact name enu..?",a:["indu","amruta","my baby"],ok:"💗 hehe correct😁",no:"Pakka naa 😌"},
-  {q:"What do you call me when it's just us..?",a:["cutie","bubu","love","idiot"],ok:"i like that one 🤭",no:"hmmm not that"},
-  {q:"Which chocolate you gave me on my Birthdayy..?",a:["diary milk","dairy milk","fruit and nut","diarymilk"],ok:"Soo cutee🥺",no:"hmmm think again"},
-  {q:"Happiness level kammi iddaga en madbek ninuu..?",a:["hug","kiss","talk","call"],ok:"exactly ❤️",no:"almost... think again"}
+  {q:"What do you call me when it's just us..?",a:["cutie","bubu","love","idiot"],ok:"Soo cutee🥺🤭",no:"Yochne madu..🥺"},
+  {q:"Which chocolate you gave me on my Birthdayy..?",a:["diary milk","dairy milk","fruit and nut","dairymilk","diarymilk"],ok:"Easy ittu idu..😌",no:"I hate you..😤"},
+  {q:"Happiness level kammi iddaga en madbek ninuu..?",a:["hug","kiss","talk","call"],ok:"Mmuuaaahh 💋",no:"not at all..🥲"}
 ];
 let qIndex=0;
 
@@ -973,8 +974,10 @@ function showQuestion(){
   const qBox=document.getElementById("questionText");
   const input=document.getElementById("answerInput");
   const resp=document.getElementById("responseText");
-  if(!qBox) return;
- if(resp) resp.textContent=""; input.value="";
+ if(!qBox) return;
+if(resp) resp.textContent="";
+if(input) input.value="";
+
   qBox.classList.remove("show"); qBox.textContent=q.q;
   setTimeout(()=>{ qBox.classList.add("show"); input.focus(); },120);
 }
@@ -1023,8 +1026,9 @@ function quizComplete(){
 
   inner.innerHTML=`
   <div class="finalOpen fadeText" style="font-family:'Pacifico',cursive;font-size:38px;line-height:1.5;">
-    Yayy Finallyy..😁💗<br>
-    Konegu prove madbitte alvaa..🫂
+    Yayy...😁💗<br>
+    Konegu prove madbitte alvaa..🥰🧡
+    Mmmuuuaaahh 💋🫂
   </div>`;
   requestAnimationFrame(()=>inner.querySelector(".fadeText").classList.add("show"));
 
@@ -1036,7 +1040,7 @@ if(fade) fade.classList.remove("show");
       inner.innerHTML=`
       <div class="heartMessage" style="font-family:'Pacifico',cursive;">
         Baa nan jotee..<br>
-        we're going inside my heart 💗
+        I have something for you inside my heart 💗
       </div>`;
 
       setTimeout(()=>{
@@ -1120,7 +1124,7 @@ function startHeartWorld(){
 
     const w=document.createElement("div");
     w.className="welcomeText";
-    w.textContent="Welcome to my Heart 🌸";
+    w.textContent="Welcome to my Heart 😎🌸";
     ui.appendChild(w);
 
     const sub=document.createElement("div");
@@ -1167,12 +1171,12 @@ function startPetalRain(){
 
 const loveReasons=[
   {text:"I love how your snaps melt my anger…", heart:"💗"},
-  {text: 'I like that my day feels incomplete without your "👋"', heart: "🥺" },
+  {text: 'I like how my day feels incomplete without your "👋"', heart: "🥺" },
   {text:"I like how you calm down my overthinking…", heart:"🫂"},
   {text:"I love that you never really left even on bad days…", heart:"❤️"},
   {text:"I love how we keep trusting each other without breaking…", heart:"💖"},
-  {text:"I love that you're not perfect… but still perfect for me…", heart:"🌸"},
-  {text:"I love being the one who slowly ruins your innocence 😌", heart:"🤭"},
+  {text:"I love being the one who slowly ruins your innocence…", heart:"🌸"},
+  {text:"I love that you're not perfect… but still perfect for me…", heart:"🤭"},
 ];
 
 let letterIndex=0;
@@ -1221,7 +1225,7 @@ function showNextLetter(){
       <span class="letterNumber">${letterIndex+1}.</span>
       <p class="letterText">${r.text}</p>
       <span class="letterHeart">${r.heart}</span>
-      <div class="tapHint">tap to continue ✨</div>`;
+      <div class="tapHint">tap to continue..✨</div>`;
     stage.appendChild(card);
 
     setTimeout(()=>{
@@ -1310,7 +1314,7 @@ function showProposalButtons(stage){
 
   const yesBtn=document.createElement("button");
   yesBtn.className="yesBtn";
-  yesBtn.textContent="Yes, always 💗";
+  yesBtn.textContent="Yes Babyy💗";
 
   const noBtn=document.createElement("button");
   noBtn.className="noBtn";
@@ -1333,7 +1337,7 @@ function showProposalButtons(stage){
   document.body.appendChild(noBtn);
 
   /* NO texts to cycle through */
-  const noTexts=["No","Wait are you sure?","Please don't 🥺","You can't mean that...","Okay fine… but really?","I'm not giving up 😤","Last chance... 💗"];
+  const noTexts=["No","Oii..🥺🥲","Babyy.. Please dont😟😖","You're too bad..🥲😭.","Okay fine… Ide maata!?","I'm not giving up 😤","Last chance... 💗"];
 
   noBtn.addEventListener("mouseenter",()=>{
     noAttempts++;
@@ -1384,7 +1388,7 @@ function startCelebration(){
   /* big text pop */
   const t1=document.createElement("div");
   t1.className="celebrationText";
-  t1.innerHTML="Of course you said yes 🥺💗<br><span style='font-size:.6em;font-family:Lora,serif;font-style:italic;'>I knew you would...</span>";
+  t1.innerHTML="Hurrayyy!.. Finally I won😎😁💗<br><span style='font-size:.6em;font-family:Lora,serif;font-style:italic;'>Nang pakka gottittu🥰🫂...</span>";
   stage.appendChild(t1);
   setTimeout(()=>t1.classList.add("pop"),300);
 
@@ -1433,7 +1437,7 @@ function launchCelebHeart(){
   h.style.setProperty("--rot2",(Math.random()*120-60)+"deg");
   h.style.animationDuration=(1.5+Math.random()*1.5)+"s";
   document.body.appendChild(h);
-  setTimeout(()=>h.remove(),3000);
+  setTimeout(()=>h.remove(),3500);
 }
 
 /* ============================================================
@@ -1531,6 +1535,8 @@ function typeConfession(){
       if(currentLine && currentLine.textContent===""){ /* empty line = paragraph break */
         const br=document.createElement("br");
         body.appendChild(br);
+  setTimeout(typeNext, 450); // pause between lines
+  return;
       } else {
         const br=document.createElement("br");
         body.appendChild(br);
@@ -1547,9 +1553,14 @@ function typeConfession(){
     scroll.scrollTop=scroll.scrollHeight;
     i++;
     /* vary speed slightly for natural feel */
-    const delay=ch==="."||ch==="…"||ch==="!"||ch==="?"?80:
-                ch===","?50: ch===" "?18: 12;
-    setTimeout(typeNext,delay);
+    const delay =
+  ch==="."||ch==="…"||ch==="!"||ch==="?" ? 320 :
+  ch==="," ? 220 :
+  ch===" " ? 70 :
+  45;
+
+setTimeout(typeNext, delay);
+
   }
   typeNext();
 }
@@ -1626,10 +1637,13 @@ function startEnding(){
   const stage=document.getElementById("endingStage");
   stage.classList.add("show");
 
-  const t=document.createElement("div");
-  t.className="endingText";
-  t.innerHTML="Happy First Valentine's Day,<br>Amruta 🩷";
-  stage.appendChild(t);
+
+ const t=document.createElement("div");
+t.className="endingText";
+t.style.fontFamily="'Tangerine', cursive";
+t.innerHTML="Happy First Valentine's Day,<br>Amruta 🩷";
+stage.appendChild(t);
+
 
   const heart=document.createElement("div");
   heart.className="endingHeart";
