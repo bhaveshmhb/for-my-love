@@ -37,6 +37,10 @@ font-size:clamp(38px,7vw,80px);line-height:1.25;z-index:20;opacity:0;
 transition:all 900ms cubic-bezier(.22,1,.36,1);
 text-shadow:0 0 30px rgba(255,200,230,.6),0 0 60px rgba(255,150,200,.3);pointer-events:none;
 }
+  .storyClear{
+text-shadow:none !important;
+filter:none !important;
+}
 .slideIn{opacity:1!important;transform:translate(-50%,-50%) scale(1)!important;filter:blur(0)!important;}
 .slideOut{opacity:0!important;transform:translate(-50%,-47%) scale(1.03)!important;filter:blur(5px)!important;}
 .star{position:fixed;width:2px;height:2px;background:#fff;border-radius:50%;z-index:1;animation:twinkle 2s infinite alternate;}
@@ -57,7 +61,7 @@ text-shadow:0 0 30px rgba(255,200,230,.6),0 0 60px rgba(255,150,200,.3);pointer-
 /* ── HUG BUTTON ── */
 #hugBtn{position:relative;overflow:hidden;width:100%;padding:18px 24px;border-radius:35px;border:none;cursor:none;font-family:'Poppins',sans-serif;font-size:16px;letter-spacing:.4px;color:rgba(255,255,255,.97);font-weight:600;background:transparent;text-shadow:0 1px 2px rgba(0,0,0,.6),0 0 12px rgba(255,180,230,.5);transition:transform .25s ease,box-shadow .25s ease;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;}
 #hugBtn::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,.10));backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25);box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -8px 18px rgba(255,150,200,.18);z-index:0;}
-#hugBtn::after{content:"";position:absolute;inset:-2px;border-radius:inherit;pointer-events:none;background:radial-gradient(circle at var(--x,50%) var(--y,50%),rgba(255,120,200,.65) 0%,rgba(255,120,200,.45) 25%,rgba(255,120,200,.25) 45%,transparent 70%);opacity:var(--hold,0);transform:scale(calc(var(--hold,0)*1.9));transition:opacity .2s linear,transform .2s linear;z-index:1;}
+#hugBtn::after{content:"";position:absolute;inset:-2px;border-radius:inherit;pointer-events:none;background:rgba(255,120,200,.18) ,rgba(255,120,200,.10) ,rgba(255,120,200,.05) ,transparent 70%);opacity:var(--hold,0);transform:scale(calc(var(--hold,0)*1.9));transition:opacity .2s linear,transform .2s linear;z-index:1;}
 #hugBtn:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 10px 30px rgba(255,140,200,.4);}
 .aura{position:absolute;inset:-6px;border-radius:inherit;background:radial-gradient(circle,rgba(255,160,210,.35),transparent 70%);filter:blur(14px);opacity:.6;z-index:-1;pointer-events:none;transition:.3s;}
 #hugBtn:hover .aura{opacity:1;transform:scale(1.1);}
@@ -314,7 +318,16 @@ function showSlides(){
   requestAnimationFrame(()=>story.classList.add("slideIn"));
   setTimeout(()=>{
     story.classList.remove("slideIn"); story.classList.add("slideOut");
-    setTimeout(()=>{ index++; if(index>=lines.length){dim.classList.remove("show");createSideCard();return;} showSlides(); },1500);
+    setTimeout(()=>{ index++; if(index>=lines.length){
+
+  // remove pink atmosphere instantly
+  story.classList.remove("slideIn","slideOut");
+  story.classList.add("storyClear");
+  story.style.opacity="0";
+
+  // wait a moment so background becomes clean
+  setTimeout(()=>{
+createSideCard();},700);return;} showSlides(); },1500);
   },3800);
 }
 function startStory(){setTimeout(()=>{dim.classList.add("show");setTimeout(showSlides,2000);},700);}
@@ -589,10 +602,13 @@ function showProposalButtons(stage){
   const btnWrap=document.createElement("div"); btnWrap.className="proposalButtons"; btnWrap.id="proposalBtnWrap";
   const yesBtn=document.createElement("button"); yesBtn.className="yesBtn"; yesBtn.textContent="Yes Babyy💗";
   const noBtn=document.createElement("button"); noBtn.className="noBtn"; noBtn.id="noBtn"; noBtn.textContent="No";
-  noBtn.style.cssText=`padding:16px 36px;border-radius:50px;border:2px solid rgba(255,255,255,.4);cursor:none;font-family:'Poppins',sans-serif;font-size:16px;font-weight:600;background:rgba(255,255,255,.12);backdrop-filter:blur(10px);color:rgba(255,255,255,.8);letter-spacing:.3px;transition:all .15s ease;position:fixed;left:calc(50% - 220px);top:calc(50% + 120px);z-index:99;`;
-  btnWrap.appendChild(yesBtn); stage.appendChild(btnWrap); document.body.appendChild(noBtn);
+  noBtn.style.cssText=`padding:16px 36px;border-radius:50px;border:2px solid rgba(255,255,255,.4);font-family:'Poppins',sans-serif;font-size:16px;font-weight:600;background:rgba(255,255,255,.12);backdrop-filter:blur(10px);color:rgba(255,255,255,.8);letter-spacing:.3px;transition:all .15s ease;position:relative;`;
+  btnWrap.appendChild(yesBtn); stage.appendChild(btnWrap); btnWrap.appendChild(noBtn);
   const noTexts=["No","Oii..🥺🥲","Babyy.. Please dont😟😖","You're too bad..🥲😭","I'm not giving up 😤","Okay fine… Ide maata!","Last chance... 💗"];
   noBtn.addEventListener("mouseenter",()=>{
+    if(noAttempts===1){
+  noBtn.style.position="fixed";
+}
     noAttempts++; noBtn.textContent=noTexts[Math.min(noAttempts,noTexts.length-1)];
     function clamp(v,mn,mx){return Math.min(Math.max(v,mn),mx);}
     const btnW=160,btnH=60;
