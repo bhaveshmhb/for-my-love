@@ -1181,8 +1181,8 @@ function quizComplete(){
   inner.innerHTML=`
   <div class="finalOpen fadeText" style="font-family:'Pacifico',cursive;font-size:38px;line-height:1.5;">
     Yayy...😁💗<br>
-    Konegu prove madbitte alvaa..🥰🧡
-    Mmmuuuaaahh 💋🫂
+    Konegu prove madbitte alvaa..🥰🧡<br>
+    Take this hugg..🫂
   </div>`;
   requestAnimationFrame(()=>inner.querySelector(".fadeText").classList.add("show"));
 
@@ -1329,10 +1329,10 @@ function startPetalRain(){
 ============================================================ */
 
 const loveReasons=[
-  {text:"I love how your snaps melt my anger…", heart:"💗"},
+  {text:"I love how your snaps melts my anger…", heart:"💗"},
   {text: 'I like how my day feels incomplete without your "👋"', heart: "🥺" },
-  {text:"I like how you calm down my overthinking…", heart:"🫂"},
-  {text:"I love that you never really left even on bad days…", heart:"❤️"},
+  {text:"I like the way you calm down my overthinking…", heart:"🫂"},
+  {text:"I love that you never really left me when I'm feeling low…", heart:"❤️"},
   {text:"I love how we keep trusting each other without breaking…", heart:"💖"},
   {text:"I love being the one who slowly ruins your innocence…", heart:"🌸"},
   {text:"I love that you're not perfect… but still perfect for me…", heart:"🤭"},
@@ -1422,10 +1422,11 @@ function endLoveLetters(){
 
 const proposalLines=[
   "we never really had a big moment",
-  "aadru ist close and comfortable aadvi",
-  "and somehow we just slowly became us",
-  "so…",
-  "can we keep being like this till the end? 🙂"
+  "still I became soo close and attached to you",
+   "and without even noticing..you became my comfort",
+  "now I look for you in every day just like you're already my habit",
+  "I think I’m in too deep now…",
+  "can I stay yours a little longer!?..❤️🙂"
 ];
 
 let noAttempts=0;
@@ -1496,7 +1497,7 @@ function showProposalButtons(stage){
   document.body.appendChild(noBtn);
 
   /* NO texts to cycle through */
-  const noTexts=["No","Oii..🥺🥲","Babyy.. Please dont😟😖","You're too bad..🥲😭.","Okay fine… Ide maata!?","I'm not giving up 😤","Last chance... 💗"];
+  const noTexts=["No","Oii..🥺🥲","Babyy.. Please dont😟😖","You're too bad..🥲😭.","I'm not giving up 😤","Okay fine… Ide maata!","Last chance... 💗"];
 
   noBtn.addEventListener("mouseenter",()=>{
     noAttempts++;
@@ -1547,7 +1548,7 @@ function startCelebration(){
   /* big text pop */
   const t1=document.createElement("div");
   t1.className="celebrationText";
-  t1.innerHTML="Hurrayyy!.. Finally I won😎😁💗<br><span style='font-size:.6em;font-family:Lora,serif;font-style:italic;'>Nang pakka gottittu🥰🫂...</span>";
+  t1.innerHTML="Celebration timeee😁🥳!! We’re officially trapped together forever 😌😎💗<br><span style='font-size:.6em;font-family:Lora,serif;font-style:italic;'>Nang pakka gottittu🥰🫂...</span>";
   stage.appendChild(t1);
   setTimeout(()=>t1.classList.add("pop"),300);
 
@@ -1611,13 +1612,13 @@ Ning surprise kodbeku anta en madlilla idna.. But maybe ivattu ninu nanna miss m
 
 And konegu we are left with 2 screens.. you on your side of the world, me on mine, pretending a screen is enough when we both know it never fully is...🙂
 
-This 517 km is stealing my happiness in holding your hand without a reason, looking at you while talking, sharing the same quiet instead of a call. Istella aadru, the first person I reached for today was still you😌... Not because today was Valentine's day,.. but ninge gottalvaa my days start and settle around you anywayss😁🥰...
+This 517 km is stealing my happiness in holding your hand without a reason, looking at you while talking, sharing the same quiet instead of a call. Istella aadru, the first person I reached for today was still you😌... Not because today was Valentine's day,.. but it has become a habit.. ninge gottalvaa my days start and settle around you anywayss😁🥰...
 
 Somewhere between our random 6 pm snaps🫣, late night sleepy calls🥱, stupid overthinking fights😌 and quick so called makeups in our Love reset mode😘🥰… you stopped feeling like just someone I love. You slowly became the place my mind goes to rest and start being raw and real🫂🧡.. We never really got big perfect moments, so we kept collecting small ones instead and somehow those started meaning more to me than anything planned ever could...💖💖😎
 
 So if today felt a little empty around you, remember this… You were never celebrating alone babyy😌...I was right here with you the same way you've always been with me..maybe not beside you.. but never away from you and Every second you missed me, your bubu was also missing you the same way, or even more...😤🥺
 
-I too wanted my baby to understand that someone is also waiting for her and.. Even she deserves all the beautiful things that exists in the world... So nan kaiyalli en agutto adna madide aste.. I dont know how you felt after seeing this but, I love you Babyy... I dont know what else I could do other than thiss.. but I just want you to be with me just like this as a bestestest friend and Let's make sure that nothing should make us lose intrests and bored...
+I too wanted my baby to understand that someone is also waiting for her and.. Even she deserves all the beautiful things that exists in the world... So nan kaiyalli en agutto adna madide aste.. I dont know how you felt after seeing this but, I love you Babyy... I dont know what else I could do other than thiss to express my feelings towards you.. but You should know that I always want you to be with me just like this as a bestestest friend and Let's make sure that nothing should make us lose intrests and bored...
 
 Scold me if I am wrong, Kiss me if I need love, Beat me if I am stubborn, Hug me if I am lonely, Control me if I am reckless, Teach me if I am mistaken, Remind me how to love you, Challenge me if I am setteling for less, Protect me if I am in danger, And Support me till the end....
 
@@ -1839,7 +1840,7 @@ stage.appendChild(t);
       finalMsg.style.fontFamily="'Lora',serif";
       finalMsg.style.fontStyle="italic";
       finalMsg.style.color="rgba(255,255,255,.7)";
-      finalMsg.textContent="Countless more to come..,<br>only with you,<br>...always yours, Bubu 💖";
+     finalMsg.innerHTML="First of many…. all with only you.,<br>...always yours, -Bubu 💖";
       stage.appendChild(finalMsg);
       setTimeout(()=>finalMsg.classList.add("show"),300);
 
