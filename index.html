@@ -818,27 +818,21 @@ function startEnding(){
     "can I stay yours a little longer!?..❤️",
     "Promise 3:<br>We will not let this friendship die at any cost"
   ];
- let flashIndex=0;
-
-function runFlash(){
-  if(flashIndex>=memories.length){
-    setTimeout(()=>showMainEnding(),800);
-    return;
-  }
-
-  const flash=document.createElement("div");
-  flash.className="memoryFlash";
-  flash.innerHTML=`<div class="memoryContent">${memories[flashIndex]}</div>`;
-  document.body.appendChild(flash);
-
-  setTimeout(()=>flash.classList.add("show"),50);
-  setTimeout(()=>flash.remove(),flashIndex===0?800:700);
-
-  flashIndex++;
-  setTimeout(runFlash,flashIndex===1?1000:700);
-}
-
-runFlash();
+  
+  let flashIndex=0;
+  const flashInterval=setInterval(()=>{
+    if(flashIndex>=memories.length){
+      clearInterval(flashInterval);
+      setTimeout(()=>showMainEnding(),800);
+      return;
+    }
+    const flash=document.createElement("div");flash.className="memoryFlash";
+    flash.innerHTML=`<div class="memoryContent">${memories[flashIndex]}</div>`;
+    document.body.appendChild(flash);
+    setTimeout(()=>flash.classList.add("show"),50);
+    setTimeout(()=>flash.remove(),flashIndex===0?800:600+flashIndex*100);
+    flashIndex++;
+  },flashIndex===0?1000:700);
 }
 
 function showMainEnding(){
