@@ -95,9 +95,6 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:'Poppins',sans
 .promiseText.show{opacity:1;transform:translateY(0);}
 .promiseCounter{position:fixed;top:40px;left:50%;transform:translateX(-50%);font-family:'Lora',serif;font-style:italic;font-size:15px;color:rgba(255,255,255,.6);letter-spacing:1px;z-index:20;opacity:0;transition:opacity .8s ease;}
 .promiseCounter.show{opacity:1;}
-.promiseAccepted{box-shadow:0 0 40px rgba(255,140,200,.8),0 0 90px rgba(255,120,180,.5);transform:scale(1.04);transition:all .45s cubic-bezier(.22,1,.36,1);}
-.promisePulse{position:fixed;pointer-events:none;font-size:34px;transform:translate(-50%,-50%) scale(.4);opacity:0;animation:promisePulseAnim 900ms cubic-bezier(.22,1,.36,1) forwards;z-index:60;}
-@keyframes promisePulseAnim{0%{opacity:0;transform:translate(-50%,-50%) scale(.4);}25%{opacity:1;transform:translate(-50%,-50%) scale(1.2);}70%{opacity:.8;transform:translate(-50%,-50%) scale(1);}100%{opacity:0;transform:translate(-50%,-50%) scale(2);}}
 
 /* transition text between promises & letters */
 .transitionText{position:fixed;inset:0;z-index:16;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 1.5s ease;}
@@ -468,7 +465,7 @@ function startPetalRain(){
 
 /* ══ PROMISES ══ */
 const promises=[
-  {text:"We will not respect from each other"},
+  {text:"We won't deserve respect from each other"},
   {text:"We will not share anything with anyone"},
   {text:"We will not let this friendship die at any cost"},
   {text:"We will meet each other at least once a year"},
@@ -503,19 +500,7 @@ function showNextPromise(){
     card.innerHTML=`<span class="promiseNumber">Promise ${promiseIndex+1}</span><p class="promiseText">${p.text}</p>`;
     stage.appendChild(card);
     setTimeout(()=>{card.classList.add("visible");setTimeout(()=>card.querySelector(".promiseText").classList.add("show"),300);},80);
-    card.addEventListener("click",()=>{
-  card.classList.add("promiseAccepted");
-  const r=card.getBoundingClientRect();
-  const pulse=document.createElement("div");
-  pulse.className="promisePulse";
-  pulse.textContent="💗";
-  pulse.style.left=r.left+r.width/2+"px";
-  pulse.style.top=r.top+r.height/2+"px";
-  document.body.appendChild(pulse);
-  setTimeout(()=>pulse.remove(),900);
-  setTimeout(()=>{promiseIndex++;showNextPromise();},650);
-},{once:true});
-
+    card.addEventListener("click",()=>{promiseIndex++;showNextPromise();},{once:true});
   },old?700:0);
 }
 
@@ -817,7 +802,7 @@ function hugFinishComplete(btn){
   setTimeout(()=>{
     const stage=document.getElementById("confessionStage");
     stage.style.opacity="0";stage.style.transition="opacity 2s ease";
-    setTimeout(()=>startEnding(),3500);
+    setTimeout(()=>startEnding(),2000);
   },1500);
 }
 
@@ -833,21 +818,27 @@ function startEnding(){
     "can I stay yours a little longer!?..❤️",
     "Promise 3:<br>We will not let this friendship die at any cost"
   ];
-  
-  let flashIndex=0;
-  const flashInterval=setInterval(()=>{
-    if(flashIndex>=memories.length){
-      clearInterval(flashInterval);
-      setTimeout(()=>showMainEnding(),800);
-      return;
-    }
-    const flash=document.createElement("div");flash.className="memoryFlash";
-    flash.innerHTML=`<div class="memoryContent">${memories[flashIndex]}</div>`;
-    document.body.appendChild(flash);
-    setTimeout(()=>flash.classList.add("show"),50);
-    setTimeout(()=>flash.remove(),flashIndex===0?800:600+flashIndex*100);
-    flashIndex++;
-  },flashIndex===0?1000:700);
+ let flashIndex=0;
+
+function runFlash(){
+  if(flashIndex>=memories.length){
+    setTimeout(()=>showMainEnding(),800);
+    return;
+  }
+
+  const flash=document.createElement("div");
+  flash.className="memoryFlash";
+  flash.innerHTML=`<div class="memoryContent">${memories[flashIndex]}</div>`;
+  document.body.appendChild(flash);
+
+  setTimeout(()=>flash.classList.add("show"),50);
+  setTimeout(()=>flash.remove(),flashIndex===0?800:700);
+
+  flashIndex++;
+  setTimeout(runFlash,flashIndex===1?1000:700);
+}
+
+runFlash();
 }
 
 function showMainEnding(){
@@ -858,7 +849,7 @@ function showMainEnding(){
   begin.style.fontSize="clamp(22px,3.5vw,42px)";
   begin.textContent="This is just the beginning...";
   stage.appendChild(begin);
-  setTimeout(()=>begin.classList.add("show"),400);
+  setTimeout(()=>begin.classList.add("show"),500);
   
   setTimeout(()=>{
     begin.style.opacity="0";
@@ -884,7 +875,7 @@ function showMainEnding(){
           first.style.fontSize="clamp(20px,3vw,38px)";
           first.innerHTML="This is our first... but not our last 💗";
           stage.appendChild(first);
-          setTimeout(()=>first.classList.add("show"),400);
+          setTimeout(()=>first.classList.add("show"),300);
           
           setTimeout(()=>{
             first.style.opacity="0";
@@ -895,7 +886,7 @@ function showMainEnding(){
               inf.style.fontFamily="'Poppins',sans-serif";inf.style.fontWeight="300";
               inf.innerHTML="<span style='font-size:clamp(40px,8vw,90px);'>1</span> <span style='font-size:clamp(30px,6vw,60px);'>/</span> <span class='infinitySymbol'>∞</span>";
               stage.appendChild(inf);
-              setTimeout(()=>inf.classList.add("show"),500);
+              setTimeout(()=>inf.classList.add("show"),300);
               
               setTimeout(()=>{
                 inf.style.opacity="0";
@@ -907,23 +898,23 @@ function showMainEnding(){
                   always.style.fontSize="clamp(18px,3vw,36px)";
                   always.innerHTML="Every Valentine's Day...<br>every moment...<br>always yours 💗";
                   stage.appendChild(always);
-                  setTimeout(()=>always.classList.add("show"),500);
+                  setTimeout(()=>always.classList.add("show"),300);
                   
                   setTimeout(()=>{
                     always.style.opacity="0";
                     setTimeout(()=>{
                       always.remove();
-                      setTimeout(()=>startCountdown(stage),700);
+                      startCountdown(stage);
                     },1500);
-                  },4800);
+                  },3500);
                 },1500);
-              },4200);
+              },2500);
             },1500);
-          },2800);
+          },3000);
         },6000);
-      },2600);
-    },2000);
-  },2500);
+      },3000);
+    },2500);
+  },3000);
 }
 
 function startCountdown(stage){
@@ -943,51 +934,24 @@ function startCountdown(stage){
       counter.textContent="517 km";
       stage.appendChild(counter);
       
-     let km=517;
-let speed=420;
-
-function runCountdown(){
-  if(km<=0){
-    counter.textContent="0 km";
-    counter.style.color="#ff9bd4";
-
-    // emotional pause moment
-    counter.style.transform="scale(1.15)";
-    counter.style.textShadow="0 0 40px rgba(255,120,200,1)";
-
-    setTimeout(()=>{
-      counter.style.opacity="0";
-      setTimeout(()=>{
-        counter.remove();
-        startFinalTexts(); // <-- VERY IMPORTANT
-      },1200);
-    },1800);
-
-    return;
-  }
-
-  // human-feeling distance shrink
-  if(km>300) km-=Math.floor(Math.random()*8)+5;
-  else if(km>150) km-=Math.floor(Math.random()*14)+8;
-  else if(km>60) km-=Math.floor(Math.random()*22)+12;
-  else if(km>20) km-=Math.floor(Math.random()*12)+6;
-  else km-=1;
-
-  counter.textContent=Math.max(0,km)+" km";
-
-  speed*=0.93;
-  setTimeout(runCountdown,speed);
-}
-
-runCountdown();
-
-              function startFinalTexts(){
+      let km=517;
+      const countInterval=setInterval(()=>{
+        km-=Math.floor(Math.random()*40)+20;
+        if(km<=0){
+          clearInterval(countInterval);
+          counter.textContent="0 km";
+          counter.style.color="#ff9bd4";
+          setTimeout(()=>{
+            counter.style.opacity="0";
+            setTimeout(()=>{
+              counter.remove();
+              
               const soon=document.createElement("div");soon.className="endingText";
               soon.style.fontFamily="'Pacifico',cursive";
               soon.style.fontSize="clamp(28px,5vw,60px)";
-              soon.textContent="Soon Babyy... 🫂";
+              soon.textContent="Soon... 🫂";
               stage.appendChild(soon);
-              setTimeout(()=>soon.classList.add("show"),500);
+              setTimeout(()=>soon.classList.add("show"),300);
               
               setTimeout(()=>{
                 soon.style.opacity="0";
@@ -999,7 +963,7 @@ runCountdown();
                   until.style.fontSize="clamp(18px,3vw,36px)";
                   until.innerHTML="Until then,<br>you're in my heart 💗";
                   stage.appendChild(until);
-                  setTimeout(()=>until.classList.add("show"),3000);
+                  setTimeout(()=>until.classList.add("show"),300);
                   
                   setTimeout(()=>{
                     until.style.opacity="0";
@@ -1011,7 +975,7 @@ runCountdown();
                       sign.style.fontSize="clamp(32px,5vw,70px)";
                       sign.textContent="-Bhavesh MHB";
                       stage.appendChild(sign);
-                      setTimeout(()=>sign.classList.add("show"),1200);
+                      setTimeout(()=>sign.classList.add("show"),300);
                       
                       setTimeout(()=>{
                         sign.style.opacity="0";
@@ -1039,7 +1003,9 @@ runCountdown();
           },2000);
           return;
         }
-    
+        counter.textContent=km+" km";
+      },80);
+      
     },1500);
   },2500);
 }
